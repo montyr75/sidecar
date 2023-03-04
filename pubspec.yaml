@@ -7,6 +7,7 @@ environment:
   sdk: '>=2.18.6 <3.0.0'
 
 dependencies:
+  appwrite: ^8.2.2
   collection: ^1.17.0
   flex_color_scheme: ^6.1.2
   flutter:

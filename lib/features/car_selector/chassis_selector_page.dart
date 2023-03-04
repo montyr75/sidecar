@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/cars.dart';
 import '../../models/car_chassis.dart';
-import '../../models/enums.dart';
 import '../../utils/screen_utils.dart';
 import '../car_record_sheet/controller/car_state.dart';
 import 'chassis_page.dart';
