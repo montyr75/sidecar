@@ -1,10 +1,12 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import 'app_config.dart';
 import 'features/app/pages/home_page.dart';
 import 'features/app/pages/not_found_page.dart';
+import 'features/auth/pages/login_page.dart';
+import 'features/auth/services/auth_service.dart';
 import 'features/car_builder/car_builder_page.dart';
 import 'features/car_record_sheet/car_record_sheet_page.dart';
 import 'features/car_selector/chassis_selector_page.dart';
@@ -17,7 +19,7 @@ enum AppRoute {
   carBuilder,
   carRecordSheet,
   chassisSelector,
-  login;
+  login('/login');
 
   final String? _path;
   String get path => _path ?? name;
@@ -27,10 +29,17 @@ enum AppRoute {
 
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
-  // when needed, we can use the ref to watch an authRepo here, then add a redirect to the GoRouter
-
   return GoRouter(
-    initialLocation: '/',
+    initialLocation: AppRoute.home.path,
+    redirect: (context, state) {
+      log.info("------------- ${state.subloc}");
+
+      if (!ref.read(authServiceProvider).isLoggedIn) {
+        return AppRoute.login.path;
+      }
+
+      return null;
+    },
     debugLogDiagnostics: true,
     observers: [FlutterSmartDialog.observer],
     routes: [
@@ -39,11 +48,6 @@ GoRouter goRouter(GoRouterRef ref) {
         path: AppRoute.home.path,
         builder: (context, state) => const HomePage(),
         routes: [
-          GoRoute(
-            name: AppRoute.login.name,
-            path: AppRoute.login.path,
-            builder: (context, state) => const Center(child: Placeholder()),
-          ),
           GoRoute(
             name: AppRoute.chassisSelector.name,
             path: AppRoute.chassisSelector.path,
@@ -60,6 +64,11 @@ GoRouter goRouter(GoRouterRef ref) {
             builder: (context, state) => CarRecordSheetPage(initialState: ref.read(appServiceProvider).initialCarState!),
           ),
         ],
+      ),
+      GoRoute(
+        name: AppRoute.login.name,
+        path: AppRoute.login.path,
+        builder: (context, state) => const LoginPage(),
       ),
     ],
     errorBuilder: (context, state) => const NotFoundPage(),

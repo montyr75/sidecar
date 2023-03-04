@@ -3,7 +3,7 @@ import 'package:quiver/core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../app_config.dart';
-import '../repo/auth_repo.dart';
+import '../repos/auth_repo.dart';
 import 'auth_state.dart';
 
 part 'auth_service.g.dart';
@@ -12,6 +12,12 @@ part 'auth_service.g.dart';
 class AuthService extends _$AuthService {
   @override
   AuthState build() => const AuthState();
+
+  Future<void> register({required String email, required String password}) async {
+    state = state.copyWith(isLoading: true);
+
+    final account = await ref.read(authRepoProvider).register(email: email, password: password);
+  }
 
   Future<void> login({required String email, required String password}) async {
     if (!state.isLoading) {
