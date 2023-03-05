@@ -35,6 +35,10 @@ extension NumberX on num {
   T max<T extends num>(T maximum) => math.min(this as T, maximum);
 }
 
+extension StringX on String {
+  bool toBool() => this == "true" ? true : false;
+}
+
 extension IterableIntX on Iterable<int> {
   int sum() => fold(0, (int total, int current) => total + current);
 }

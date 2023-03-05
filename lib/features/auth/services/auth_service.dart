@@ -3,6 +3,7 @@ import 'package:quiver/core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../app_config.dart';
+import '../../../repos/secure_storage/secure_storage_repo.dart';
 import '../repos/auth_repo.dart';
 import 'auth_state.dart';
 
@@ -11,7 +12,30 @@ part 'auth_service.g.dart';
 @Riverpod(keepAlive: true)
 class AuthService extends _$AuthService {
   @override
-  AuthState build() => const AuthState();
+  AuthState build() {
+    _init();
+    return const AuthState();
+  }
+
+  Future<void> _init() async {
+    final sessionID = await ref.read(secureStorageRepoProvider).read(StorageKey.sessionId.toKey());
+
+    if (sessionID != null) {
+      final repo = ref.read(authRepoProvider);
+
+      final session = await repo.getActiveSession(sessionID);
+
+      Account? account;
+
+      if (session != null) {
+        account = await repo.getActiveAccount();
+
+        if (account != null) {
+          _login(session: session, account: account);
+        }
+      }
+    }
+  }
 
   Future<void> register({required String username, required String email, required String password}) async {
     state = state.copyWith(isLoading: true);
@@ -46,21 +70,9 @@ class AuthService extends _$AuthService {
     if (session != null) {
       if (!state.hasAccount) {
         account = await repo.getActiveAccount();
-
-        log.severe("AuthService::login() -- $account");
-
-        if (account == null) {
-          log.severe("AuthService::login() -- account is null");
-        }
       }
 
-      state = state.copyWith(
-        isLoading: false,
-        session: Optional<Session?>.of(session),
-        account: account != null ? Optional<Account?>.of(account) : null,
-      );
-
-      log.info("AuthService::login() -- LOGGED IN!! -> ${state.session}");
+      _login(session: session, account: account);
     }
     else {
       state = state.copyWith(isLoading: false);
@@ -74,5 +86,19 @@ class AuthService extends _$AuthService {
 
       log.info("AuthService::logout() -- LOGGED OUT!!");
     }
+
+    ref.read(secureStorageRepoProvider).logout();
+  }
+
+  void _login({required Session session, Account? account}) {
+    state = state.copyWith(
+      isLoading: false,
+      session: Optional<Session?>.of(session),
+      account: account != null ? Optional<Account?>.of(account) : null,
+    );
+
+    ref.read(secureStorageRepoProvider).write(key: StorageKey.sessionId.toKey(), value: session.$id);
+
+    log.info("AuthService::login() -- LOGGED IN!! -> ${state.session}");
   }
 }

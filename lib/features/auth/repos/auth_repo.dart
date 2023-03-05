@@ -55,6 +55,16 @@ class AuthRepo {
     }
   }
 
+  Future<models.Session?> getActiveSession(String sessionID) async {
+    try {
+      return await _accountService.getSession(sessionId: sessionID);
+    }
+    catch (e) {
+      _handleError(e);
+      return null;
+    }
+  }
+
   Future<models.Account?> getActiveAccount() async {
     try {
       return await _accountService.get();
