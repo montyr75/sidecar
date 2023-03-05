@@ -21,4 +21,18 @@ final appwriteClientProvider = AutoDisposeProvider<Client>.internal(
 );
 
 typedef AppwriteClientRef = AutoDisposeProviderRef<Client>;
+String _$appWriteDbHash() => r'322d713ad7368cfac55a4eef5684a71e2a48004f';
+
+/// See also [appWriteDb].
+@ProviderFor(appWriteDb)
+final appWriteDbProvider = AutoDisposeProvider<Databases>.internal(
+  appWriteDb,
+  name: r'appWriteDbProvider',
+  debugGetCreateSourceHash:
+      const bool.fromEnvironment('dart.vm.product') ? null : _$appWriteDbHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef AppWriteDbRef = AutoDisposeProviderRef<Databases>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

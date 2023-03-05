@@ -15,3 +15,8 @@ Client appwriteClient(AppwriteClientRef ref) {
       .setProject(projectID)
       .setSelfSigned(status: true); // For self signed certificates, only use for development
 }
+
+@riverpod
+Databases appWriteDb(AppWriteDbRef ref) {
+  return Databases(ref.watch(appwriteClientProvider));
+}
