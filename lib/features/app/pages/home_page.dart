@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../routes.dart';
 import '../../../utils/screen_utils.dart';
+import '../../auth/services/auth_service.dart';
 
 class HomePage extends ConsumerWidget {
   const HomePage({super.key});
@@ -12,14 +13,26 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        centerTitle: true,
         title: const Text(
           "Sidecar",
           style: TextStyle(
             fontFamily: "Blazed",
             fontSize: 22,
+            color: Colors.blueGrey,
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: med),
+            child: TextButton(
+              onPressed: () async {
+                await ref.read(authServiceProvider.notifier).logout();
+                ref.read(goRouterProvider).goNamed(AppRoute.login.name);
+              },
+              child: const Text("Log out"),
+            ),
+          ),
+        ],
       ),
       body: DecoratedBox(
         decoration: const BoxDecoration(

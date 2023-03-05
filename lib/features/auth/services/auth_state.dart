@@ -3,22 +3,36 @@ import 'package:quiver/core.dart';
 
 class AuthState {
   final bool isLoading;
-  final Account? user;
+  final Session? session;
+  final Account? account;
 
   const AuthState({
     this.isLoading = false,
-    this.user,
+    this.session,
+    this.account,
   });
 
   AuthState copyWith({
     bool? isLoading,
-    Optional<Account?>? user,
+    Optional<Session?>? session,
+    Optional<Account?>? account,
   }) {
     return AuthState(
       isLoading: isLoading ?? this.isLoading,
-      user: user == null ? this.user : user.orNull,
+      session: session == null ? this.session : session.orNull,
+      account: account == null ? this.account : account.orNull,
     );
   }
 
-  bool get isLoggedIn => user != null;
+  AuthState logout() {
+    return copyWith(
+      isLoading: false,
+      session: const Optional<Session?>.absent(),
+      account: const Optional<Account?>.absent(),
+    );
+  }
+
+  bool get hasSession => session != null;
+  bool get hasAccount => account != null;
+  bool get isLoggedIn => hasSession;
 }

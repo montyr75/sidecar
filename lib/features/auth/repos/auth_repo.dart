@@ -2,6 +2,7 @@ import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../../app_config.dart';
 import '../../../db/appwrite.dart';
 import '../../../services/error/error_service.dart';
 
@@ -10,6 +11,11 @@ part 'auth_repo.g.dart';
 @riverpod
 Account appwriteAccountService(AppwriteAccountServiceRef ref) {
   return Account(ref.watch(appwriteClientProvider));
+}
+
+@riverpod
+AuthRepo authRepo(AuthRepoRef ref) {
+  return AuthRepo(ref: ref, accountService: ref.watch(appwriteAccountServiceProvider));
 }
 
 class AuthRepo {
@@ -21,15 +27,14 @@ class AuthRepo {
     required Account accountService,
   }) : _accountService = accountService;
 
-  Future<models.Account?> register({required String email, required String password}) async {
+  Future<models.Account?> register({required String username, required String email, required String password}) async {
     try {
-      final account = await _accountService.create(
+      return await _accountService.create(
         userId: ID.unique(),
+        name: username,
         email: email,
         password: password,
       );
-
-      return account;
     }
     catch (e) {
       _handleError(e);
@@ -39,12 +44,10 @@ class AuthRepo {
 
   Future<models.Session?> login({required String email, required String password}) async {
     try {
-      final session = await _accountService.createEmailSession(
+      return await _accountService.createEmailSession(
         email: email,
         password: password,
       );
-
-      return session;
     }
     catch (e) {
       _handleError(e);
@@ -52,24 +55,63 @@ class AuthRepo {
     }
   }
 
-  void logout() {
+  Future<models.Account?> getActiveAccount() async {
+    try {
+      return await _accountService.get();
+    }
+    catch (e) {
+      _handleError(e);
+      return null;
+    }
+  }
 
+  Future logout(String sessionId) async {
+    try {
+      return _accountService.deleteSession(sessionId: sessionId);
+    }
+    catch (e) {
+      _handleError(e);
+      return null;
+    }
   }
 
   void _handleError(Object e) {
+    // AppwriteException error types: https://appwrite.io/docs/response-codes
+
     final errorService = ref.read(errorServiceProvider.notifier);
 
-    errorService.onError(
-      provider: authRepoProvider,
-      error: AppError(
-        error: e,
-        showAlert: true,
-      ),
-    );
-  }
-}
+    if (e is AppwriteException) {
+      log.info("AuthRepo::_handleError() -- ${e.type}");
 
-@riverpod
-AuthRepo authRepo(AuthRepoRef ref) {
-  return AuthRepo(ref: ref, accountService: ref.watch(appwriteAccountServiceProvider));
+      String? message;
+
+      switch (e.type) {
+        case "user_email_already_exists":
+        case "user_already_exists": message = "That email address is already in use."; break;
+        case "general_argument_invalid":    // for auth, this would likely be a too-short password
+        case "user_invalid_credentials": message = "Bad username or password."; break;
+        case "user_unauthorized": message = "Unauthorized."; break;
+        case "user_not_found": message = "User not found."; break;
+        case "user_session_not_found": message = "Session not found."; break;
+      }
+
+      errorService.onError(
+        provider: authRepoProvider,
+        error: AppError(
+          error: e,
+          message: message ?? "Unknown server error.",
+          showAlert: true,
+        ),
+      );
+    }
+    else {
+      errorService.onError(
+        provider: authRepoProvider,
+        error: AppError(
+          error: e,
+          showAlert: true,
+        ),
+      );
+    }
+  }
 }

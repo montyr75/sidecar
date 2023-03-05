@@ -11,6 +11,8 @@ part 'login_form_ctrl.g.dart';
 class LoginFormCtrl extends _$LoginFormCtrl {
   @override
   LoginFormState build() {
+    // TODO: Set up some secure storage stuff here.
+
     // final authState = ref.read(authServiceProvider);
     //
     // if (!authState.canAutoLogin && authState.canPrefill) {
@@ -36,11 +38,9 @@ class LoginFormCtrl extends _$LoginFormCtrl {
 
   void submit() {
     if (state.status.isValid) {
-      final authService = ref.read(authServiceProvider.notifier);
-
-      authService.login(
-        email: state.email.value,
-        password: state.password.value,
+      ref.read(authServiceProvider.notifier).login(
+        email: state.email.value.trim(),
+        password: state.password.value.trim(),
       );
     }
   }

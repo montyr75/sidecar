@@ -27,12 +27,43 @@ class RegistrationForm extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: const [
+          _UsernameInput(),
+          boxXXL,
           _EmailInput(),
           boxXXL,
           _PasswordInput(),
           boxXXL,
           _ConfirmPasswordInput(),
         ],
+      ),
+    );
+  }
+}
+
+class _UsernameInput extends ConsumerWidget {
+  static const inputName = "Username";
+
+  const _UsernameInput({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final field = ref.watch(registrationFormCtrlProvider.select((state) => state.username));
+
+    return TextFormField(
+      key: const Key('${formName}_${inputName}_textField'),
+      initialValue: field.value,
+      autofocus: true,
+      onChanged: (value) => ref.read(registrationFormCtrlProvider.notifier).usernameChanged(value),
+      onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
+      keyboardType: TextInputType.name,
+      textInputAction: TextInputAction.next,
+      enableSuggestions: false,
+      autocorrect: false,
+      autofillHints: const [AutofillHints.username],
+      decoration: InputDecoration(
+        labelText: inputName,
+        errorText: field.invalid ? field.error!.errorMsg : null,
+        isDense: true,
       ),
     );
   }
@@ -50,7 +81,6 @@ class _EmailInput extends ConsumerWidget {
     return TextFormField(
       key: const Key('${formName}_${inputName}_textField'),
       initialValue: field.value,
-      autofocus: true,
       onChanged: (value) => ref.read(registrationFormCtrlProvider.notifier).emailChanged(value),
       onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.emailAddress,
@@ -135,15 +165,18 @@ class _SubmitButton extends ConsumerWidget {
     final status = ref.watch(registrationFormCtrlProvider.select((state) => state.status));
     final isLoading = ref.watch(authServiceProvider.select((state) => state.isLoading));
 
-    return !isLoading
-        ? ElevatedButton(
-            key: const Key('${formName}_${inputName}_button'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
-            onPressed: status.isValidated ? () => ref.read(registrationFormCtrlProvider.notifier).submit() : null,
-            child: const Text(inputName),
-          )
-        : const CircularProgressIndicator();
+    return SizedBox(
+      height: 35,
+      child: !isLoading
+          ? ElevatedButton(
+        key: const Key('${formName}_${inputName}_button'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        onPressed: status.isValidated ? () => ref.read(registrationFormCtrlProvider.notifier).submit() : null,
+        child: const Text(inputName),
+      )
+          : const CircularProgressIndicator(),
+    );
   }
 }

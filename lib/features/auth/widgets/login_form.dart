@@ -104,15 +104,18 @@ class _SubmitButton extends ConsumerWidget {
     final status = ref.watch(loginFormCtrlProvider.select((state) => state.status));
     final isLoading = ref.watch(authServiceProvider.select((state) => state.isLoading));
 
-    return !isLoading
-        ? ElevatedButton(
-            key: const Key('${formName}_${inputName}_button'),
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Theme.of(context).primaryColor,
-            ),
-            onPressed: status.isValidated ? () => ref.read(loginFormCtrlProvider.notifier).submit() : null,
-            child: const Text(inputName),
-          )
-        : const CircularProgressIndicator();
+    return SizedBox(
+      height: 35,
+      child: !isLoading
+          ? ElevatedButton(
+        key: const Key('${formName}_${inputName}_button'),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        onPressed: status.isValidated ? () => ref.read(loginFormCtrlProvider.notifier).submit() : null,
+        child: const Text(inputName),
+      )
+          : const CircularProgressIndicator()
+    );
   }
 }

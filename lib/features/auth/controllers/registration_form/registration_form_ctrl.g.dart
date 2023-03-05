@@ -7,7 +7,7 @@ part of 'registration_form_ctrl.dart';
 // **************************************************************************
 
 String _$registrationFormCtrlHash() =>
-    r'da2a47ce54c62972bc197a439ac8d9997dd19ff7';
+    r'b6d8c80b75ec28a1138458264e0f2feeea624f0a';
 
 /// See also [RegistrationFormCtrl].
 @ProviderFor(RegistrationFormCtrl)

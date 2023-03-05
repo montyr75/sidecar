@@ -49,7 +49,7 @@ class RequiredConfirmPasswordFormField extends StringFormField {
   final String match;
 
   const RequiredConfirmPasswordFormField.pure([String value = '', this.match = '']) : super.pure(value);
-  RequiredConfirmPasswordFormField.dirty(this.match, [String value = '']) : super.dirty(value);
+  RequiredConfirmPasswordFormField.dirty({required this.match, String value = ''}) : super.dirty(value);
 
   @override
   ValidationError? validator(String value) {

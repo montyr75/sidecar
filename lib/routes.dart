@@ -2,7 +2,6 @@ import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import 'app_config.dart';
 import 'features/app/pages/home_page.dart';
 import 'features/app/pages/not_found_page.dart';
 import 'features/auth/pages/login_page.dart';
@@ -30,17 +29,15 @@ enum AppRoute {
 @riverpod
 GoRouter goRouter(GoRouterRef ref) {
   return GoRouter(
+    debugLogDiagnostics: false,
     initialLocation: AppRoute.home.path,
     redirect: (context, state) {
-      log.info("------------- ${state.subloc}");
-
       if (!ref.read(authServiceProvider).isLoggedIn) {
         return AppRoute.login.path;
       }
 
       return null;
     },
-    debugLogDiagnostics: true,
     observers: [FlutterSmartDialog.observer],
     routes: [
       GoRoute(

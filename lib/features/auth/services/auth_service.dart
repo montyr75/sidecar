@@ -13,10 +13,23 @@ class AuthService extends _$AuthService {
   @override
   AuthState build() => const AuthState();
 
-  Future<void> register({required String email, required String password}) async {
+  Future<void> register({required String username, required String email, required String password}) async {
     state = state.copyWith(isLoading: true);
 
-    final account = await ref.read(authRepoProvider).register(email: email, password: password);
+    final account = await ref.read(authRepoProvider).register(username: username, email: email, password: password);
+
+    if (account != null) {
+      log.info("AuthService::register() -- ACCOUNT CREATED: ${account.email}");
+
+      state = state.copyWith(
+        account: Optional<Account?>.of(account),
+      );
+
+      login(email: email, password: password);
+    }
+    else {
+      state = state.copyWith(isLoading: false);
+    }
   }
 
   Future<void> login({required String email, required String password}) async {
@@ -24,26 +37,36 @@ class AuthService extends _$AuthService {
       state = state.copyWith(isLoading: true);
     }
 
-    final session = await ref.read(authRepoProvider).login(email: email, password: password);
+    final repo = ref.read(authRepoProvider);
+
+    final session = await repo.login(email: email, password: password);
+
+    Account? account;
 
     if (session != null) {
+      if (!state.hasAccount) {
+        account = await repo.getActiveAccount();
+      }
+
       state = state.copyWith(
         isLoading: false,
-        // user: account,
+        session: Optional<Session?>.of(session),
+        account: Optional<Account?>.of(account),
       );
 
-      log.info("AuthService::login() -- LOGGED IN!! -> ${state.user}");
+      log.info("AuthService::login() -- LOGGED IN!! -> ${state.session}");
     }
     else {
       state = state.copyWith(isLoading: false);
     }
   }
 
-  void logout() {
-    ref.read(authRepoProvider).logout();
+  Future<void> logout() async {
+    if (state.hasSession) {
+      await ref.read(authRepoProvider).logout(state.session!.$id);
+      state = state.logout();
 
-    state = state.copyWith(
-      user: const Optional<Account?>.absent(),
-    );
+      log.info("AuthService::logout() -- LOGGED OUT!!");
+    }
   }
 }

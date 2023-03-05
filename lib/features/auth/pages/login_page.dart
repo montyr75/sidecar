@@ -1,21 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../routes.dart';
 import '../../../utils/screen_utils.dart';
+import '../services/auth_service.dart';
 import '../widgets/login_form.dart';
 import '../widgets/registration_form.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginPage extends ConsumerStatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginPageState extends ConsumerState<LoginPage> {
   bool _loginMode = true;
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(authServiceProvider, (previous, next) {
+      if (!(previous?.isLoggedIn ?? false) && next.isLoggedIn) {
+        context.goNamed(AppRoute.home.name);
+      }
+    });
+
     return Scaffold(
       body: DecoratedBox(
         decoration: const BoxDecoration(
@@ -59,11 +69,11 @@ class _LoginPageState extends State<LoginPage> {
                               child: Transform.translate(
                                 offset: const Offset(0, 5),
                                 child: TextButton(
-                                  onPressed: () {
+                                  onPressed: !ref.read(authServiceProvider).isLoading ? () {
                                     setState(() {
                                       _loginMode = !_loginMode;
                                     });
-                                  },
+                                  } : null,
                                   child: _loginMode ? const Text("Register") : const Text("Log in"),
                                 ),
                               ),

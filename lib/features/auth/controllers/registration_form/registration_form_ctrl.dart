@@ -12,6 +12,12 @@ class RegistrationFormCtrl extends _$RegistrationFormCtrl {
   @override
   RegistrationFormState build() => const RegistrationFormState();
 
+  void usernameChanged(String value) {
+    _setValidatedState(state.copyWith(
+      username: RequiredStringFormField.dirty(value),
+    ));
+  }
+
   void emailChanged(String value) {
     _setValidatedState(state.copyWith(
       email: RequiredEmailFormField.dirty(value),
@@ -26,17 +32,16 @@ class RegistrationFormCtrl extends _$RegistrationFormCtrl {
 
   void confirmPasswordChanged(String value) {
     _setValidatedState(state.copyWith(
-      confirmPassword: RequiredConfirmPasswordFormField.dirty(state.password.value, value),
+      confirmPassword: RequiredConfirmPasswordFormField.dirty(match: state.password.value, value: value),
     ));
   }
 
   void submit() {
     if (state.status.isValid) {
-      final authService = ref.read(authServiceProvider.notifier);
-
-      authService.register(
-        email: state.email.value,
-        password: state.password.value,
+      ref.read(authServiceProvider.notifier).register(
+        username: state.username.value.trim(),
+        email: state.email.value.trim(),
+        password: state.password.value.trim(),
       );
     }
   }

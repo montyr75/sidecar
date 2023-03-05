@@ -6,7 +6,7 @@ part of 'login_form_ctrl.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginFormCtrlHash() => r'070e4cdf8e7007fd33aa9974b554665a284be585';
+String _$loginFormCtrlHash() => r'56c274a35f3997f2b9f59360520a8e54abfd0c04';
 
 /// See also [LoginFormCtrl].
 @ProviderFor(LoginFormCtrl)
