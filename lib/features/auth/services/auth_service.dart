@@ -46,12 +46,18 @@ class AuthService extends _$AuthService {
     if (session != null) {
       if (!state.hasAccount) {
         account = await repo.getActiveAccount();
+
+        log.severe("AuthService::login() -- $account");
+
+        if (account == null) {
+          log.severe("AuthService::login() -- account is null");
+        }
       }
 
       state = state.copyWith(
         isLoading: false,
         session: Optional<Session?>.of(session),
-        account: Optional<Account?>.of(account),
+        account: account != null ? Optional<Account?>.of(account) : null,
       );
 
       log.info("AuthService::login() -- LOGGED IN!! -> ${state.session}");

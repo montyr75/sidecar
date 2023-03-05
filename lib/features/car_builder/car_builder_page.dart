@@ -333,6 +333,8 @@ class LocationComps extends ConsumerWidget {
     if (loc == Location.crew) {
       return PopupMenuButton<String>(
         tooltip: "Add crew",
+        shape: RoundedRectangleBorder(borderRadius: radiusM),
+        offset: const Offset(0, 30),
         onSelected: (item) {
           List<Component> selectables;
 
@@ -385,6 +387,8 @@ class LocationComps extends ConsumerWidget {
     } else if (loc == Location.turret) {
       return PopupMenuButton<String>(
         tooltip: "Add turreted weapon",
+        shape: RoundedRectangleBorder(borderRadius: radiusM),
+        offset: const Offset(0, 30),
         onSelected: (item) {
           List<Component> selectables = db.components.values.getCompByAttr(Attribute.turret);
 
@@ -403,6 +407,8 @@ class LocationComps extends ConsumerWidget {
     } else if (loc == Location.upgrade) {
       return PopupMenuButton<String>(
         tooltip: "Add upgrade",
+        shape: RoundedRectangleBorder(borderRadius: radiusM),
+        offset: const Offset(0, 30),
         onSelected: (item) {
           List<Component> selectables = db.components.values.upgrades;
 
@@ -426,6 +432,8 @@ class LocationComps extends ConsumerWidget {
 
       return PopupMenuButton<ComponentType>(
         tooltip: "Add car components",
+        shape: RoundedRectangleBorder(borderRadius: radiusM),
+        offset: const Offset(0, 30),
         onSelected: (item) {
           List<Component> selectables;
 

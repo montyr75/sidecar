@@ -22,16 +22,37 @@ class HomePage extends ConsumerWidget {
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: med),
-            child: TextButton(
-              onPressed: () async {
+          if (ref.read(authServiceProvider).isLoggedIn)
+            PopupMenuButton<String>(
+              tooltip: "User profile",
+              shape: RoundedRectangleBorder(borderRadius: radiusM),
+              offset: const Offset(0, 50),
+              onSelected: (item) async {
                 await ref.read(authServiceProvider.notifier).logout();
                 ref.read(goRouterProvider).goNamed(AppRoute.login.name);
               },
-              child: const Text("Log out"),
+              itemBuilder: (BuildContext context) => [
+                const PopupMenuItem(value: "Log out", child: Text("Log out")),
+              ],
+              child: Container(
+                margin: paddingAllM,
+                padding: paddingAllM,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      ref.read(authServiceProvider).account!.name,
+                      style: const TextStyle(fontFamily: 'Audiowide'),
+                    ),
+                    boxS,
+                    const RotatedBox(
+                      quarterTurns: 1,
+                      child: Icon(Icons.chevron_right),
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
         ],
       ),
       body: DecoratedBox(
@@ -46,12 +67,12 @@ class HomePage extends ConsumerWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              HomeButton(
+              HomeNavButton(
                 label: "Vehicle Guide",
                 onPressed: () => context.goNamed(AppRoute.chassisSelector.name),
               ),
               boxXXL,
-              HomeButton(
+              HomeNavButton(
                 label: "Car Builder",
                 onPressed: () => context.goNamed(AppRoute.carBuilder.name),
               ),
@@ -63,11 +84,11 @@ class HomePage extends ConsumerWidget {
   }
 }
 
-class HomeButton extends StatelessWidget {
+class HomeNavButton extends StatelessWidget {
   final String label;
   final VoidCallback onPressed;
 
-  const HomeButton({Key? key, required this.label, required this.onPressed}) : super(key: key);
+  const HomeNavButton({Key? key, required this.label, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
