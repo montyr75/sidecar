@@ -21,6 +21,22 @@ final appwriteClientProvider = AutoDisposeProvider<Client>.internal(
 );
 
 typedef AppwriteClientRef = AutoDisposeProviderRef<Client>;
+String _$appwriteAccountServiceHash() =>
+    r'f689fd2b137f4394ea6e0851de23c0861e471a51';
+
+/// See also [appwriteAccountService].
+@ProviderFor(appwriteAccountService)
+final appwriteAccountServiceProvider = AutoDisposeProvider<Account>.internal(
+  appwriteAccountService,
+  name: r'appwriteAccountServiceProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$appwriteAccountServiceHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef AppwriteAccountServiceRef = AutoDisposeProviderRef<Account>;
 String _$appWriteDbHash() => r'322d713ad7368cfac55a4eef5684a71e2a48004f';
 
 /// See also [appWriteDb].

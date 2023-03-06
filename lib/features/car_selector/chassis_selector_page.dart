@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../data/cars.dart';
+import '../../data/vehicle_guide.dart';
 import '../../models/car_chassis.dart';
 import '../../utils/screen_utils.dart';
 import '../car_record_sheet/controller/car_state.dart';
@@ -25,9 +25,9 @@ class ChassisSelectorPage extends ConsumerWidget {
               constraints: const BoxConstraints(maxWidth: 500),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                children: cars.keys.map<ChassisTile>(
+                children: vg.keys.map<ChassisTile>(
                   (chassisType) {
-                    return ChassisTile(chassis: cars[chassisType]!);
+                    return ChassisTile(chassis: vg[chassisType]!);
                   },
                 ).toList(),
               ),
@@ -64,7 +64,7 @@ class ChassisTile extends StatelessWidget {
 }
 
 void showChassisPage(BuildContext context, {CarSelectorMode mode = CarSelectorMode.drive, required CarChassis chassis}) {
-  final carDivs = cars[chassis.type]!;
+  final carDivs = vg[chassis.type]!;
 
   final Map<int, CarState> divisionStates = {
     for (final int division in carDivs.divisions.keys)

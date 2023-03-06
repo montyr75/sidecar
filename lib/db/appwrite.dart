@@ -3,9 +3,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'appwrite.g.dart';
 
-const projectID = '6402cba725d77ce1e716';
-const endpoint = 'http://10.0.0.228/v1';
-const dbID = '6402d1866b4425840e54';
+const projectID = '640509d1427ecb8ca360';
+const endpoint = 'http://137.184.84.239/v1';
+const dbID = '64050affc996c7c754bf';
 
 @riverpod
 Client appwriteClient(AppwriteClientRef ref) {
@@ -14,6 +14,11 @@ Client appwriteClient(AppwriteClientRef ref) {
       .setEndpoint(endpoint)
       .setProject(projectID)
       .setSelfSigned(status: true); // For self signed certificates, only use for development
+}
+
+@riverpod
+Account appwriteAccountService(AppwriteAccountServiceRef ref) {
+  return Account(ref.watch(appwriteClientProvider));
 }
 
 @riverpod

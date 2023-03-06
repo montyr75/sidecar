@@ -11,11 +11,11 @@ class ErrorService extends _$ErrorService {
   @override
   AppError? build() => null;
 
-  void onError({ProviderBase? provider, required Object error, StackTrace? stackTrace}) {
+  void onError({ProviderBase? provider, required Object error, StackTrace? st}) {
     final appError = error is AppError ? error : AppError(error: error, showAlert: false);
 
     if (log.debugMode) {
-      log.error("${provider?.name ?? provider?.runtimeType ?? 'Unknown Source'} error: ${appError.toDebugString()}");
+      log.error("${provider?.name ?? provider?.runtimeType ?? 'Unknown Source'} error: ${appError.toDebugString()}${st != null ? '\n$st' : ''}");
     }
 
     state = appError;

@@ -1,10 +1,10 @@
-import 'car.dart';
 import 'enums.dart';
+import 'vehicle.dart';
 
 class CarChassis {
-  final CarChassisType type;
+  final ChassisType type;
   final String description;
-  final Map<int, Car> divisions;
+  final Map<int, Vehicle> divisions;
 
   const CarChassis({
     required this.type,
@@ -12,5 +12,5 @@ class CarChassis {
     required this.divisions,
   });
 
-  Car operator [](int division) => divisions[division]!;
+  Vehicle operator [](int division) => divisions[division]!;
 }

@@ -6,22 +6,6 @@ part of 'auth_repo.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$appwriteAccountServiceHash() =>
-    r'f689fd2b137f4394ea6e0851de23c0861e471a51';
-
-/// See also [appwriteAccountService].
-@ProviderFor(appwriteAccountService)
-final appwriteAccountServiceProvider = AutoDisposeProvider<Account>.internal(
-  appwriteAccountService,
-  name: r'appwriteAccountServiceProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$appwriteAccountServiceHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef AppwriteAccountServiceRef = AutoDisposeProviderRef<Account>;
 String _$authRepoHash() => r'4cc8ad63596bc2e22c8a28b27c40c840bd94cffa';
 
 /// See also [authRepo].

@@ -19,8 +19,10 @@ class WeaponsBody extends ConsumerWidget {
     return Column(
       children: [
         WeaponTable(state: state, type: ComponentType.sidearm),
-        boxXL,
-        WeaponTable(state: state),
+        if (state.hasWeapons) ...[
+          boxXL,
+          WeaponTable(state: state),
+        ],
       ],
     );
   }

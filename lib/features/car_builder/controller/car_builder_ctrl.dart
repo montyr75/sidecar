@@ -6,6 +6,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../data/components.dart';
 import '../../../models/components.dart';
 import '../../../models/enums.dart';
+import '../../../models/form_models.dart';
 import '../../car_record_sheet/controller/car_state.dart';
 import 'car_builder_state.dart';
 
@@ -34,7 +35,11 @@ class CarBuilderCtrl extends _$CarBuilderCtrl {
     return initialValue;
   }
 
-  void onChassisChanged(CarChassisType value) {
+  void nameChanged(String value) {
+    state = state.copyWith(name: RequiredStringFormField.dirty(value));
+  }
+
+  void onChassisChanged(ChassisType value) {
     state = state.copyWith(chassis: value);
   }
 
@@ -99,5 +104,11 @@ class CarBuilderCtrl extends _$CarBuilderCtrl {
     );
 
     onDivisionChanged(state.division);
+  }
+
+  void saveBuild() {
+    if (state.isValid) {
+      // TODO: Save the build to the db.
+    }
   }
 }

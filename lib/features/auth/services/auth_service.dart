@@ -1,5 +1,4 @@
 import 'package:appwrite/models.dart';
-import 'package:quiver/core.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../app_config.dart';
@@ -46,7 +45,7 @@ class AuthService extends _$AuthService {
       log.info("AuthService::register() -- ACCOUNT CREATED: ${account.email}");
 
       state = state.copyWith(
-        account: Optional<Account?>.of(account),
+        account: account,
       );
 
       login(email: email, password: password);
@@ -90,11 +89,15 @@ class AuthService extends _$AuthService {
     ref.read(secureStorageRepoProvider).logout();
   }
 
-  void _login({required Session session, Account? account}) {
+  Future<void> _login({required Session session, Account? account}) async {
+    final savedBuilds = await ref.read(authRepoProvider).getSavedBuilds(session.userId);
+    log.info("AuthService::_login() -- $savedBuilds");
+
     state = state.copyWith(
       isLoading: false,
-      session: Optional<Session?>.of(session),
-      account: account != null ? Optional<Account?>.of(account) : null,
+      session: session,
+      account: account,
+      savedBuilds: savedBuilds,
     );
 
     ref.read(secureStorageRepoProvider).write(key: StorageKey.sessionId.toKey(), value: session.$id);

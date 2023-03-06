@@ -1,10 +1,10 @@
 import 'package:collection/collection.dart';
 
 import '../../../data/components.dart' as db;
-import '../../../models/car.dart';
 import '../../../models/components.dart';
 import '../../../models/damage_dice.dart';
 import '../../../models/enums.dart';
+import '../../../models/vehicle.dart';
 import '../../../utils/utils.dart';
 
 class CarState {
@@ -12,7 +12,7 @@ class CarState {
   static const defaultPowerPlant = 10;
   static const defaultTires = 10;
 
-  final Car car;
+  final Vehicle car;
   final List<InstalledComponent> components;
   final Map<Location, LocationState> locs;
   final List<Attribute> attributes;
@@ -34,7 +34,7 @@ class CarState {
     this.ace = 0,
   });
 
-  factory CarState.fromCar(Car car) {
+  factory CarState.fromCar(Vehicle car) {
     final List<InstalledComponent> comps = [];
     for (final loc in Location.values) {
       final locComps = car.locs[loc]?.map((key) => db.components[key]!) ?? const [];
@@ -80,7 +80,7 @@ class CarState {
   }
 
   CarState copyWith({
-    Car? car,
+    Vehicle? car,
     List<InstalledComponent>? components,
     Map<Location, LocationState>? locs,
     List<Attribute>? attributes,
@@ -238,6 +238,7 @@ class CarState {
   List<InstalledComponent> get structure => components.structure;
 
   bool get hasGear => gear.isNotEmpty;
+  bool get hasWeapons => weapons.isNotEmpty;
   bool get hasAccessories => accessories.isNotEmpty;
   bool get hasUpgrades => upgrades.isNotEmpty;
   bool get hasStructure => structure.isNotEmpty;
@@ -328,7 +329,7 @@ class LocationState {
     this.paint = false,
   });
 
-  factory LocationState.fromCar({required Location loc, required Car car, int bonusAP = 0}) {
+  factory LocationState.fromCar({required Location loc, required Vehicle car, int bonusAP = 0}) {
     return LocationState(
       loc: loc,
       armor: ArmorState.fromDivision(car.division, bonusAP: bonusAP),

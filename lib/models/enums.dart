@@ -94,7 +94,7 @@ enum Location {
   }
 }
 
-enum CarChassisType {
+enum ChassisType {
   custom(Source.custom),
   apollo(Source.set2),
   aristocrat(Source.set3),
@@ -131,7 +131,7 @@ enum CarChassisType {
 
   final Source source;
 
-  const CarChassisType(this.source);
+  const ChassisType(this.source);
 
   @override
   String toString() => ReCase(name).titleCase;

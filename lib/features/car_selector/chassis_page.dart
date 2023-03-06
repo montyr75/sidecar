@@ -74,7 +74,7 @@ class ChassisPage extends ConsumerWidget {
                                       }
                                     : () {
                                         ref.read(appServiceProvider.notifier)
-                                            .buildCar(CarBuilderState.fromCar(carDivisions[division]!.car));
+                                            .buildCar(CarBuilderState.fromVehicle(carDivisions[division]!.car));
                                         Navigator.of(context).pop();
                                       },
                                 child: Text(

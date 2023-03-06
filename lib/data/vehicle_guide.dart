@@ -1,15 +1,17 @@
-import '../models/car.dart';
 import '../models/car_chassis.dart';
 import '../models/enums.dart';
+import '../models/vehicle.dart';
 
-const Map<CarChassisType, CarChassis> cars = {
-  CarChassisType.apollo: CarChassis(
-    type: CarChassisType.apollo,
+const Map<ChassisType, CarChassis> vg = {
+  ChassisType.apollo: CarChassis(
+    type: ChassisType.apollo,
     description:
         "Apollo is tough and very effective in a crowd, where its fire weapons and the crew's grenades can wreak the most havoc.\n\nThe long wheelbase means it isn't the easiest car to drive, so most Apollo drivers cruise around the perimeter of the arena until there is an ideal opportunity to dive into the mix.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.apollo,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Apollo (Div. 4)",
+        chassis: ChassisType.apollo,
         division: 4,
         locs: {
           Location.crew: [
@@ -39,8 +41,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.apollo,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Apollo (Div. 8)",
+        chassis: ChassisType.apollo,
         division: 8,
         locs: {
           Location.crew: [
@@ -77,13 +81,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.aristocrat: CarChassis(
-    type: CarChassisType.aristocrat,
+  ChassisType.aristocrat: CarChassis(
+    type: ChassisType.aristocrat,
     description:
         "The Aristocrat is almost regal in design, despite the fact that it is bristling with a wide array of weapons.\n\nIts light defensive setup means it won't last long in a firefight if it doesn't get the upper hand quickly.\n\nIt is a rolling hornet's nest, encircling opponents with fire mines before ripping them to shreds.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.aristocrat,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Aristocrat (Div. 4)",
+        chassis: ChassisType.aristocrat,
         division: 4,
         locs: {
           Location.crew: [
@@ -115,8 +121,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.aristocrat,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Aristocrat (Div. 8)",
+        chassis: ChassisType.aristocrat,
         division: 8,
         locs: {
           Location.crew: [
@@ -152,13 +160,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.avalanche: CarChassis(
-    type: CarChassisType.avalanche,
+  ChassisType.avalanche: CarChassis(
+    type: ChassisType.avalanche,
     description:
         "The low-slung Avalanche is essentially a high-speed tank with a weapon loadout designed to maximize tire damage.\n\nHeavy armor, tire protection, and a roll bar help the crew shrug off most attacks as they patiently wait to bash through any opponents left limping around the arena.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.avalanche,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Avalanche (Div. 4)",
+        chassis: ChassisType.avalanche,
         division: 4,
         locs: {
           Location.crew: [
@@ -185,8 +195,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.avalanche,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Avalanche (Div. 8)",
+        chassis: ChassisType.avalanche,
         division: 8,
         locs: {
           Location.crew: [
@@ -219,13 +231,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.boomerang: CarChassis(
-    type: CarChassisType.boomerang,
+  ChassisType.boomerang: CarChassis(
+    type: ChassisType.boomerang,
     description:
         "The Boomerang's distinct profile is immediately recognizable.\n\nThe large rear tires seem like an obvious weak spot, but experienced duellists know to stay in the rear arc or risk an attack, even from great range.\n\nBoomerang is a favorite of many gunners as long as there is a talented driver at the controls.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.boomerang,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Boomerang (Div. 4)",
+        chassis: ChassisType.boomerang,
         division: 4,
         locs: {
           Location.crew: [
@@ -256,8 +270,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.boomerang,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Boomerang (Div. 8)",
+        chassis: ChassisType.boomerang,
         division: 8,
         locs: {
           Location.crew: [
@@ -292,13 +308,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.brimstone: CarChassis(
-    type: CarChassisType.brimstone,
+  ChassisType.brimstone: CarChassis(
+    type: ChassisType.brimstone,
     description:
         "Preferred by maniacs and daredevils, Brimstone is a scrapyard beast that pollutes the arena with oil slicks.\n\nDespite its ramshackle appearance, this raucous car is tough and can deal huge damage.\n\nThe unprotected tires seem to be an obvious weak spot, but good luck getting anywhere near them.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.brimstone,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Brimstone (Div. 4)",
+        chassis: ChassisType.brimstone,
         division: 4,
         locs: {
           Location.crew: [
@@ -327,8 +345,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.brimstone,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Brimstone (Div. 8)",
+        chassis: ChassisType.brimstone,
         division: 8,
         locs: {
           Location.crew: [
@@ -360,13 +380,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.butcher: CarChassis(
-    type: CarChassisType.butcher,
+  ChassisType.butcher: CarChassis(
+    type: ChassisType.butcher,
     description:
         "Butcher is a savage monster sitting atop a simple tractor, deadly and durable.\n\nIt is a vehicle for bombastic crew members that revel in total chaos.\n\nThe cabover design leaves the front of the vehicle somewhat exposed, but every other angle promises a grim death for opponents.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.butcher,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Butcher (Div. 4)",
+        chassis: ChassisType.butcher,
         division: 4,
         locs: {
           Location.crew: [
@@ -396,8 +418,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.butcher,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Butcher (Div. 8)",
+        chassis: ChassisType.butcher,
         division: 8,
         locs: {
           Location.crew: [
@@ -433,13 +457,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.conestoga: CarChassis(
-    type: CarChassisType.conestoga,
+  ChassisType.conestoga: CarChassis(
+    type: ChassisType.conestoga,
     description:
         "The Conestoga is very well equipped, but requires a talented crew due to the lack of driving aids and asymmetrical loadout.\n\nThe handling isn't great, but as long as the crew can keep control of the car, the Conestoga is dangerous from all angles and performs well in any duelling format.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.conestoga,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Conestoga (Div. 4)",
+        chassis: ChassisType.conestoga,
         division: 4,
         locs: {
           Location.crew: [
@@ -469,8 +495,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.conestoga,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Conestoga (Div. 8)",
+        chassis: ChassisType.conestoga,
         division: 8,
         locs: {
           Location.crew: [
@@ -502,13 +530,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.dragon: CarChassis(
-    type: CarChassisType.dragon,
+  ChassisType.dragon: CarChassis(
+    type: ChassisType.dragon,
     description:
         "The Dragon is a fire-breathing beast that has proven to be a reliable platform for many different styles of arena combat.\n\nIts bulky frame allows for a variety of structural upgrades, and the heavy forward-facing weapon mounts mean that anyone unfortunate enough to be caught in front of a Dragon is unlikely to survive for long.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.dragon,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Dragon (Div. 4)",
+        chassis: ChassisType.dragon,
         division: 4,
         locs: {
           Location.crew: [
@@ -535,8 +565,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.dragon,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Dragon (Div. 8)",
+        chassis: ChassisType.dragon,
         division: 8,
         locs: {
           Location.crew: [
@@ -572,13 +604,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.fuzion: CarChassis(
-    type: CarChassisType.fuzion,
+  ChassisType.fuzion: CarChassis(
+    type: ChassisType.fuzion,
     description:
         "Fuzion is quite maneuverable and outfitted with an autopilot system that keeps the driver focused while the gunner unleashes an assortment of rockets to send enemies careening out of control.\n\nWhile not heavily armored, it is sturdy enough to put up a good fight.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.fuzion,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Fuzion (Div. 4)",
+        chassis: ChassisType.fuzion,
         division: 4,
         locs: {
           Location.crew: [
@@ -606,8 +640,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.fuzion,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Fuzion (Div. 8)",
+        chassis: ChassisType.fuzion,
         division: 8,
         locs: {
           Location.crew: [
@@ -644,13 +680,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.goblin: CarChassis(
-    type: CarChassisType.goblin,
+  ChassisType.goblin: CarChassis(
+    type: ChassisType.goblin,
     description:
         "Originally a light-duty military vehicle, the stout Goblin is well armored and plays the long game, chipping away at an opponent until the time is right to go in for the kill.\n\nDespite the added armor weight, Goblin is easy to control and is a good all-round rig for any duellist.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.goblin,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Goblin (Div. 4)",
+        chassis: ChassisType.goblin,
         division: 4,
         locs: {
           Location.crew: [
@@ -685,8 +723,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.goblin,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Goblin (Div. 8)",
+        chassis: ChassisType.goblin,
         division: 8,
         locs: {
           Location.crew: [
@@ -724,13 +764,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.hades: CarChassis(
-    type: CarChassisType.hades,
+  ChassisType.hades: CarChassis(
+    type: ChassisType.hades,
     description:
         "A solid choice for any duellist, Hades is capable of accelerating unexpectedly fast and outfitted with a wide variety of weapons.\n\nIt carries enough mounted equipment to compensate for its relatively light armor, and when manned by an experienced crew, Hades can be a complex and overwhelming offensive force.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.hades,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Hades (Div. 4)",
+        chassis: ChassisType.hades,
         division: 4,
         locs: {
           Location.crew: [
@@ -758,8 +800,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.hades,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Hades (Div. 8)",
+        chassis: ChassisType.hades,
         division: 8,
         locs: {
           Location.crew: [
@@ -796,13 +840,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.hammer: CarChassis(
-    type: CarChassisType.hammer,
+  ChassisType.hammer: CarChassis(
+    type: ChassisType.hammer,
     description:
         "The Hammer has enough firepower to soften up opponents quite a bit before plowing through them for the finishing blow.\n\nIt trades heavy weapons for a thick outer hull, so it requires a patient crew to create an effective attack strategy.\n\nThe extra plating may hinder the handling a bit but a Hammer does not go down easily.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.hammer,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Hammer (Div. 4)",
+        chassis: ChassisType.hammer,
         division: 4,
         locs: {
           Location.crew: [
@@ -831,8 +877,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.hammer,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Hammer (Div. 8)",
+        chassis: ChassisType.hammer,
         division: 8,
         locs: {
           Location.crew: [
@@ -867,13 +915,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.hotshot: CarChassis(
-    type: CarChassisType.hotshot,
+  ChassisType.hotshot: CarChassis(
+    type: ChassisType.hotshot,
     description:
         "Hotshot is not particularly effective from long range, but once it closes the distance, it is equipped to slag even the toughest opponent.\n\nFavored by experienced duellists that aren't afraid to take a few knocks before incinerating everything in sight, combatants must either outgun a Hotshot...or outrun it.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.hotshot,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Hotshot (Div. 4)",
+        chassis: ChassisType.hotshot,
         division: 4,
         locs: {
           Location.crew: [
@@ -899,8 +949,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.hotshot,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Hotshot (Div. 8)",
+        chassis: ChassisType.hotshot,
         division: 8,
         locs: {
           Location.crew: [
@@ -930,13 +982,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.hydra: CarChassis(
-    type: CarChassisType.hydra,
+  ChassisType.hydra: CarChassis(
+    type: ChassisType.hydra,
     description:
         "The four tires hiding under Hydra's front fenders provide increased traction and improved airflow.\n\nThis, combined with the high-torque differential, make the car very easy to control at high speeds.\n\nThis control is necessary because Hydra is only moderately armed except for the giant cannon on the front, so positioning is crucial to keep opponents on the defensive.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.hydra,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Hydra (Div. 4)",
+        chassis: ChassisType.hydra,
         division: 4,
         locs: {
           Location.crew: [
@@ -964,8 +1018,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.hydra,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Hydra (Div. 8)",
+        chassis: ChassisType.hydra,
         division: 8,
         locs: {
           Location.crew: [
@@ -999,13 +1055,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.jackal: CarChassis(
-    type: CarChassisType.jackal,
+  ChassisType.jackal: CarChassis(
+    type: ChassisType.jackal,
     description:
         "A Jackal driver must be at once skittish, clever, and resourceful.\n\nThe small unibody design of the car makes it a small target, but only the front end carries any substantial plating.\n\nAs a result, Jackal performs best by charging directly at an opponent, attacking, then darting away before it gets into too much trouble.\n\nThe solid tires allow for high getaway speeds even after taking significant damage.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.jackal,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Jackal (Div. 4)",
+        chassis: ChassisType.jackal,
         division: 4,
         locs: {
           Location.crew: [
@@ -1039,8 +1097,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.jackal,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Jackal (Div. 8)",
+        chassis: ChassisType.jackal,
         division: 8,
         locs: {
           Location.crew: [
@@ -1078,13 +1138,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.jackrabbit: CarChassis(
-    type: CarChassisType.jackrabbit,
+  ChassisType.jackrabbit: CarChassis(
+    type: ChassisType.jackrabbit,
     description:
         "Packing an enormous punch into a compact and well-armored package, the Jackrabbit is particularly resilient in most duelling formats.\n\nOriginally designed using scrap parts, the Jackrabbit carries more diverse weaponry than many larger vehicles, and it can be fitted with significantly heavier plating than other vehicles of comparable size.\n\nThe Jackrabbit is most effective in close-quarters combat.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.jackrabbit,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Jackrabbit (Div. 4)",
+        chassis: ChassisType.jackrabbit,
         division: 4,
         locs: {
           Location.crew: [
@@ -1111,8 +1173,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.jackrabbit,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Jackrabbit (Div. 8)",
+        chassis: ChassisType.jackrabbit,
         division: 8,
         locs: {
           Location.crew: [
@@ -1148,13 +1212,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.josephSpecial: CarChassis(
-    type: CarChassisType.josephSpecial,
+  ChassisType.josephSpecial: CarChassis(
+    type: ChassisType.josephSpecial,
     description:
         "Well equipped and designed to hit extremely hard, the Joseph Special is an offensive powerhouse that demands an experienced crew.\n\nOpponents are advised to steer clear of the front arc, but nowhere is safe — watch for rocket attacks and mines when chasing behind it.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.josephSpecial,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Joseph Special (Div. 4)",
+        chassis: ChassisType.josephSpecial,
         division: 4,
         locs: {
           Location.crew: [
@@ -1181,8 +1247,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.josephSpecial,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Joseph Special (Div. 8)",
+        chassis: ChassisType.josephSpecial,
         division: 8,
         locs: {
           Location.crew: [
@@ -1212,13 +1280,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.kodiak: CarChassis(
-    type: CarChassisType.kodiak,
+  ChassisType.kodiak: CarChassis(
+    type: ChassisType.kodiak,
     description:
         "Kodiak's concealed weapons remain a mystery until an opponent overcommits and Kodiak lets loose.\n\nThe thick plating, wheel protection, and smoke emitter make the lumbering Kodiak extremely difficult to destroy even before considering the massive machine gun, melee weapons, and whatever is hiding beneath the plating.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.kodiak,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Kodiak (Div. 4)",
+        chassis: ChassisType.kodiak,
         division: 4,
         locs: {
           Location.crew: [
@@ -1248,8 +1318,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.kodiak,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Kodiak (Div. 8)",
+        chassis: ChassisType.kodiak,
         division: 8,
         locs: {
           Location.crew: [
@@ -1283,13 +1355,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.pillbug: CarChassis(
-    type: CarChassisType.pillbug,
+  ChassisType.pillbug: CarChassis(
+    type: ChassisType.pillbug,
     description:
         "The Pillbug is a rolling fortress, heavily armored but only moderately armed.\n\nThe extra defense results in mediocre handling, but the heavy plating, wheel hubs, and shielded power plant keep it in the fight, rolling for much longer than most.\n\nThe crew has plenty of time to tear their opponents to bits.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.pillbug,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Pillbug (Div. 4)",
+        chassis: ChassisType.pillbug,
         division: 4,
         locs: {
           Location.crew: [
@@ -1318,8 +1392,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.pillbug,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Pillbug (Div. 8)",
+        chassis: ChassisType.pillbug,
         division: 8,
         locs: {
           Location.crew: [
@@ -1353,13 +1429,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.pureEnergy: CarChassis(
-    type: CarChassisType.pureEnergy,
+  ChassisType.pureEnergy: CarChassis(
+    type: ChassisType.pureEnergy,
     description:
         "Outfitted with an array of high-energy laser weapons, improved handling, and a reactive defense system, Pure Energy prefers to snipe at foes from long range, rather than charging into the fender-to-fender combat.\n\nIt is nimble and fairly durable, but its lasers are easily destroyed by a persistent opponent.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.pureEnergy,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Pure Energy (Div. 4)",
+        chassis: ChassisType.pureEnergy,
         division: 4,
         locs: {
           Location.crew: [
@@ -1385,8 +1463,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.pureEnergy,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Pure Energy (Div. 8)",
+        chassis: ChassisType.pureEnergy,
         division: 8,
         locs: {
           Location.crew: [
@@ -1422,13 +1502,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.redline: CarChassis(
-    type: CarChassisType.redline,
+  ChassisType.redline: CarChassis(
+    type: ChassisType.redline,
     description:
         "Lightly armored, but sprightly and fast, Redline is a tricky vehicle to master.\n\nThe front and back are quite dangerous, but the sides are somewhat exposed.\n\nRedline darts in and out of the fray, but it won't last long in close-quarter combat, as its armor was sacrificed in exchange for substantially improved handling.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.redline,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Redline (Div. 4)",
+        chassis: ChassisType.redline,
         division: 4,
         locs: {
           Location.crew: [
@@ -1455,8 +1537,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.redline,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Redline (Div. 8)",
+        chassis: ChassisType.redline,
         division: 8,
         locs: {
           Location.crew: [
@@ -1495,13 +1579,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.sawtooth: CarChassis(
-    type: CarChassisType.sawtooth,
+  ChassisType.sawtooth: CarChassis(
+    type: ChassisType.sawtooth,
     description:
         "Sawtooth is fast, brutal, and crewed by absolute maniacs.\n\nBuilt on the frame of a small luxury coupe, it's exceptionally nimble and isn't concerned with tire damage.\n\nAn unpredictable clsoe-quarters nightmare, Sawtooth rams into other cars and jabs its Bonesaw right into the open wound.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.sawtooth,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Sawtooth (Div. 4)",
+        chassis: ChassisType.sawtooth,
         division: 4,
         locs: {
           Location.crew: [
@@ -1530,8 +1616,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.sawtooth,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Sawtooth (Div. 8)",
+        chassis: ChassisType.sawtooth,
         division: 8,
         locs: {
           Location.crew: [
@@ -1566,13 +1654,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.scarab: CarChassis(
-    type: CarChassisType.scarab,
+  ChassisType.scarab: CarChassis(
+    type: ChassisType.scarab,
     description:
         "Lightweight and maneuverable, with high visibility offered by the canopy design, the Scarab is versatile and deadly, especially when equipped with weapon concealment systems.\n\nThe lack of rear weaponry leaves it vulnerable to attacks from behind, but it can be easily modified to add a mine dropper.\n\nThis is a great choice for beginners and experienced duellists alike.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.scarab,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Scarab (Div. 4)",
+        chassis: ChassisType.scarab,
         division: 4,
         locs: {
           Location.crew: [
@@ -1600,8 +1690,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.scarab,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Scarab (Div. 8)",
+        chassis: ChassisType.scarab,
         division: 8,
         locs: {
           Location.crew: [
@@ -1637,13 +1729,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.scimitar: CarChassis(
-    type: CarChassisType.scimitar,
+  ChassisType.scimitar: CarChassis(
+    type: ChassisType.scimitar,
     description:
         "The Scimitar is an all-purpose design that can adapted to many different arena settings, from drifting on pavement to rock crawling.\n\nDurable, modular, and sporting respectable armor for most engagements, the Scimitar is a well-rounded workhorse that holds its own at any range, balancing large shock weapons, lasers, and tire-shredding weaponry.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.scimitar,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Scimitar (Div. 4)",
+        chassis: ChassisType.scimitar,
         division: 4,
         locs: {
           Location.crew: [
@@ -1671,8 +1765,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.scimitar,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Scimitar (Div. 8)",
+        chassis: ChassisType.scimitar,
         division: 8,
         locs: {
           Location.crew: [
@@ -1701,13 +1797,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.shuriken: CarChassis(
-    type: CarChassisType.shuriken,
+  ChassisType.shuriken: CarChassis(
+    type: ChassisType.shuriken,
     description:
         "With excellent handling, a strengthened outer shell, and heavy firepower, the Shuriken is a frequent arena contender that strikes a careful balance between offense, defense, and driving performance.\n\nThis car has a complete lack of front weaponry, so an effective offense requires precision driving.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.shuriken,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Shuriken (Div. 4)",
+        chassis: ChassisType.shuriken,
         division: 4,
         locs: {
           Location.crew: [
@@ -1735,8 +1833,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.shuriken,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Shuriken (Div. 8)",
+        chassis: ChassisType.shuriken,
         division: 8,
         locs: {
           Location.crew: [
@@ -1771,13 +1871,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.sledge: CarChassis(
-    type: CarChassisType.sledge,
+  ChassisType.sledge: CarChassis(
+    type: ChassisType.sledge,
     description:
         "Sledge is a titan on the battlefield, intimidating and mean.\n\nPart mobile weapons platform, part bulldozer, it unleashes a barrage of rockets and then fearlessly plunges into the thick of the smoke.\n\nSledge is built to deal a ton of damage quickly and then take its time picking apart the limping survivors.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.sledge,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Sledge (Div. 4)",
+        chassis: ChassisType.sledge,
         division: 4,
         locs: {
           Location.crew: [
@@ -1807,8 +1909,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.sledge,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Sledge (Div. 8)",
+        chassis: ChassisType.sledge,
         division: 8,
         locs: {
           Location.crew: [
@@ -1844,13 +1948,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.slipstream: CarChassis(
-    type: CarChassisType.slipstream,
+  ChassisType.slipstream: CarChassis(
+    type: ChassisType.slipstream,
     description:
         "As the name implies, Slipstream is sleek, fast, and agile.\n\nWhile not heavily armored, it is particularly capable of mitigating tire damage.\n\nExcellent maneuverability and reliable slug weapons allow Slipstream to dart around the arena as it overwhelms the defensive weaknesses of any opponent.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.slipstream,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Slipstream (Div. 4)",
+        chassis: ChassisType.slipstream,
         division: 4,
         locs: {
           Location.crew: [
@@ -1879,8 +1985,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.slipstream,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Slipstream (Div. 8)",
+        chassis: ChassisType.slipstream,
         division: 8,
         locs: {
           Location.crew: [
@@ -1915,13 +2023,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.spark: CarChassis(
-    type: CarChassisType.spark,
+  ChassisType.spark: CarChassis(
+    type: ChassisType.spark,
     description:
         "Spark's design was heavily influenced by old stealth aircraft.\n\nIts front weapons are lethal, so don't get caught by surprise.\n\nUnfortunately, the front is also the most vulnerable spot to attack.\n\nHeavily armed and armored, Spark is a technological marvel that can easily accommodate live crew members or complex AI systems.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.spark,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Spark (Div. 4)",
+        chassis: ChassisType.spark,
         division: 4,
         locs: {
           Location.crew: [
@@ -1948,8 +2058,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.spark,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Spark (Div. 8)",
+        chassis: ChassisType.spark,
         division: 8,
         locs: {
           Location.crew: [
@@ -1983,13 +2095,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.stiletto: CarChassis(
-    type: CarChassisType.stiletto,
+  ChassisType.stiletto: CarChassis(
+    type: ChassisType.stiletto,
     description:
         "The tight-handling and devious Stiletto relies on speed and maneuverability to bolster its defense.\n\nIt wields huge shock weapons that inflict massive damage, but can be quite fragile.\n\nIts smokescreens create confusion in the battlefield and provide Stiletto with cover for strategic targeting or quick getaways.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.stiletto,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Stiletto (Div. 4)",
+        chassis: ChassisType.stiletto,
         division: 4,
         locs: {
           Location.crew: [
@@ -2015,8 +2129,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.stiletto,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Stiletto (Div. 8)",
+        chassis: ChassisType.stiletto,
         division: 8,
         locs: {
           Location.crew: [
@@ -2051,13 +2167,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.superflash: CarChassis(
-    type: CarChassisType.superflash,
+  ChassisType.superflash: CarChassis(
+    type: ChassisType.superflash,
     description:
         "Superflash relies on an electromagnetic distortion field and smokescreens to minimize counterattacks while making long-range, precision attacks.\n\nIt can carry fewer weapons than most other vehicles because its thick skin keeps everything safe and functioning for much longer than usual, even under heavy fire.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.superflash,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Superflash (Div. 4)",
+        chassis: ChassisType.superflash,
         division: 4,
         locs: {
           Location.crew: [
@@ -2085,8 +2203,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.superflash,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Superflash (Div. 8)",
+        chassis: ChassisType.superflash,
         division: 8,
         locs: {
           Location.crew: [
@@ -2120,13 +2240,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.typhoon: CarChassis(
-    type: CarChassisType.typhoon,
+  ChassisType.typhoon: CarChassis(
+    type: ChassisType.typhoon,
     description:
         "Typhoon is the definition of a \"glass cannon.\"\n\nIt packs a big enough punch to tear through even the most armored foe, but relies on fancy driving to keep it safe from attack.\n\nWith that in mind, it is well equipped to maintain control during extreme maneuvers, and only a handful of well-placed shots are needed to ensure a win.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.typhoon,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Typhoon (Div. 4)",
+        chassis: ChassisType.typhoon,
         division: 4,
         locs: {
           Location.crew: [
@@ -2156,8 +2278,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.typhoon,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Typhoon (Div. 8)",
+        chassis: ChassisType.typhoon,
         division: 8,
         locs: {
           Location.crew: [
@@ -2188,13 +2312,15 @@ const Map<CarChassisType, CarChassis> cars = {
       ),
     },
   ),
-  CarChassisType.warhawk: CarChassis(
-    type: CarChassisType.warhawk,
+  ChassisType.warhawk: CarChassis(
+    type: ChassisType.warhawk,
     description:
         "Built for ramming and loaded with concussion mines, the heavily-armored Warhawk is a formidable opponent.\n\nThe machine gun turret on the roof means there is no safe place for opponents to hide.\n\nIts weakest point is the rear armor, but the mine droppers make it exceptionally difficult for anyone to chase a Warhawk for too long.",
     divisions: {
-      4: Car(
-        chassis: CarChassisType.warhawk,
+      4: Vehicle(
+        version: "0.0.1",
+        name: "Warhawk (Div. 4)",
+        chassis: ChassisType.warhawk,
         division: 4,
         locs: {
           Location.crew: [
@@ -2227,8 +2353,10 @@ const Map<CarChassisType, CarChassis> cars = {
           ],
         },
       ),
-      8: Car(
-        chassis: CarChassisType.warhawk,
+      8: Vehicle(
+        version: "0.0.1",
+        name: "Warhawk (Div. 8)",
+        chassis: ChassisType.warhawk,
         division: 8,
         locs: {
           Location.crew: [

@@ -113,7 +113,7 @@ class _CarRecordSheetPageState extends ConsumerState<CarRecordSheetPage> {
         title: Padding(
           padding: const EdgeInsets.only(right: 60.0),
           child: Text(
-            widget.initialState.name,
+            widget.initialState.car.name,
             style: const TextStyle(
               fontSize: 22,
               fontFamily: 'Blazed',

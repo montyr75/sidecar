@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../data/cars.dart';
 import '../../data/components.dart' as db;
+import '../../data/vehicle_guide.dart';
 import '../../models/components.dart';
 import '../../models/enums.dart';
+import '../../models/form_models.dart';
 import '../../routes.dart';
 import '../../services/app/app_service.dart';
 import '../../utils/screen_utils.dart';
@@ -45,8 +46,8 @@ class CarBuilderPage extends ConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(right: med),
             child: TextButton(
-              onPressed: state.canDrive ? () {
-                ref.read(appServiceProvider.notifier).driveCar(CarState.fromCar(state.toCar()));
+              onPressed: state.isValid ? () {
+                ref.read(appServiceProvider.notifier).driveCar(CarState.fromCar(state.toVehicle()));
                 context.goNamed(AppRoute.carRecordSheet.name);
               } : null,
               child: const Text(
@@ -76,6 +77,14 @@ class CarBuilderPage extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(
+                      width: 350,
+                      child: _NameInput(
+                        field: state.name,
+                        onChanged: (value) => ctrl.nameChanged(value),
+                      ),
+                    ),
+                    boxXXL,
                     _PointBar(state: state),
                     boxXXL,
                     Row(
@@ -89,7 +98,7 @@ class CarBuilderPage extends ConsumerWidget {
                             children: [
                               const Text("Chassis", style: labelStyle),
                               boxS,
-                              DropdownButtonFormField<CarChassisType>(
+                              DropdownButtonFormField<ChassisType>(
                                 value: state.chassis,
                                 onChanged: (value) => ctrl.onChassisChanged(value!),
                                 decoration: InputDecoration(
@@ -100,8 +109,8 @@ class CarBuilderPage extends ConsumerWidget {
                                   ),
                                   filled: false,
                                 ),
-                                items: CarChassisType.values.map<DropdownMenuItem<CarChassisType>>((value) {
-                                  return DropdownMenuItem<CarChassisType>(
+                                items: ChassisType.values.map<DropdownMenuItem<ChassisType>>((value) {
+                                  return DropdownMenuItem<ChassisType>(
                                     value: value,
                                     child: SizedBox(
                                       width: 175,
@@ -154,11 +163,11 @@ class CarBuilderPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    if (state.chassis != CarChassisType.custom) ...[
+                    if (state.chassis != ChassisType.custom) ...[
                       boxM,
                       TextButton(
                         onPressed: () =>
-                            showChassisPage(context, mode: CarSelectorMode.build, chassis: cars[state.chassis]!),
+                            showChassisPage(context, mode: CarSelectorMode.build, chassis: vg[state.chassis]!),
                         child: Text("Load ${state.chassis.toString()}"),
                       ),
                     ],
@@ -525,5 +534,33 @@ class LocationComps extends ConsumerWidget {
         data: component,
       );
     }).toList();
+  }
+}
+
+class _NameInput extends StatelessWidget {
+  static const inputName = "Name";
+
+  final RequiredStringFormField field;
+  final ValueChanged<String> onChanged;
+
+  const _NameInput({Key? key, required this.field, required this.onChanged}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      key: const Key('cb_${inputName}_textField'),
+      initialValue: field.value,
+      autofocus: true,
+      onChanged: onChanged,
+      // onChanged: (value) => ref.read(carBuilderCtrlProvider.notifier).usernameChanged(value),
+      keyboardType: TextInputType.name,
+      enableSuggestions: false,
+      autocorrect: false,
+      decoration: InputDecoration(
+        labelText: inputName,
+        errorText: field.invalid ? field.error!.errorMsg : null,
+        isDense: true,
+      ),
+    );
   }
 }

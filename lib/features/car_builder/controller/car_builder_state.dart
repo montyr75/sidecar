@@ -1,7 +1,9 @@
+import '../../../app_config.dart';
 import '../../../data/components.dart' as db;
-import '../../../models/car.dart';
 import '../../../models/components.dart';
 import '../../../models/enums.dart';
+import '../../../models/form_models.dart';
+import '../../../models/vehicle.dart';
 import '../../../utils/utils.dart';
 import '../../car_record_sheet/controller/car_state.dart';
 
@@ -12,7 +14,9 @@ class CarBuilderState {
   final int bp;
   final int cp;
 
-  final CarChassisType chassis;
+  final RequiredStringFormField name;
+
+  final ChassisType chassis;
   final int division;
   final List<InstalledComponent> components;
 
@@ -23,26 +27,28 @@ class CarBuilderState {
     this.ap = defaultDivision,
     this.bp = defaultDivision * 4,
     this.cp = defaultDivision,
-    this.chassis = CarChassisType.custom,
+    this.name = const RequiredStringFormField.pure(),
+    this.chassis = ChassisType.custom,
     this.division = defaultDivision,
     this.components = const [],
     this.restrictions = const [],
     this.attributes = const [],
   });
 
-  factory CarBuilderState.fromCar(Car car) {
+  factory CarBuilderState.fromVehicle(Vehicle vehicle) {
     final List<InstalledComponent> comps = [];
     for (final loc in Location.values) {
-      final locComps = car.locs[loc]?.map((key) => db.components[key]!) ?? const [];
+      final locComps = vehicle.locs[loc]?.map((key) => db.components[key]!) ?? const [];
       comps.addAll(createInstalledComponents(locComps, loc));
     }
 
     return CarBuilderState(
-      ap: car.division,
-      bp: car.division * 4,
-      cp: car.division,
-      chassis: car.chassis,
-      division: car.division,
+      ap: vehicle.division,
+      bp: vehicle.division * 4,
+      cp: vehicle.division,
+      name: RequiredStringFormField.pure(vehicle.name),
+      chassis: vehicle.chassis,
+      division: vehicle.division,
       components: List<InstalledComponent>.unmodifiable(comps),
       restrictions: comps.allRestrictions,
       attributes: comps.allAttributes,
@@ -53,7 +59,8 @@ class CarBuilderState {
     int? ap,
     int? bp,
     int? cp,
-    CarChassisType? chassis,
+    RequiredStringFormField? name,
+    ChassisType? chassis,
     int? division,
     List<InstalledComponent>? components,
     List<Restriction>? restrictions,
@@ -63,6 +70,7 @@ class CarBuilderState {
       ap: ap ?? this.ap,
       bp: bp ?? this.bp,
       cp: cp ?? this.cp,
+      name: name ?? this.name,
       chassis: chassis ?? this.chassis,
       division: division ?? this.division,
       components: components ?? this.components,
@@ -98,8 +106,9 @@ class CarBuilderState {
 
   bool hasComponentBySubtype(ComponentSubtype subtype) => components.any((value) => value.subtype == subtype);
 
-  bool get canDrive {
+  bool get isValid {
     return [
+      name.valid,
       hasDriver,
       hasGunner,
       bpSpent <= bp,
@@ -107,7 +116,7 @@ class CarBuilderState {
     ].allTrue;
   }
 
-  Car toCar() {
+  Vehicle toVehicle() {
     final crew = components.allCrewComponents.map((value) => value.component.toKey()).toList();
     final front = components.getCarCompsByLoc(Location.front).map((value) => value.component.toKey()).toList();
     final left = components.getCarCompsByLoc(Location.left).map((value) => value.component.toKey()).toList();
@@ -116,7 +125,9 @@ class CarBuilderState {
     final turret = components.getCompsByAttr(Attribute.turret).map((value) => value.component.toKey()).toList();
     final upgrade = components.upgrades.map((value) => value.component.toKey()).toList();
 
-    return Car(
+    return Vehicle(
+      version: version,
+      name: name.value.trim(),
       chassis: chassis,
       division: division,
       locs: {
