@@ -69,11 +69,13 @@ class HomePage extends ConsumerWidget {
             children: [
               HomeNavButton(
                 label: "Vehicle Guide",
+                desc: "Browse prebuilt vehicles",
                 onPressed: () => context.goNamed(AppRoute.chassisSelector.name),
               ),
               boxXXL,
               HomeNavButton(
-                label: "Car Builder",
+                label: "Chop Shop",
+                desc: "Build/Modify vehicles",
                 onPressed: () => context.goNamed(AppRoute.carBuilder.name),
               ),
             ],
@@ -86,42 +88,50 @@ class HomePage extends ConsumerWidget {
 
 class HomeNavButton extends StatelessWidget {
   final String label;
+  final String desc;
   final VoidCallback onPressed;
 
-  const HomeNavButton({Key? key, required this.label, required this.onPressed}) : super(key: key);
+  const HomeNavButton({Key? key, required this.label, required this.desc, required this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200,
+      width: 250,
       height: 100,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.black54,
+          backgroundColor: Colors.black87,
           side: const BorderSide(width: 2, color: Colors.white30),
           shape: const BeveledRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(med))),
         ),
         onPressed: onPressed,
-        child: Container(
-          padding: paddingAllXL,
-          decoration: BoxDecoration(
-            gradient: const LinearGradient(
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-              colors: [
-                Colors.white38,
-                Colors.black45,
-                Colors.black,
-                Colors.black45,
-                Colors.white38,
-              ],
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              padding: paddingAllXL,
+              decoration: BoxDecoration(
+                gradient: const LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: [
+                    Colors.white38,
+                    Colors.black45,
+                    Colors.black,
+                    Colors.black45,
+                    Colors.white38,
+                  ],
+                ),
+                borderRadius: radiusM,
+              ),
+              child: Text(
+                label,
+                style: const TextStyle(fontFamily: 'Audiowide', color: Colors.white),
+              ),
             ),
-            borderRadius: radiusM,
-          ),
-          child: Text(
-            label,
-            style: const TextStyle(fontFamily: 'Audiowide', color: Colors.white),
-          ),
+            boxL,
+            Text(desc, style: const TextStyle(color: Colors.white70)),
+          ],
         ),
       ),
     );

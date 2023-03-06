@@ -3,7 +3,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../data/components.dart' as db;
-import '../../data/vehicle_guide.dart';
 import '../../models/components.dart';
 import '../../models/enums.dart';
 import '../../models/form_models.dart';
@@ -14,10 +13,10 @@ import '../../utils/utils.dart';
 import '../../widgets/component_display.dart';
 import '../../widgets/panel_list.dart';
 import '../car_record_sheet/controller/car_state.dart';
-import '../car_selector/chassis_page.dart';
-import '../car_selector/chassis_selector_page.dart';
-import 'controller/car_builder_ctrl.dart';
-import 'controller/car_builder_state.dart';
+import '../vehicle_guide/chassis_page.dart';
+import '../vehicle_guide/chassis_selector_page.dart';
+import 'controllers/car_builder_ctrl.dart';
+import 'controllers/car_builder_state.dart';
 import 'widgets/component_selector.dart';
 
 final divisions = List<int>.generate(12, (i) => i + 1);
@@ -98,7 +97,7 @@ class CarBuilderPage extends ConsumerWidget {
                             children: [
                               const Text("Chassis", style: labelStyle),
                               boxS,
-                              DropdownButtonFormField<ChassisType>(
+                              DropdownButtonFormField<Chassis>(
                                 value: state.chassis,
                                 onChanged: (value) => ctrl.onChassisChanged(value!),
                                 decoration: InputDecoration(
@@ -109,8 +108,8 @@ class CarBuilderPage extends ConsumerWidget {
                                   ),
                                   filled: false,
                                 ),
-                                items: ChassisType.values.map<DropdownMenuItem<ChassisType>>((value) {
-                                  return DropdownMenuItem<ChassisType>(
+                                items: Chassis.values.map<DropdownMenuItem<Chassis>>((value) {
+                                  return DropdownMenuItem<Chassis>(
                                     value: value,
                                     child: SizedBox(
                                       width: 175,
@@ -163,11 +162,11 @@ class CarBuilderPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    if (state.chassis != ChassisType.custom) ...[
+                    if (state.chassis != Chassis.custom) ...[
                       boxM,
                       TextButton(
                         onPressed: () =>
-                            showChassisPage(context, mode: CarSelectorMode.build, chassis: vg[state.chassis]!),
+                            showChassisPage(context: context, mode: CarSelectorMode.build, chassis: state.chassis),
                         child: Text("Load ${state.chassis.toString()}"),
                       ),
                     ],

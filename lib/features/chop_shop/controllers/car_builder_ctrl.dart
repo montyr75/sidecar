@@ -39,7 +39,7 @@ class CarBuilderCtrl extends _$CarBuilderCtrl {
     state = state.copyWith(name: RequiredStringFormField.dirty(value));
   }
 
-  void onChassisChanged(ChassisType value) {
+  void onChassisChanged(Chassis value) {
     state = state.copyWith(chassis: value);
   }
 

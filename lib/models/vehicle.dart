@@ -9,7 +9,7 @@ class Vehicle {
   final String version;
   final String name;
   final VehicleType vehicleType;
-  final ChassisType chassis;
+  final Chassis chassis;
   final int division;
   final Map<Location, List<String>> locs;
 

@@ -16,7 +16,7 @@ class CarBuilderState {
 
   final RequiredStringFormField name;
 
-  final ChassisType chassis;
+  final Chassis chassis;
   final int division;
   final List<InstalledComponent> components;
 
@@ -28,7 +28,7 @@ class CarBuilderState {
     this.bp = defaultDivision * 4,
     this.cp = defaultDivision,
     this.name = const RequiredStringFormField.pure(),
-    this.chassis = ChassisType.custom,
+    this.chassis = Chassis.custom,
     this.division = defaultDivision,
     this.components = const [],
     this.restrictions = const [],
@@ -60,7 +60,7 @@ class CarBuilderState {
     int? bp,
     int? cp,
     RequiredStringFormField? name,
-    ChassisType? chassis,
+    Chassis? chassis,
     int? division,
     List<InstalledComponent>? components,
     List<Restriction>? restrictions,
