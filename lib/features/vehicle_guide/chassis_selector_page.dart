@@ -62,7 +62,7 @@ class ChassisTile extends StatelessWidget {
 void showChassisPage({
   required BuildContext context,
   required Chassis chassis,
-  CarSelectorMode mode = CarSelectorMode.drive,
+  SelectorMode mode = SelectorMode.drive,
 }) {
   final carStates = vg.getByChassis(chassis).map((value) => CarState.fromCar(value)).toList();
 

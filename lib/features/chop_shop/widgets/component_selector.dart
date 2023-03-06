@@ -8,7 +8,7 @@ import '../../../utils/screen_utils.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/component_display.dart';
 import '../../../widgets/panel_list.dart';
-import '../controllers/car_builder_ctrl.dart';
+import '../controllers/car_builder/car_builder_ctrl.dart';
 
 class ComponentSelector extends ConsumerStatefulWidget {
   final Location loc;

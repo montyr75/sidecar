@@ -9,9 +9,9 @@ import '../../services/app/app_service.dart';
 import '../../utils/screen_utils.dart';
 import '../../widgets/vehicle_browser.dart';
 import '../car_record_sheet/controller/car_state.dart';
-import '../chop_shop/controllers/car_builder_state.dart';
+import '../chop_shop/controllers/car_builder/car_builder_state.dart';
 
-enum CarSelectorMode {
+enum SelectorMode {
   drive,
   build;
 
@@ -20,13 +20,13 @@ enum CarSelectorMode {
 }
 
 class ChassisPage extends ConsumerWidget {
-  final CarSelectorMode mode;
+  final SelectorMode mode;
   final Chassis chassis;
   final List<CarState> vehicles;
 
   const ChassisPage({
     Key? key,
-    this.mode = CarSelectorMode.drive,
+    this.mode = SelectorMode.drive,
     required this.chassis,
     required this.vehicles,
   }) : super(key: key);
@@ -57,7 +57,7 @@ class ChassisPage extends ConsumerWidget {
                   VehicleBrowser(
                     vehicles: vehicles,
                     selectionText: mode.toString(),
-                    onSelected: mode == CarSelectorMode.drive
+                    onSelected: mode == SelectorMode.drive
                         ? (carState) {
                             ref.read(appServiceProvider.notifier).driveCar(carState);
                             context.goNamed(AppRoute.carRecordSheet.name);

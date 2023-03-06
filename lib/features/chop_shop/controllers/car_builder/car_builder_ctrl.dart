@@ -3,12 +3,12 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../data/components.dart';
-import '../../../models/components.dart';
-import '../../../models/enums.dart';
-import '../../../models/form_models.dart';
-import '../../car_record_sheet/controller/car_state.dart';
-import 'car_builder_state.dart';
+import '../../../../data/components.dart';
+import '../../../../models/components.dart';
+import '../../../../models/enums.dart';
+import '../../../../models/form_models.dart';
+import '../../../car_record_sheet/controller/car_state.dart';
+import '../car_builder/car_builder_state.dart';
 
 part 'car_builder_ctrl.g.dart';
 

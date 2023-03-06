@@ -90,14 +90,10 @@ class AuthService extends _$AuthService {
   }
 
   Future<void> _login({required Session session, Account? account}) async {
-    final savedBuilds = await ref.read(authRepoProvider).getSavedBuilds(session.userId);
-    log.info("AuthService::_login() -- $savedBuilds");
-
     state = state.copyWith(
       isLoading: false,
       session: session,
       account: account,
-      savedBuilds: savedBuilds,
     );
 
     ref.read(secureStorageRepoProvider).write(key: StorageKey.sessionId.toKey(), value: session.$id);

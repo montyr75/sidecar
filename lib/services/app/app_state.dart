@@ -1,5 +1,5 @@
 import '../../features/car_record_sheet/controller/car_state.dart';
-import '../../features/chop_shop/controllers/car_builder_state.dart';
+import '../../features/chop_shop/controllers/car_builder/car_builder_state.dart';
 
 class AppState {
   final CarState? initialCarState;

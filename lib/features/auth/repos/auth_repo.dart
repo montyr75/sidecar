@@ -1,12 +1,8 @@
-import 'dart:convert';
-
 import 'package:appwrite/appwrite.dart';
 import 'package:appwrite/models.dart' as models;
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../app_config.dart';
 import '../../../db/appwrite.dart';
-import '../../../db/models/saved_builds.dart';
 import '../../../services/error/error_service.dart';
 
 part 'auth_repo.g.dart';
@@ -18,21 +14,17 @@ AuthRepo authRepo(AuthRepoRef ref) {
   return AuthRepo(
     ref: ref,
     accountService: ref.watch(appwriteAccountServiceProvider),
-    db: ref.watch(appWriteDbProvider),
   );
 }
 
 class AuthRepo {
   final AuthRepoRef ref;
   final Account _accountService;
-  final Databases _db;
 
   const AuthRepo({
     required this.ref,
     required Account accountService,
-    required Databases db,
-  })  : _accountService = accountService,
-        _db = db;
+  })  : _accountService = accountService;
 
   Future<models.Account?> register({required String username, required String email, required String password}) async {
     try {
@@ -78,29 +70,6 @@ class AuthRepo {
     }
   }
 
-  Future<SavedBuilds?> getSavedBuilds(String uid) async {
-    try {
-      final doc = await _db.getDocument(
-        databaseId: dbID,
-        collectionId: savedBuildsCollectionID,
-        documentId: uid,
-      );
-
-      return SavedBuilds.fromData(
-          (doc.data['builds'] as List<String>).map<Map<String, dynamic>>((value) => jsonDecode(value)).toList());
-    } on AppwriteException catch (e, st) {
-      if (e.type == "document_not_found") {
-        return const SavedBuilds();
-      }
-
-      _handleError(e, st);
-      return null;
-    } catch (e, st) {
-      _handleError(e, st);
-      return null;
-    }
-  }
-
   Future logout(String sessionId) async {
     try {
       return _accountService.deleteSession(sessionId: sessionId);
@@ -116,8 +85,6 @@ class AuthRepo {
     final errorService = ref.read(errorServiceProvider.notifier);
 
     if (e is AppwriteException) {
-      log.info("AuthRepo::_handleError() -- ${e.type}");
-
       String? message;
 
       switch (e.type) {

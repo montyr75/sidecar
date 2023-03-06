@@ -1,11 +1,11 @@
-import '../../../app_config.dart';
-import '../../../data/components.dart' as db;
-import '../../../models/components.dart';
-import '../../../models/enums.dart';
-import '../../../models/form_models.dart';
-import '../../../models/vehicle.dart';
-import '../../../utils/utils.dart';
-import '../../car_record_sheet/controller/car_state.dart';
+import '../../../../app_config.dart';
+import '../../../../data/components.dart' as db;
+import '../../../../models/components.dart';
+import '../../../../models/enums.dart';
+import '../../../../models/form_models.dart';
+import '../../../../models/vehicle.dart';
+import '../../../../utils/utils.dart';
+import '../../../car_record_sheet/controller/car_state.dart';
 
 class CarBuilderState {
   static const defaultDivision = 4;

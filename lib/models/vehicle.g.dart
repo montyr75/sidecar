@@ -12,7 +12,7 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) => Vehicle(
       vehicleType:
           $enumDecodeNullable(_$VehicleTypeEnumMap, json['vehicleType']) ??
               VehicleType.car,
-      chassis: $enumDecode(_$ChassisTypeEnumMap, json['chassis']),
+      chassis: $enumDecode(_$ChassisEnumMap, json['chassis']),
       division: json['division'] as int,
       locs: (json['locs'] as Map<String, dynamic>).map(
         (k, e) => MapEntry($enumDecode(_$LocationEnumMap, k),
@@ -24,7 +24,7 @@ Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
       'version': instance.version,
       'name': instance.name,
       'vehicleType': _$VehicleTypeEnumMap[instance.vehicleType]!,
-      'chassis': _$ChassisTypeEnumMap[instance.chassis]!,
+      'chassis': _$ChassisEnumMap[instance.chassis]!,
       'division': instance.division,
       'locs': instance.locs.map((k, e) => MapEntry(_$LocationEnumMap[k]!, e)),
     };
@@ -33,7 +33,7 @@ const _$VehicleTypeEnumMap = {
   VehicleType.car: 'car',
 };
 
-const _$ChassisTypeEnumMap = {
+const _$ChassisEnumMap = {
   Chassis.custom: 'custom',
   Chassis.apollo: 'apollo',
   Chassis.aristocrat: 'aristocrat',

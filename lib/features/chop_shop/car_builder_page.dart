@@ -15,8 +15,8 @@ import '../../widgets/panel_list.dart';
 import '../car_record_sheet/controller/car_state.dart';
 import '../vehicle_guide/chassis_page.dart';
 import '../vehicle_guide/chassis_selector_page.dart';
-import 'controllers/car_builder_ctrl.dart';
-import 'controllers/car_builder_state.dart';
+import 'controllers/car_builder/car_builder_ctrl.dart';
+import 'controllers/car_builder/car_builder_state.dart';
 import 'widgets/component_selector.dart';
 
 final divisions = List<int>.generate(12, (i) => i + 1);
@@ -166,7 +166,7 @@ class CarBuilderPage extends ConsumerWidget {
                       boxM,
                       TextButton(
                         onPressed: () =>
-                            showChassisPage(context: context, mode: CarSelectorMode.build, chassis: state.chassis),
+                            showChassisPage(context: context, mode: SelectorMode.build, chassis: state.chassis),
                         child: Text("Load ${state.chassis.toString()}"),
                       ),
                     ],
@@ -433,7 +433,7 @@ class LocationComps extends ConsumerWidget {
         child: const Icon(Icons.add),
       );
     } else {
-      final structureDisqualifiers = [
+      final List<bool> structureDisqualifiers = [
         state.hasComponentTypeByLoc(loc, ComponentType.structure),
         state.componentTypeCount(ComponentType.structure) >= 4,
       ];
