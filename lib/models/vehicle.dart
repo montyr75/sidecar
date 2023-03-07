@@ -5,8 +5,9 @@ import 'enums.dart';
 part 'vehicle.g.dart';
 
 @JsonSerializable()
-class Vehicle {
+class Vehicle implements Comparable<Vehicle> {
   final String version;
+  final String? id;
   final String name;
   final VehicleType vehicleType;
   final Chassis chassis;
@@ -15,6 +16,7 @@ class Vehicle {
 
   const Vehicle({
     required this.version,
+    this.id,
     required this.name,
     this.vehicleType = VehicleType.car,
     required this.chassis,
@@ -28,6 +30,9 @@ class Vehicle {
 
   @override
   String toString() => "$chassis (Division $division)";
+
+  @override
+  int compareTo(Vehicle other) => name.compareTo(other.name);
 
   Map<String, dynamic> toJson() => _$VehicleToJson(this);
   factory Vehicle.fromJson(Map<String, dynamic> json) => _$VehicleFromJson(json);

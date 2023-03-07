@@ -1,23 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'auth_service.dart';
+part of 'chop_shop_ctrl.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authServiceHash() => r'fa407d9f5b2e89e00d0be5b318a93c9331b04bcb';
+String _$chopShopCtrlHash() => r'0bb7d32248c146391b68bea4464d89fc896d755b';
 
-/// See also [AuthService].
-@ProviderFor(AuthService)
-final authServiceProvider = NotifierProvider<AuthService, AuthState>.internal(
-  AuthService.new,
-  name: r'authServiceProvider',
+/// See also [ChopShopCtrl].
+@ProviderFor(ChopShopCtrl)
+final chopShopCtrlProvider =
+    AutoDisposeNotifierProvider<ChopShopCtrl, ChopShopState>.internal(
+  ChopShopCtrl.new,
+  name: r'chopShopCtrlProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$authServiceHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$chopShopCtrlHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$AuthService = Notifier<AuthState>;
+typedef _$ChopShopCtrl = AutoDisposeNotifier<ChopShopState>;
 // ignore_for_file: unnecessary_raw_strings, subtype_of_sealed_class, invalid_use_of_internal_member, do_not_use_environment, prefer_const_constructors, public_member_api_docs, avoid_private_typedef_functions

@@ -2,22 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../data/components.dart' as db;
-import '../../models/components.dart';
-import '../../models/enums.dart';
-import '../../models/form_models.dart';
-import '../../routes.dart';
-import '../../services/app/app_service.dart';
-import '../../utils/screen_utils.dart';
-import '../../utils/utils.dart';
-import '../../widgets/component_display.dart';
-import '../../widgets/panel_list.dart';
-import '../car_record_sheet/controller/car_state.dart';
-import '../vehicle_guide/chassis_page.dart';
-import '../vehicle_guide/chassis_selector_page.dart';
-import 'controllers/car_builder/car_builder_ctrl.dart';
-import 'controllers/car_builder/car_builder_state.dart';
-import 'widgets/component_selector.dart';
+import '../../../data/components.dart' as db;
+import '../../../models/components.dart';
+import '../../../models/enums.dart';
+import '../../../models/form_models.dart';
+import '../../../routes.dart';
+import '../../../services/app/app_service.dart';
+import '../../../utils/screen_utils.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/component_display.dart';
+import '../../../widgets/panel_list.dart';
+import '../../car_record_sheet/controller/car_state.dart';
+import '../../vehicle_guide/chassis_page.dart';
+import '../../vehicle_guide/chassis_selector_page.dart';
+import '../controllers/car_builder/car_builder_ctrl.dart';
+import '../controllers/car_builder/car_builder_state.dart';
+import '../widgets/component_selector.dart';
 
 final divisions = List<int>.generate(12, (i) => i + 1);
 
@@ -36,11 +36,6 @@ class CarBuilderPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: IconButton(
-          tooltip: "Home",
-          onPressed: () => context.goNamed(AppRoute.home.name),
-          icon: const Icon(Icons.home),
-        ),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: med),

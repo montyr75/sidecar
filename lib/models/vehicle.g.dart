@@ -8,6 +8,7 @@ part of 'vehicle.dart';
 
 Vehicle _$VehicleFromJson(Map<String, dynamic> json) => Vehicle(
       version: json['version'] as String,
+      id: json['id'] as String?,
       name: json['name'] as String,
       vehicleType:
           $enumDecodeNullable(_$VehicleTypeEnumMap, json['vehicleType']) ??
@@ -22,6 +23,7 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) => Vehicle(
 
 Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
       'version': instance.version,
+      'id': instance.id,
       'name': instance.name,
       'vehicleType': _$VehicleTypeEnumMap[instance.vehicleType]!,
       'chassis': _$ChassisEnumMap[instance.chassis]!,

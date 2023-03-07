@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../app_config.dart';
 import '../../../repos/secure_storage/secure_storage_repo.dart';
+import '../../chop_shop/repos/vehicle_repo.dart';
 import '../repos/auth_repo.dart';
 import 'auth_state.dart';
 
@@ -47,6 +48,8 @@ class AuthService extends _$AuthService {
       state = state.copyWith(
         account: account,
       );
+
+      ref.read(vehicleRepoProvider).createSavedBuilds();
 
       login(email: email, password: password);
     }

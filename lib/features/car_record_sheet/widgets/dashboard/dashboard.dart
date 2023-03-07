@@ -7,7 +7,7 @@ import '../../../../services/app/app_service.dart';
 import '../../../../utils/screen_utils.dart';
 import '../../../../widgets/mod_display.dart';
 import '../../../../widgets/token_pile.dart';
-import '../../../chop_shop/car_builder_page.dart';
+import '../../../chop_shop/pages/car_builder_page.dart';
 import '../../controller/car_ctrl.dart';
 import '../../controller/car_state.dart';
 import '../maneuvers_display.dart';

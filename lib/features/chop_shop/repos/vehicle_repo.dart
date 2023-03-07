@@ -29,6 +29,19 @@ class VehicleRepo {
     required Databases db,
   }) : _db = db;
 
+  Future<void> createSavedBuilds() async {
+    try {
+      await _db.createDocument(
+        databaseId: dbID,
+        collectionId: savedBuildsCollectionID,
+        documentId: ref.read(authServiceProvider).uid,
+        data: const SavedBuilds().toJson(),
+      );
+    } catch (e, st) {
+      _handleError(e, st);
+    }
+  }
+
   Future<SavedBuilds?> getSavedBuilds() async {
     try {
       final doc = await _db.getDocument(
@@ -37,8 +50,9 @@ class VehicleRepo {
         documentId: ref.read(authServiceProvider).uid,
       );
 
-      return SavedBuilds.fromData(
-          (doc.data['builds'] as List<String>).map<Map<String, dynamic>>((value) => jsonDecode(value)).toList());
+      // doc.data['vehicles'] = (doc.data['vehicles'] as List<String>).map((value) => jsonDecode(value)).toList();
+
+      return SavedBuilds.fromJson(doc.data);
     } on AppwriteException catch (e, st) {
       if (e.type == "document_not_found") {
         return const SavedBuilds();
@@ -52,27 +66,17 @@ class VehicleRepo {
     }
   }
 
-  Future<void> setSavedBuilds(SavedBuilds data) async {
-    // try {
-    //   final doc = await _db.getDocument(
-    //     databaseId: dbID,
-    //     collectionId: savedBuildsCollectionID,
-    //     documentId: uid,
-    //   );
-    //
-    //   return SavedBuilds.fromData(
-    //       (doc.data['builds'] as List<String>).map<Map<String, dynamic>>((value) => jsonDecode(value)).toList());
-    // } on AppwriteException catch (e, st) {
-    //   if (e.type == "document_not_found") {
-    //     return const SavedBuilds();
-    //   }
-    //
-    //   _handleError(e, st);
-    //   return null;
-    // } catch (e, st) {
-    //   _handleError(e, st);
-    //   return null;
-    // }
+  Future<void> saveSavedBuilds(SavedBuilds data) async {
+    try {
+      await _db.updateDocument(
+        databaseId: dbID,
+        collectionId: savedBuildsCollectionID,
+        documentId: ref.read(authServiceProvider).uid,
+        data: data.toJson(),
+      );
+    } catch (e, st) {
+      _handleError(e, st);
+    }
   }
 
   void _handleError(Object e, StackTrace st) {

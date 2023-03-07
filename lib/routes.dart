@@ -7,7 +7,8 @@ import 'features/app/pages/not_found_page.dart';
 import 'features/auth/pages/login_page.dart';
 import 'features/auth/services/auth_service.dart';
 import 'features/car_record_sheet/car_record_sheet_page.dart';
-import 'features/chop_shop/car_builder_page.dart';
+import 'features/chop_shop/pages/car_builder_page.dart';
+import 'features/chop_shop/pages/chop_shop_page.dart';
 import 'features/vehicle_guide/chassis_selector_page.dart';
 import 'services/app/app_service.dart';
 
@@ -18,6 +19,7 @@ enum AppRoute {
   carBuilder,
   carRecordSheet,
   chassisSelector,
+  chopShop,
   login('/login');
 
   final String? _path;
@@ -51,9 +53,16 @@ GoRouter goRouter(GoRouterRef ref) {
             builder: (context, state) => const ChassisSelectorPage(),
           ),
           GoRoute(
-            name: AppRoute.carBuilder.name,
-            path: AppRoute.carBuilder.path,
-            builder: (context, state) => const CarBuilderPage(),
+            name: AppRoute.chopShop.name,
+            path: AppRoute.chopShop.path,
+            builder: (context, state) => const ChopShopPage(),
+            routes: [
+              GoRoute(
+                name: AppRoute.carBuilder.name,
+                path: AppRoute.carBuilder.path,
+                builder: (context, state) => const CarBuilderPage(),
+              ),
+            ],
           ),
           GoRoute(
             name: AppRoute.carRecordSheet.name,
