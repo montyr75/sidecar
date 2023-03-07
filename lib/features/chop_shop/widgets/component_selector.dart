@@ -8,7 +8,7 @@ import '../../../utils/screen_utils.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/component_display.dart';
 import '../../../widgets/panel_list.dart';
-import '../controllers/car_builder/car_builder_ctrl.dart';
+import '../controllers/shop/shop_ctrl.dart';
 
 class ComponentSelector extends ConsumerStatefulWidget {
   final Location loc;
@@ -58,7 +58,7 @@ class _ComponentSelectorState extends ConsumerState<ComponentSelector> {
 
   List<ExpandableItem<InstalledComponent>> _generateComponentItems(List<InstalledComponent> value) {
     final initialState = ref.read(appServiceProvider).initialCarBuilderState;
-    final state = ref.read(carBuilderCtrlProvider(initialState));
+    final state = ref.read(shopCtrlProvider(initialState));
 
     return value.map<ExpandableItem<InstalledComponent>>((component) {
       return ExpandableItem<InstalledComponent>(

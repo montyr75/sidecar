@@ -14,7 +14,7 @@ class VehicleGuideDrive extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return VehicleGuideSelectorPage(
       onSelected: (vehicle) {
-        ref.read(appServiceProvider.notifier).driveCar(CarState.fromVehicle(vehicle));
+        ref.read(appServiceProvider.notifier).drive(CarState.fromVehicle(vehicle));
         context.goNamed(AppRoute.carRecordSheet.name);
       },
     );

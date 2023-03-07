@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:collection/collection.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import '../../models/vehicle.dart';
@@ -25,4 +26,7 @@ class SavedBuilds {
     map['vehicles'] = (map['vehicles'] as List<Map<String, dynamic>>).map((value) => jsonEncode(value)).toList();
     return map;
   }
+
+  bool vehicleIdExists(String id) => vehicles.any((value) => value.id == id);
+  Vehicle? getVehicleByID(String id) => vehicles.firstWhereOrNull((value) => value.id == id);
 }

@@ -8,42 +8,38 @@ import '../../../models/enums.dart';
 import '../../../models/form_models.dart';
 import '../../../routes.dart';
 import '../../../services/app/app_service.dart';
+import '../../../utils/popup_utils.dart';
 import '../../../utils/screen_utils.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/component_display.dart';
 import '../../../widgets/panel_list.dart';
 import '../../car_record_sheet/controller/car_state.dart';
-import '../controllers/car_builder/car_builder_ctrl.dart';
-import '../controllers/car_builder/car_builder_state.dart';
 import '../controllers/chop_shop/chop_shop_ctrl.dart';
+import '../controllers/shop/shop_ctrl.dart';
+import '../controllers/shop/shop_state.dart';
 import '../widgets/component_selector.dart';
 
 final divisions = List<int>.generate(12, (i) => i + 1);
 
-class CarBuilderPage extends ConsumerWidget {
+class ShopPage extends ConsumerWidget {
   static const labelStyle = TextStyle(fontFamily: 'Facon', color: Colors.blueGrey);
 
-  const CarBuilderPage({Key? key}) : super(key: key);
+  const ShopPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final initialState = ref.watch(appServiceProvider.select((value) => value.initialCarBuilderState));
 
-    final ctrl = ref.read(carBuilderCtrlProvider(initialState).notifier);
-    final state = ref.watch(carBuilderCtrlProvider(initialState));
+    final ctrl = ref.read(shopCtrlProvider(initialState).notifier);
+    final state = ref.watch(shopCtrlProvider(initialState));
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         actions: [
           IconButton(
-            onPressed: state.canSave ? () async {
-              final success = await ref.read(chopShopCtrlProvider.notifier).saveBuild(state.toVehicle());
-
-              if (success) {
-                showSuccessToast("${state.name.value.trim()} saved.");
-              }
-            } : null,
+            tooltip: "Save Vehicle",
+            onPressed: state.canSave ? () => _saveBuild(context, ref, state) : null,
             icon: const Icon(Icons.save),
           ),
           Padding(
@@ -51,7 +47,7 @@ class CarBuilderPage extends ConsumerWidget {
             child: TextButton(
               onPressed: state.isValid
                   ? () {
-                      ref.read(appServiceProvider.notifier).driveCar((state.toCarState()));
+                      ref.read(appServiceProvider.notifier).drive((state.toCarState()));
                       context.goNamed(AppRoute.carRecordSheet.name);
                     }
                   : null,
@@ -63,7 +59,7 @@ class CarBuilderPage extends ConsumerWidget {
           ),
         ],
         title: const Text(
-          "Car Builder",
+          "The Shop",
           style: TextStyle(
             fontSize: 22,
             fontFamily: 'Blazed',
@@ -207,10 +203,31 @@ class CarBuilderPage extends ConsumerWidget {
       ),
     );
   }
+
+  Future<void> _saveBuild(BuildContext context, WidgetRef ref, ShopState state) async {
+    final chopShopState = ref.read(chopShopCtrlProvider);
+
+    if (chopShopState.savedBuilds.vehicleIdExists(state.id)) {
+      final confirm = await showConfirmDialog(
+        context: context,
+        message: "This vehicle already exists. Are you sure you want to overwrite it?",
+      );
+
+      if (!confirm) {
+        return;
+      }
+    }
+
+    final success = await ref.read(chopShopCtrlProvider.notifier).saveBuild(state.toVehicle());
+
+    if (success) {
+      showSuccessToast("${state.name.value.trim()} saved.");
+    }
+  }
 }
 
 class _PointBar extends StatelessWidget {
-  final CarBuilderState state;
+  final ShopState state;
 
   const _PointBar({Key? key, required this.state}) : super(key: key);
 
@@ -287,7 +304,7 @@ class _PointDisplay extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: paddingAllM,
-                child: Text(label, style: CarBuilderPage.labelStyle),
+                child: Text(label, style: ShopPage.labelStyle),
               ),
             ),
           ],
@@ -322,7 +339,7 @@ class LocationComps extends ConsumerWidget {
           children: [
             Text(
               "${loc.toString()}${loc == Location.upgrade ? 's' : ''}",
-              style: CarBuilderPage.labelStyle,
+              style: ShopPage.labelStyle,
             ),
             _buildAddMenu(context, ref),
           ],
@@ -334,7 +351,7 @@ class LocationComps extends ConsumerWidget {
 
   Widget _buildAddMenu(BuildContext context, WidgetRef ref) {
     final initialState = ref.read(appServiceProvider).initialCarBuilderState;
-    final state = ref.read(carBuilderCtrlProvider(initialState));
+    final state = ref.read(shopCtrlProvider(initialState));
 
     if (loc == Location.crew) {
       return PopupMenuButton<String>(

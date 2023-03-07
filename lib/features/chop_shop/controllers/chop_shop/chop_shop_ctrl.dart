@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../db/models/saved_builds.dart';
 import '../../../../models/vehicle.dart';
+import '../../../../utils/utils.dart';
 import '../../repos/vehicle_repo.dart';
 import 'chop_shop_state.dart';
 
@@ -27,22 +28,45 @@ class ChopShopCtrl extends _$ChopShopCtrl {
   }
 
   Future<bool> saveBuild(Vehicle vehicle) async {
-    final vehicles = state.savedBuilds.vehicles.toList()..add(vehicle);
+    final vehicles = state.savedBuilds.vehicles.toList();
+
+    final existingVehicle = state.savedBuilds.getVehicleByID(vehicle.id);
+
+    if (existingVehicle != null) {
+      vehicles.replaceWith(existingVehicle, vehicle);
+    }
+    else {
+      vehicles..add(vehicle)..sort();
+    }
 
     state = state.copyWith(
-      savedBuilds: SavedBuilds(List<Vehicle>.unmodifiable(vehicles..sort())),
+      isLoading: true,
+      savedBuilds: SavedBuilds(List<Vehicle>.unmodifiable(vehicles)),
     );
 
-    state = state.copyWith(isLoading: true);
+    return _persistSavedBuilds();
+  }
 
-    final success = await _persistSavedBuilds();
+  Future<bool> deleteBuild(String id) {
+    final vehicles = state.savedBuilds.vehicles.toList()..removeWhere((value) => value.id == id);
+
+    state = state.copyWith(
+      isLoading: true,
+      savedBuilds: SavedBuilds(List<Vehicle>.unmodifiable(vehicles)),
+    );
+
+    return _persistSavedBuilds();
+  }
+
+  Future<bool> _persistSavedBuilds() async {
+    if (!state.isLoading) {
+      state = state.copyWith(isLoading: true);
+    }
+
+    final success = await ref.read(vehicleRepoProvider).saveSavedBuilds(state.savedBuilds);
 
     state = state.copyWith(isLoading: false);
 
     return success;
-  }
-
-  Future<bool> _persistSavedBuilds() async {
-    return ref.read(vehicleRepoProvider).saveSavedBuilds(state.savedBuilds);
   }
 }

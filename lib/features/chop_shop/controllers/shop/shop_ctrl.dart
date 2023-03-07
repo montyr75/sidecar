@@ -7,15 +7,16 @@ import '../../../../data/components.dart';
 import '../../../../models/components.dart';
 import '../../../../models/enums.dart';
 import '../../../../models/form_models.dart';
+import '../../../../utils/utils.dart';
 import '../../../car_record_sheet/controller/car_state.dart';
-import '../car_builder/car_builder_state.dart';
+import '../shop/shop_state.dart';
 
-part 'car_builder_ctrl.g.dart';
+part 'shop_ctrl.g.dart';
 
 @riverpod
-class CarBuilderCtrl extends _$CarBuilderCtrl {
+class ShopCtrl extends _$ShopCtrl {
   @override
-  CarBuilderState build([CarBuilderState? initialValue]) {
+  ShopState build([ShopState? initialValue]) {
     if (initialValue == null) {
       scheduleMicrotask(() {
         addComponent(
@@ -28,7 +29,7 @@ class CarBuilderCtrl extends _$CarBuilderCtrl {
         );
       });
 
-      return const CarBuilderState();
+      return ShopState(id: uuid.v4());
     }
 
     scheduleMicrotask(() => onDivisionChanged(initialValue.division));

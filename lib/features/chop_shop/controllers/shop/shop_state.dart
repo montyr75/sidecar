@@ -7,13 +7,14 @@ import '../../../../models/vehicle.dart';
 import '../../../../utils/utils.dart';
 import '../../../car_record_sheet/controller/car_state.dart';
 
-class CarBuilderState {
+class ShopState {
   static const defaultDivision = 4;
 
   final int ap;
   final int bp;
   final int cp;
 
+  final String id;    // ID to use for vehicle
   final RequiredStringFormField name;
 
   final Chassis chassis;
@@ -23,7 +24,8 @@ class CarBuilderState {
   final List<Restriction> restrictions;
   final List<Attribute> attributes;
 
-  const CarBuilderState({
+  const ShopState({
+    this.id = '',
     this.ap = defaultDivision,
     this.bp = defaultDivision * 4,
     this.cp = defaultDivision,
@@ -35,14 +37,14 @@ class CarBuilderState {
     this.attributes = const [],
   });
 
-  factory CarBuilderState.fromVehicle(Vehicle vehicle) {
+  factory ShopState.fromVehicle(Vehicle vehicle) {
     final List<InstalledComponent> comps = [];
     for (final loc in Location.values) {
       final locComps = vehicle.locs[loc]?.map((key) => db.components[key]!) ?? const [];
       comps.addAll(createInstalledComponents(locComps, loc));
     }
 
-    return CarBuilderState(
+    return ShopState(
       ap: vehicle.division,
       bp: vehicle.division * 4,
       cp: vehicle.division,
@@ -55,7 +57,7 @@ class CarBuilderState {
     );
   }
 
-  CarBuilderState copyWith({
+  ShopState copyWith({
     int? ap,
     int? bp,
     int? cp,
@@ -66,7 +68,7 @@ class CarBuilderState {
     List<Restriction>? restrictions,
     List<Attribute>? attributes,
   }) {
-    return CarBuilderState(
+    return ShopState(
       ap: ap ?? this.ap,
       bp: bp ?? this.bp,
       cp: cp ?? this.cp,
@@ -129,7 +131,7 @@ class CarBuilderState {
 
     return Vehicle(
       version: version,
-      id: uuid.v4(),
+      id: id,
       name: name.value.trim(),
       chassis: chassis,
       division: division,

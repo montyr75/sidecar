@@ -7,7 +7,7 @@ part 'vehicle.g.dart';
 @JsonSerializable()
 class Vehicle implements Comparable<Vehicle> {
   final String version;
-  final String? id;
+  final String id;
   final String name;
   final VehicleType vehicleType;
   final Chassis chassis;
@@ -16,7 +16,7 @@ class Vehicle implements Comparable<Vehicle> {
 
   const Vehicle({
     required this.version,
-    this.id,
+    this.id = '',
     required this.name,
     this.vehicleType = VehicleType.car,
     required this.chassis,
