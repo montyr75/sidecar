@@ -7,7 +7,6 @@ import '../../../../data/components.dart';
 import '../../../../models/components.dart';
 import '../../../../models/enums.dart';
 import '../../../../models/form_models.dart';
-import '../../../../utils/utils.dart';
 import '../../../car_record_sheet/controller/car_state.dart';
 import '../shop/shop_state.dart';
 
@@ -29,7 +28,7 @@ class ShopCtrl extends _$ShopCtrl {
         );
       });
 
-      return ShopState(id: uuid.v4());
+      return const ShopState();
     }
 
     scheduleMicrotask(() => onDivisionChanged(initialValue.division));

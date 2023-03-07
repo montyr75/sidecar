@@ -14,7 +14,6 @@ class ShopState {
   final int bp;
   final int cp;
 
-  final String id;    // ID to use for vehicle
   final RequiredStringFormField name;
 
   final Chassis chassis;
@@ -25,7 +24,6 @@ class ShopState {
   final List<Attribute> attributes;
 
   const ShopState({
-    this.id = '',
     this.ap = defaultDivision,
     this.bp = defaultDivision * 4,
     this.cp = defaultDivision,
@@ -131,7 +129,7 @@ class ShopState {
 
     return Vehicle(
       version: version,
-      id: id,
+      id: uuid.v4(),
       name: name.value.trim(),
       chassis: chassis,
       division: division,
