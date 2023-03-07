@@ -79,9 +79,12 @@ class ShopState {
     );
   }
 
-  int get bpSpent =>
-      components.allCarComponents.map((value) => value.cost).sum() -
-      (components.where((value) => value.hasAttribute(Attribute.paired)).length ~/ 2);
+  int get bpSpent {
+    final comps = components.allCarComponents;
+    final pairedItems = comps.where((value) => value.hasAttribute(Attribute.paired)).toList();
+
+    return (comps.totalCost - (pairedItems.totalCost ~/ 2)).toInt();
+  }
 
   int get cpSpent => components.allCrewComponents.map((value) => value.cost).sum();
 

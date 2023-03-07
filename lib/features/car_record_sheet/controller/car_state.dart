@@ -1,4 +1,4 @@
-import 'package:collection/collection.dart';
+import 'package:collection/collection.dart' hide IterableIntegerExtension;
 
 import '../../../data/components.dart' as db;
 import '../../../models/components.dart';
@@ -469,6 +469,8 @@ extension ListInstCompX on List<InstalledComponent> {
 
     return List<Restriction>.unmodifiable(list);
   }
+
+  int get totalCost => map((value) => value.cost).sum();
 }
 
 extension ListSpecialAttributeX on List<Attribute> {

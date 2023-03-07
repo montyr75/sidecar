@@ -4,7 +4,7 @@ import '../models/vehicle.dart';
 const List<Vehicle> vg = [
   Vehicle(
     version: "0.0.1",
-    name: "Apollo (Div. 4)",
+    name: "Apollo",
     chassis: Chassis.apollo,
     division: 4,
     locs: {
@@ -37,7 +37,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Apollo (Div. 8)",
+    name: "Apollo",
     chassis: Chassis.apollo,
     division: 8,
     locs: {
@@ -75,7 +75,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Aristocrat (Div. 4)",
+    name: "Aristocrat",
     chassis: Chassis.aristocrat,
     division: 4,
     locs: {
@@ -110,7 +110,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Aristocrat (Div. 8)",
+    name: "Aristocrat",
     chassis: Chassis.aristocrat,
     division: 8,
     locs: {
@@ -147,7 +147,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Avalanche (Div. 4)",
+    name: "Avalanche",
     chassis: Chassis.avalanche,
     division: 4,
     locs: {
@@ -177,7 +177,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Avalanche (Div. 8)",
+    name: "Avalanche",
     chassis: Chassis.avalanche,
     division: 8,
     locs: {
@@ -211,7 +211,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Boomerang (Div. 4)",
+    name: "Boomerang",
     chassis: Chassis.boomerang,
     division: 4,
     locs: {
@@ -245,7 +245,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Boomerang (Div. 8)",
+    name: "Boomerang",
     chassis: Chassis.boomerang,
     division: 8,
     locs: {
@@ -281,7 +281,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Brimstone (Div. 4)",
+    name: "Brimstone",
     chassis: Chassis.brimstone,
     division: 4,
     locs: {
@@ -313,7 +313,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Brimstone (Div. 8)",
+    name: "Brimstone",
     chassis: Chassis.brimstone,
     division: 8,
     locs: {
@@ -346,7 +346,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Butcher (Div. 4)",
+    name: "Butcher",
     chassis: Chassis.butcher,
     division: 4,
     locs: {
@@ -379,7 +379,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Butcher (Div. 8)",
+    name: "Butcher",
     chassis: Chassis.butcher,
     division: 8,
     locs: {
@@ -416,7 +416,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Conestoga (Div. 4)",
+    name: "Conestoga",
     chassis: Chassis.conestoga,
     division: 4,
     locs: {
@@ -449,7 +449,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Conestoga (Div. 8)",
+    name: "Conestoga",
     chassis: Chassis.conestoga,
     division: 8,
     locs: {
@@ -482,7 +482,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Dragon (Div. 4)",
+    name: "Dragon",
     chassis: Chassis.dragon,
     division: 4,
     locs: {
@@ -512,7 +512,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Dragon (Div. 8)",
+    name: "Dragon",
     chassis: Chassis.dragon,
     division: 8,
     locs: {
@@ -549,7 +549,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Fuzion (Div. 4)",
+    name: "Fuzion",
     chassis: Chassis.fuzion,
     division: 4,
     locs: {
@@ -580,7 +580,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Fuzion (Div. 8)",
+    name: "Fuzion",
     chassis: Chassis.fuzion,
     division: 8,
     locs: {
@@ -618,7 +618,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Goblin (Div. 4)",
+    name: "Goblin",
     chassis: Chassis.goblin,
     division: 4,
     locs: {
@@ -656,7 +656,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Goblin (Div. 8)",
+    name: "Goblin",
     chassis: Chassis.goblin,
     division: 8,
     locs: {
@@ -695,7 +695,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Hades (Div. 4)",
+    name: "Hades",
     chassis: Chassis.hades,
     division: 4,
     locs: {
@@ -726,7 +726,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Hades (Div. 8)",
+    name: "Hades",
     chassis: Chassis.hades,
     division: 8,
     locs: {
@@ -764,7 +764,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Hammer (Div. 4)",
+    name: "Hammer",
     chassis: Chassis.hammer,
     division: 4,
     locs: {
@@ -796,7 +796,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Hammer (Div. 8)",
+    name: "Hammer",
     chassis: Chassis.hammer,
     division: 8,
     locs: {
@@ -832,7 +832,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Hotshot (Div. 4)",
+    name: "Hotshot",
     chassis: Chassis.hotshot,
     division: 4,
     locs: {
@@ -861,7 +861,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Hotshot (Div. 8)",
+    name: "Hotshot",
     chassis: Chassis.hotshot,
     division: 8,
     locs: {
@@ -892,7 +892,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Hydra (Div. 4)",
+    name: "Hydra",
     chassis: Chassis.hydra,
     division: 4,
     locs: {
@@ -923,7 +923,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Hydra (Div. 8)",
+    name: "Hydra",
     chassis: Chassis.hydra,
     division: 8,
     locs: {
@@ -958,7 +958,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Jackal (Div. 4)",
+    name: "Jackal",
     chassis: Chassis.jackal,
     division: 4,
     locs: {
@@ -995,7 +995,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Jackal (Div. 8)",
+    name: "Jackal",
     chassis: Chassis.jackal,
     division: 8,
     locs: {
@@ -1034,7 +1034,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Jackrabbit (Div. 4)",
+    name: "Jackrabbit",
     chassis: Chassis.jackrabbit,
     division: 4,
     locs: {
@@ -1064,7 +1064,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Jackrabbit (Div. 8)",
+    name: "Jackrabbit",
     chassis: Chassis.jackrabbit,
     division: 8,
     locs: {
@@ -1101,7 +1101,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Joseph Special (Div. 4)",
+    name: "Joseph Special",
     chassis: Chassis.josephSpecial,
     division: 4,
     locs: {
@@ -1131,7 +1131,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Joseph Special (Div. 8)",
+    name: "Joseph Special",
     chassis: Chassis.josephSpecial,
     division: 8,
     locs: {
@@ -1162,7 +1162,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Kodiak (Div. 4)",
+    name: "Kodiak",
     chassis: Chassis.kodiak,
     division: 4,
     locs: {
@@ -1195,7 +1195,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Kodiak (Div. 8)",
+    name: "Kodiak",
     chassis: Chassis.kodiak,
     division: 8,
     locs: {
@@ -1230,7 +1230,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Pillbug (Div. 4)",
+    name: "Pillbug",
     chassis: Chassis.pillbug,
     division: 4,
     locs: {
@@ -1262,7 +1262,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Pillbug (Div. 8)",
+    name: "Pillbug",
     chassis: Chassis.pillbug,
     division: 8,
     locs: {
@@ -1297,7 +1297,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Pure Energy (Div. 4)",
+    name: "Pure Energy",
     chassis: Chassis.pureEnergy,
     division: 4,
     locs: {
@@ -1326,7 +1326,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Pure Energy (Div. 8)",
+    name: "Pure Energy",
     chassis: Chassis.pureEnergy,
     division: 8,
     locs: {
@@ -1363,7 +1363,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Redline (Div. 4)",
+    name: "Redline",
     chassis: Chassis.redline,
     division: 4,
     locs: {
@@ -1393,7 +1393,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Redline (Div. 8)",
+    name: "Redline",
     chassis: Chassis.redline,
     division: 8,
     locs: {
@@ -1433,7 +1433,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Sawtooth (Div. 4)",
+    name: "Sawtooth",
     chassis: Chassis.sawtooth,
     division: 4,
     locs: {
@@ -1465,7 +1465,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Sawtooth (Div. 8)",
+    name: "Sawtooth",
     chassis: Chassis.sawtooth,
     division: 8,
     locs: {
@@ -1501,7 +1501,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Scarab (Div. 4)",
+    name: "Scarab",
     chassis: Chassis.scarab,
     division: 4,
     locs: {
@@ -1532,7 +1532,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Scarab (Div. 8)",
+    name: "Scarab",
     chassis: Chassis.scarab,
     division: 8,
     locs: {
@@ -1569,7 +1569,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Scimitar (Div. 4)",
+    name: "Scimitar",
     chassis: Chassis.scimitar,
     division: 4,
     locs: {
@@ -1600,7 +1600,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Scimitar (Div. 8)",
+    name: "Scimitar",
     chassis: Chassis.scimitar,
     division: 8,
     locs: {
@@ -1630,7 +1630,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Shuriken (Div. 4)",
+    name: "Shuriken",
     chassis: Chassis.shuriken,
     division: 4,
     locs: {
@@ -1661,7 +1661,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Shuriken (Div. 8)",
+    name: "Shuriken",
     chassis: Chassis.shuriken,
     division: 8,
     locs: {
@@ -1697,7 +1697,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Sledge (Div. 4)",
+    name: "Sledge",
     chassis: Chassis.sledge,
     division: 4,
     locs: {
@@ -1730,7 +1730,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Sledge (Div. 8)",
+    name: "Sledge",
     chassis: Chassis.sledge,
     division: 8,
     locs: {
@@ -1767,7 +1767,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Slipstream (Div. 4)",
+    name: "Slipstream",
     chassis: Chassis.slipstream,
     division: 4,
     locs: {
@@ -1799,7 +1799,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Slipstream (Div. 8)",
+    name: "Slipstream",
     chassis: Chassis.slipstream,
     division: 8,
     locs: {
@@ -1835,7 +1835,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Spark (Div. 4)",
+    name: "Spark",
     chassis: Chassis.spark,
     division: 4,
     locs: {
@@ -1865,7 +1865,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Spark (Div. 8)",
+    name: "Spark",
     chassis: Chassis.spark,
     division: 8,
     locs: {
@@ -1900,7 +1900,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Stiletto (Div. 4)",
+    name: "Stiletto",
     chassis: Chassis.stiletto,
     division: 4,
     locs: {
@@ -1929,7 +1929,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Stiletto (Div. 8)",
+    name: "Stiletto",
     chassis: Chassis.stiletto,
     division: 8,
     locs: {
@@ -1965,7 +1965,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Superflash (Div. 4)",
+    name: "Superflash",
     chassis: Chassis.superflash,
     division: 4,
     locs: {
@@ -1996,7 +1996,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Superflash (Div. 8)",
+    name: "Superflash",
     chassis: Chassis.superflash,
     division: 8,
     locs: {
@@ -2031,7 +2031,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Typhoon (Div. 4)",
+    name: "Typhoon",
     chassis: Chassis.typhoon,
     division: 4,
     locs: {
@@ -2064,7 +2064,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Typhoon (Div. 8)",
+    name: "Typhoon",
     chassis: Chassis.typhoon,
     division: 8,
     locs: {
@@ -2096,7 +2096,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Warhawk (Div. 4)",
+    name: "Warhawk",
     chassis: Chassis.warhawk,
     division: 4,
     locs: {
@@ -2132,7 +2132,7 @@ const List<Vehicle> vg = [
   ),
   Vehicle(
     version: "0.0.1",
-    name: "Warhawk (Div. 8)",
+    name: "Warhawk",
     chassis: Chassis.warhawk,
     division: 8,
     locs: {

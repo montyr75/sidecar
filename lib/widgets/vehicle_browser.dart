@@ -33,6 +33,26 @@ class VehicleBrowser extends StatelessWidget {
                   carState.car.name,
                   style: const TextStyle(fontSize: 18, fontFamily: 'Audiowide'),
                 ),
+                subtitle: Padding(
+                  padding: const EdgeInsets.only(top: sm),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "",
+                      children: [
+                        const TextSpan(
+                          text: "Chassis: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(text: carState.car.chassis.toString()),
+                        const TextSpan(
+                          text: "   Division: ",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        TextSpan(text: carState.car.division.toString()),
+                      ],
+                    ),
+                  ),
+                ),
                 trailing: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
