@@ -9,7 +9,8 @@ import 'features/auth/services/auth_service.dart';
 import 'features/car_record_sheet/car_record_sheet_page.dart';
 import 'features/chop_shop/pages/car_builder_page.dart';
 import 'features/chop_shop/pages/chop_shop_page.dart';
-import 'features/vehicle_guide/vehicle_guide_selector_page.dart';
+import 'features/vehicle_guide/vehicle_guide_build.dart';
+import 'features/vehicle_guide/vehicle_guide_drive.dart';
 import 'services/app/app_service.dart';
 
 part 'routes.g.dart';
@@ -18,7 +19,8 @@ enum AppRoute {
   home('/'),
   carBuilder,
   carRecordSheet,
-  chassisSelector,
+  vehicleGuideDrive,
+  vehicleGuideBuild,
   chopShop,
   login('/login');
 
@@ -48,15 +50,20 @@ GoRouter goRouter(GoRouterRef ref) {
         builder: (context, state) => const HomePage(),
         routes: [
           GoRoute(
-            name: AppRoute.chassisSelector.name,
-            path: AppRoute.chassisSelector.path,
-            builder: (context, state) => const VehicleGuideSelectorPage(),
+            name: AppRoute.vehicleGuideDrive.name,
+            path: AppRoute.vehicleGuideDrive.path,
+            builder: (context, state) => const VehicleGuideDrive(),
           ),
           GoRoute(
             name: AppRoute.chopShop.name,
             path: AppRoute.chopShop.path,
             builder: (context, state) => const ChopShopPage(),
             routes: [
+              GoRoute(
+                name: AppRoute.vehicleGuideBuild.name,
+                path: AppRoute.vehicleGuideBuild.path,
+                builder: (context, state) => const VehicleGuideBuild(),
+              ),
               GoRoute(
                 name: AppRoute.carBuilder.name,
                 path: AppRoute.carBuilder.path,

@@ -1,27 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:recase/recase.dart';
 
 import '../features/car_record_sheet/controller/car_state.dart';
 import '../models/components.dart';
+import '../models/vehicle.dart';
 import '../utils/screen_utils.dart';
+import '../utils/utils.dart';
 import 'component_display.dart';
 import 'panel_list.dart';
 
 class VehicleBrowser extends StatelessWidget {
-  final List<CarState> vehicles;
-  final ValueChanged<CarState>? onSelected;
-  final String selectionText;
+  final List<CarState> carStates;
+  final ValueChanged<VehicleSelectionResult> onSelected;
+  final List<VehicleSelectionType> selectionTypes;
 
   const VehicleBrowser({
     Key? key,
-    required this.vehicles,
-    this.onSelected,
-    this.selectionText = "Drive",
+    required this.carStates,
+    required this.onSelected,
+    this.selectionTypes = const [VehicleSelectionType.drive],
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return PanelList(
-      items: vehicles.map<ExpandableItem>(
+      items: carStates.map<ExpandableItem>(
         (carState) {
           return ExpandableItem(
             headerBuilder: (context, isExpanded) {
@@ -30,13 +33,29 @@ class VehicleBrowser extends StatelessWidget {
                   carState.car.name,
                   style: const TextStyle(fontSize: 18, fontFamily: 'Audiowide'),
                 ),
-                trailing: onSelected != null ? TextButton(
-                  onPressed: () => onSelected!(carState),
-                  child: Text(
-                    selectionText,
-                    style: const TextStyle(fontFamily: 'Facon'),
-                  ),
-                ) : null,
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (selectionTypes.contains(VehicleSelectionType.drive)) TextButton(
+                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.drive, vehicle: carState.car)),
+                      child: Text(
+                        VehicleSelectionType.drive.toString(),
+                        style: const TextStyle(fontFamily: 'Facon'),
+                      ),
+                    ),
+                    if (selectionTypes.contains(VehicleSelectionType.build)) TextButton(
+                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.build, vehicle: carState.car)),
+                      child: Text(
+                        VehicleSelectionType.build.toString(),
+                        style: const TextStyle(fontFamily: 'Facon'),
+                      ),
+                    ),
+                    if (selectionTypes.contains(VehicleSelectionType.delete)) IconButton(
+                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.delete, vehicle: carState.car)),
+                      icon: const Icon(Icons.delete),
+                    ),
+                  ].joinWidgetList(boxM).toList(),
+                ),
               );
             },
             bodyBuilder: (context, isExpanded) {
@@ -115,4 +134,23 @@ class _ComponentPanelListState extends State<ComponentPanelList> {
       );
     }).toList();
   }
+}
+
+class VehicleSelectionResult {
+  final VehicleSelectionType type;
+  final Vehicle vehicle;
+
+  const VehicleSelectionResult({
+    required this.type,
+    required this.vehicle,
+  });
+}
+
+enum VehicleSelectionType {
+  drive,
+  build,
+  delete;
+
+  @override
+  String toString() => ReCase(name).titleCase;
 }

@@ -54,7 +54,7 @@ class ChopShopPage extends ConsumerWidget {
               PageNavButton(
                 label: "Vehicle Guide",
                 desc: "Modify prebuilt vehicles",
-                onPressed: () => context.goNamed(AppRoute.carBuilder.name),
+                onPressed: () => context.goNamed(AppRoute.vehicleGuideBuild.name),
               ),
             ],
           ),

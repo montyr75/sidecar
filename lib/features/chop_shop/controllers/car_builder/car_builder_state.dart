@@ -145,5 +145,5 @@ class CarBuilderState {
     );
   }
 
-  CarState toCarState() => CarState.fromCar(toVehicle());
+  CarState toCarState() => CarState.fromVehicle(toVehicle());
 }

@@ -71,7 +71,7 @@ class HomePage extends ConsumerWidget {
               PageNavButton(
                 label: "Vehicle Guide",
                 desc: "Drive prebuilt vehicles",
-                onPressed: () => context.goNamed(AppRoute.chassisSelector.name),
+                onPressed: () => context.goNamed(AppRoute.vehicleGuideDrive.name),
               ),
               boxXXL,
               PageNavButton(

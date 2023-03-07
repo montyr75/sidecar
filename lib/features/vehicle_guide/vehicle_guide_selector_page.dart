@@ -3,12 +3,21 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../data/vehicle_guide.dart';
 import '../../models/enums.dart';
+import '../../models/vehicle.dart';
 import '../../utils/screen_utils.dart';
+import '../../widgets/vehicle_browser.dart';
 import '../car_record_sheet/controller/car_state.dart';
 import 'chassis_page.dart';
 
 class VehicleGuideSelectorPage extends ConsumerStatefulWidget {
-  const VehicleGuideSelectorPage({Key? key}) : super(key: key);
+  final ValueChanged<Vehicle> onSelected;
+  final VehicleSelectionType selectionType;
+
+  const VehicleGuideSelectorPage({
+    Key? key,
+    required this.onSelected,
+    this.selectionType = VehicleSelectionType.drive,
+  }) : super(key: key);
 
   @override
   ConsumerState<VehicleGuideSelectorPage> createState() => _VehicleGuideSelectorPageState();
@@ -50,7 +59,7 @@ class _VehicleGuideSelectorPageState extends ConsumerState<VehicleGuideSelectorP
                         onSelected: () {
                           setState(() {
                             _selectedChassis = chassis;
-                            _carStates = vg.getByChassis(chassis).map((value) => CarState.fromCar(value)).toList();
+                            _carStates = vg.getByChassis(chassis).map((value) => CarState.fromVehicle(value)).toList();
                             _page = 1;
                           });
                         },
@@ -63,7 +72,7 @@ class _VehicleGuideSelectorPageState extends ConsumerState<VehicleGuideSelectorP
           ),
         ),
         ChassisPage(
-          mode: SelectorMode.drive,
+          selectionType: widget.selectionType,
           chassis: _selectedChassis,
           vehicles: _carStates,
           onBack: () {
@@ -71,6 +80,7 @@ class _VehicleGuideSelectorPageState extends ConsumerState<VehicleGuideSelectorP
               _page = 0;
             });
           },
+          onSelected: widget.onSelected,
         ),
       ],
     );

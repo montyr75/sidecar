@@ -34,10 +34,10 @@ class CarState {
     this.ace = 0,
   });
 
-  factory CarState.fromCar(Vehicle car) {
+  factory CarState.fromVehicle(Vehicle vehicle) {
     final List<InstalledComponent> comps = [];
     for (final loc in Location.values) {
-      final locComps = car.locs[loc]?.map((key) => db.components[key]!) ?? const [];
+      final locComps = vehicle.locs[loc]?.map((key) => db.components[key]!) ?? const [];
       comps.addAll(createInstalledComponents(locComps, loc));
     }
 
@@ -65,13 +65,13 @@ class CarState {
     }
 
     return CarState(
-      car: car,
+      car: vehicle,
       components: List<InstalledComponent>.unmodifiable(comps),
       locs: Map<Location, LocationState>.unmodifiable({
         for (final loc in Location.carLocs)
           loc: LocationState.fromCar(
             loc: loc,
-            car: car,
+            car: vehicle,
             bonusAP: attributes.hasAttribute(Attribute.awardsAP) ? 1 : 0,
           ),
       }),
