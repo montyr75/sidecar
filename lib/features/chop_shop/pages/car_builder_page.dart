@@ -13,10 +13,9 @@ import '../../../utils/utils.dart';
 import '../../../widgets/component_display.dart';
 import '../../../widgets/panel_list.dart';
 import '../../car_record_sheet/controller/car_state.dart';
-import '../../vehicle_guide/chassis_page.dart';
-import '../../vehicle_guide/chassis_selector_page.dart';
 import '../controllers/car_builder/car_builder_ctrl.dart';
 import '../controllers/car_builder/car_builder_state.dart';
+import '../controllers/chop_shop/chop_shop_ctrl.dart';
 import '../widgets/component_selector.dart';
 
 final divisions = List<int>.generate(12, (i) => i + 1);
@@ -37,13 +36,25 @@ class CarBuilderPage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         actions: [
+          IconButton(
+            onPressed: state.canSave ? () async {
+              final success = await ref.read(chopShopCtrlProvider.notifier).saveBuild(state.toVehicle());
+
+              if (success) {
+                showSuccessToast("${state.name.value.trim()} saved.");
+              }
+            } : null,
+            icon: const Icon(Icons.save),
+          ),
           Padding(
             padding: const EdgeInsets.only(right: med),
             child: TextButton(
-              onPressed: state.isValid ? () {
-                ref.read(appServiceProvider.notifier).driveCar(CarState.fromCar(state.toVehicle()));
-                context.goNamed(AppRoute.carRecordSheet.name);
-              } : null,
+              onPressed: state.isValid
+                  ? () {
+                      ref.read(appServiceProvider.notifier).driveCar((state.toCarState()));
+                      context.goNamed(AppRoute.carRecordSheet.name);
+                    }
+                  : null,
               child: const Text(
                 "Drive",
                 style: TextStyle(fontFamily: 'Facon'),
@@ -157,14 +168,6 @@ class CarBuilderPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    if (state.chassis != Chassis.custom) ...[
-                      boxM,
-                      TextButton(
-                        onPressed: () =>
-                            showChassisPage(context: context, mode: SelectorMode.build, chassis: state.chassis),
-                        child: Text("Load ${state.chassis.toString()}"),
-                      ),
-                    ],
                     boxXXL,
                     LocationComps(
                       loc: Location.crew,

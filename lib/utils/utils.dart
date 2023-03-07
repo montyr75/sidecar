@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart' show Widget, EdgeInsets, Padding, Color, Colors;
+import 'package:oktoast/oktoast.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 import 'package:uuid/uuid.dart';
 
@@ -121,3 +122,11 @@ extension InstalledComponentX on InstalledComponent {
 
 T strToEnum<T extends Enum>(List<T> values, String str) => values.firstWhere((value) => value.name == str);
 T fullStrToEnum<T extends Enum>(List<T> values, String str) => values.firstWhere((value) => value.toString() == str);
+
+void showSuccessToast(String msg) {
+  showToast(msg, backgroundColor: Colors.green);
+}
+
+void showErrorToast(String msg) {
+  showToast(msg, backgroundColor: Colors.red);
+}

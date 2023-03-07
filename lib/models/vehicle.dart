@@ -29,7 +29,7 @@ class Vehicle implements Comparable<Vehicle> {
   int get cp => division;
 
   @override
-  String toString() => "$chassis (Division $division)";
+  String toString() => "$name: $chassis (Division $division)";
 
   @override
   int compareTo(Vehicle other) => name.compareTo(other.name);

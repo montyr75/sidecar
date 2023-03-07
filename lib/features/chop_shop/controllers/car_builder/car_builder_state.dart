@@ -116,6 +116,8 @@ class CarBuilderState {
     ].allTrue;
   }
 
+  bool get canSave => name.valid;
+
   Vehicle toVehicle() {
     final crew = components.allCrewComponents.map((value) => value.component.toKey()).toList();
     final front = components.getCarCompsByLoc(Location.front).map((value) => value.component.toKey()).toList();
@@ -127,6 +129,7 @@ class CarBuilderState {
 
     return Vehicle(
       version: version,
+      id: uuid.v4(),
       name: name.value.trim(),
       chassis: chassis,
       division: division,
@@ -141,4 +144,6 @@ class CarBuilderState {
       },
     );
   }
+
+  CarState toCarState() => CarState.fromCar(toVehicle());
 }

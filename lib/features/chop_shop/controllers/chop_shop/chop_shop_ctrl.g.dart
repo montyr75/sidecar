@@ -6,7 +6,7 @@ part of 'chop_shop_ctrl.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$chopShopCtrlHash() => r'0bb7d32248c146391b68bea4464d89fc896d755b';
+String _$chopShopCtrlHash() => r'5d18fe4b25f5cbe7f2b8f93db8e22172663ccde3';
 
 /// See also [ChopShopCtrl].
 @ProviderFor(ChopShopCtrl)

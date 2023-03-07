@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:oktoast/oktoast.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../app_config.dart';
+import '../../utils/utils.dart';
 
 part 'error_service.g.dart';
 
@@ -21,7 +21,7 @@ class ErrorService extends _$ErrorService {
     state = appError;
 
     if (appError.showAlert) {
-      showToast(appError.toString());
+      showErrorToast(appError.toString());
     }
   }
 }

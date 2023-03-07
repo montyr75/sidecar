@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:appwrite/appwrite.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -10,7 +8,7 @@ import '../../auth/services/auth_service.dart';
 
 part 'vehicle_repo.g.dart';
 
-const savedBuildsCollectionID = '64050cb357bad2510213';
+const savedBuildsCollectionID = '6406a0658671e31ab468';
 
 @riverpod
 VehicleRepo vehicleRepo(VehicleRepoRef ref) {
@@ -37,7 +35,8 @@ class VehicleRepo {
         documentId: ref.read(authServiceProvider).uid,
         data: const SavedBuilds().toJson(),
       );
-    } catch (e, st) {
+    }
+    catch (e, st) {
       _handleError(e, st);
     }
   }
@@ -50,32 +49,36 @@ class VehicleRepo {
         documentId: ref.read(authServiceProvider).uid,
       );
 
-      // doc.data['vehicles'] = (doc.data['vehicles'] as List<String>).map((value) => jsonDecode(value)).toList();
-
-      return SavedBuilds.fromJson(doc.data);
-    } on AppwriteException catch (e, st) {
+      return SavedBuilds.fromDbFormat(doc.data);
+    }
+    on AppwriteException catch (e, st) {
       if (e.type == "document_not_found") {
         return const SavedBuilds();
       }
 
       _handleError(e, st);
       return null;
-    } catch (e, st) {
+    }
+    catch (e, st) {
       _handleError(e, st);
       return null;
     }
   }
 
-  Future<void> saveSavedBuilds(SavedBuilds data) async {
+  Future<bool> saveSavedBuilds(SavedBuilds data) async {
     try {
       await _db.updateDocument(
         databaseId: dbID,
         collectionId: savedBuildsCollectionID,
         documentId: ref.read(authServiceProvider).uid,
-        data: data.toJson(),
+        data: data.toDbFormat(),
       );
-    } catch (e, st) {
+
+      return true;
+    }
+    catch (e, st) {
       _handleError(e, st);
+      return false;
     }
   }
 

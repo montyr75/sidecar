@@ -46,8 +46,8 @@ class ChopShopPage extends ConsumerWidget {
               ),
               boxXXL,
               PageNavButton(
-                label: "My Garage",
-                desc: "Manage saved vehicles",
+                label: "The Garage",
+                desc: "Manage your vehicles (${state.savedBuilds.vehicles.length})",
                 onPressed: () => context.pushNamed(AppRoute.carBuilder.name),
               ),
               boxXXL,

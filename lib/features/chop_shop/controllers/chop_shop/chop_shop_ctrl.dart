@@ -12,28 +12,37 @@ class ChopShopCtrl extends _$ChopShopCtrl {
   @override
   ChopShopState build() {
     _init();
-    return const ChopShopState();
+    return const ChopShopState(isLoading: true);
   }
 
   Future<void> _init() async {
     final savedBuilds = await ref.read(vehicleRepoProvider).getSavedBuilds();
 
     if (savedBuilds != null) {
-      state = state.copyWith(savedBuilds: savedBuilds);
+      state = state.copyWith(isLoading: false, savedBuilds: savedBuilds);
+    }
+    else {
+      state = state.copyWith(isLoading: false);
     }
   }
 
-  void saveBuild(Vehicle vehicle) {
+  Future<bool> saveBuild(Vehicle vehicle) async {
     final vehicles = state.savedBuilds.vehicles.toList()..add(vehicle);
 
     state = state.copyWith(
       savedBuilds: SavedBuilds(List<Vehicle>.unmodifiable(vehicles..sort())),
     );
 
-    _persistSavedBuilds();
+    state = state.copyWith(isLoading: true);
+
+    final success = await _persistSavedBuilds();
+
+    state = state.copyWith(isLoading: false);
+
+    return success;
   }
 
-  void _persistSavedBuilds() {
-    ref.read(vehicleRepoProvider).saveSavedBuilds(state.savedBuilds);
+  Future<bool> _persistSavedBuilds() async {
+    return ref.read(vehicleRepoProvider).saveSavedBuilds(state.savedBuilds);
   }
 }

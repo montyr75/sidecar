@@ -15,5 +15,5 @@ SavedBuilds _$SavedBuildsFromJson(Map<String, dynamic> json) => SavedBuilds(
 
 Map<String, dynamic> _$SavedBuildsToJson(SavedBuilds instance) =>
     <String, dynamic>{
-      'vehicles': instance.vehicles,
+      'vehicles': instance.vehicles.map((e) => e.toJson()).toList(),
     };

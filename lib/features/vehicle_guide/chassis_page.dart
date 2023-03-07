@@ -23,12 +23,14 @@ class ChassisPage extends ConsumerWidget {
   final SelectorMode mode;
   final Chassis chassis;
   final List<CarState> vehicles;
+  final VoidCallback onBack;
 
   const ChassisPage({
     Key? key,
     this.mode = SelectorMode.drive,
     required this.chassis,
     required this.vehicles,
+    required this.onBack,
   }) : super(key: key);
 
   @override
@@ -36,6 +38,10 @@ class ChassisPage extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: onBack,
+        ),
         title: Text(
           chassis.toString(),
           style: const TextStyle(fontSize: 22, fontFamily: 'Blazed', color: Colors.blueGrey),

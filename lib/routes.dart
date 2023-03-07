@@ -9,7 +9,7 @@ import 'features/auth/services/auth_service.dart';
 import 'features/car_record_sheet/car_record_sheet_page.dart';
 import 'features/chop_shop/pages/car_builder_page.dart';
 import 'features/chop_shop/pages/chop_shop_page.dart';
-import 'features/vehicle_guide/chassis_selector_page.dart';
+import 'features/vehicle_guide/vehicle_guide_selector_page.dart';
 import 'services/app/app_service.dart';
 
 part 'routes.g.dart';
@@ -50,7 +50,7 @@ GoRouter goRouter(GoRouterRef ref) {
           GoRoute(
             name: AppRoute.chassisSelector.name,
             path: AppRoute.chassisSelector.path,
-            builder: (context, state) => const ChassisSelectorPage(),
+            builder: (context, state) => const VehicleGuideSelectorPage(),
           ),
           GoRoute(
             name: AppRoute.chopShop.name,

@@ -70,7 +70,7 @@ class HomePage extends ConsumerWidget {
             children: [
               PageNavButton(
                 label: "Vehicle Guide",
-                desc: "Browse prebuilt vehicles",
+                desc: "Drive prebuilt vehicles",
                 onPressed: () => context.goNamed(AppRoute.chassisSelector.name),
               ),
               boxXXL,

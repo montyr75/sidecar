@@ -21,15 +21,25 @@ Vehicle _$VehicleFromJson(Map<String, dynamic> json) => Vehicle(
       ),
     );
 
-Map<String, dynamic> _$VehicleToJson(Vehicle instance) => <String, dynamic>{
-      'version': instance.version,
-      'id': instance.id,
-      'name': instance.name,
-      'vehicleType': _$VehicleTypeEnumMap[instance.vehicleType]!,
-      'chassis': _$ChassisEnumMap[instance.chassis]!,
-      'division': instance.division,
-      'locs': instance.locs.map((k, e) => MapEntry(_$LocationEnumMap[k]!, e)),
-    };
+Map<String, dynamic> _$VehicleToJson(Vehicle instance) {
+  final val = <String, dynamic>{
+    'version': instance.version,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('id', instance.id);
+  val['name'] = instance.name;
+  val['vehicleType'] = _$VehicleTypeEnumMap[instance.vehicleType]!;
+  val['chassis'] = _$ChassisEnumMap[instance.chassis]!;
+  val['division'] = instance.division;
+  val['locs'] = instance.locs.map((k, e) => MapEntry(_$LocationEnumMap[k]!, e));
+  return val;
+}
 
 const _$VehicleTypeEnumMap = {
   VehicleType.car: 'car',
