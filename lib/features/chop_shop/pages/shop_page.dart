@@ -37,10 +37,12 @@ class ShopPage extends ConsumerWidget {
       appBar: AppBar(
         centerTitle: true,
         actions: [
-          IconButton(
-            tooltip: "Save Vehicle",
+          TextButton(
             onPressed: state.canSave ? () => _saveBuild(context, ref, state) : null,
-            icon: const Icon(Icons.save),
+            child: const Text(
+              "Save",
+              style: TextStyle(fontFamily: 'Facon'),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: med),
@@ -520,30 +522,12 @@ class LocationComps extends ConsumerWidget {
           padding: const EdgeInsets.only(top: sm),
           child: ComponentHeader(
             component: component,
+            onSelected: component.name != 'Hand Cannon' ? () => onRemoved(component) : null,
+            selectionText: "Remove",
           ),
         ),
         bodyBuilder: (context, isExpanded) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ComponentBody(component: component, expandable: true),
-              if (component.name != 'Hand Cannon')
-                Container(
-                  height: 40,
-                  margin: const EdgeInsets.only(right: 64),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child: Center(
-                    child: TextButton(
-                      onPressed: () => onRemoved(component),
-                      child: const Text('Remove'),
-                    ),
-                  ),
-                ),
-            ],
-          );
+          return ComponentBody(component: component, expandable: true);
         },
         data: component,
       );

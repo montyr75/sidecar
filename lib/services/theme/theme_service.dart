@@ -2,6 +2,7 @@ import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
+import '../../utils/screen_utils.dart';
 import 'theme_state.dart';
 
 part 'theme_service.g.dart';
@@ -53,6 +54,15 @@ class ThemeService extends _$ThemeService {
 
     return data.copyWith(
       dividerColor: Colors.white12,
+      inputDecorationTheme: InputDecorationTheme(
+        border: OutlineInputBorder(
+          borderSide: const BorderSide(color: Colors.white24),
+          borderRadius: radiusM,
+        ),
+      ),
+      popupMenuTheme: const PopupMenuThemeData(
+        color: Colors.black87,
+      ),
       // textTheme: textTheme,
     );
   }
