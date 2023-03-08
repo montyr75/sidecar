@@ -107,6 +107,7 @@ class ShopState {
   bool hasComponentTypeByLoc(Location loc, ComponentType type) =>
       components.any((value) => value.type == type && value.loc == loc);
 
+  bool hasComponentByName(String name) => components.any((value) => value.name == name);
   bool hasComponentBySubtype(ComponentSubtype subtype) => components.any((value) => value.subtype == subtype);
 
   bool get isValid {

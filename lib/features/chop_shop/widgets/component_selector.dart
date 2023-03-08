@@ -70,6 +70,7 @@ class _ComponentSelectorState extends ConsumerState<ComponentSelector> {
         component.hasAttribute(Attribute.requiresDiv6) && state.division < 6,
         component.type == ComponentType.upgrade && component.hasSubtype && state.hasComponentBySubtype(component.subtype!),
         component.type == ComponentType.gear && component.hasSubtype && state.hasComponentBySubtype(component.subtype!),
+        component.type == ComponentType.accessory && state.hasComponentByName(component.name),
       ];
 
       return ExpandableItem<InstalledComponent>(
