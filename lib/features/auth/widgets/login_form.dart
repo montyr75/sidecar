@@ -77,7 +77,7 @@ class _PasswordInput extends ConsumerWidget {
     return TextFormField(
       key: const Key('${formName}_${inputName}_textField'),
       initialValue: field.value,
-      // obscureText: true,
+      obscureText: true,
       onChanged: ref.read(loginFormCtrlProvider.notifier).passwordChanged,
       onFieldSubmitted: (_) => ref.read(loginFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.visiblePassword,

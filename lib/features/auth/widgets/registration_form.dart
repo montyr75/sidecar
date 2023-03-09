@@ -109,7 +109,7 @@ class _PasswordInput extends ConsumerWidget {
     return TextFormField(
       key: const Key('${formName}_${inputName}_textField'),
       initialValue: field.value,
-      // obscureText: true,
+      obscureText: true,
       onChanged: (value) => ref.read(registrationFormCtrlProvider.notifier).passwordChanged(value),
       onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.visiblePassword,
@@ -138,7 +138,7 @@ class _ConfirmPasswordInput extends ConsumerWidget {
     return TextFormField(
       key: const Key('${formName}_${inputName}_textField'),
       initialValue: field.value,
-      // obscureText: true,
+      obscureText: true,
       onChanged: (value) => ref.read(registrationFormCtrlProvider.notifier).confirmPasswordChanged(value),
       onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.visiblePassword,
