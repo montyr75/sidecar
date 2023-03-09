@@ -62,7 +62,6 @@ class _ComponentSelectorState extends ConsumerState<ComponentSelector> {
 
     return value.map<ExpandableItem<InstalledComponent>>((component) {
       final disqualifiers = [
-        component.hasRestriction(Restriction.exclusive) && state.hasRestriction(Restriction.exclusive),
         component.hasRestriction(Restriction.frontOnly) && widget.loc != Location.front,
         component.hasRestriction(Restriction.backOnly) && widget.loc != Location.back,
         component.hasRestriction(Restriction.frontBack) && (widget.loc != Location.front && widget.loc != Location.back),

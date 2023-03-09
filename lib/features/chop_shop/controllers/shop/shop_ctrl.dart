@@ -62,16 +62,22 @@ class ShopCtrl extends _$ShopCtrl {
   void addComponent(Location loc, InstalledComponent component) {
     InstalledComponent? Function() compFinder = () => null;
 
-    if (component.isDriver || component.isGunner) {
-      compFinder = () => state.components.firstWhereOrNull((value) => value.subtype == component.subtype);
-    } else if (component.isAccessory || component.isSidearm) {
-      compFinder = () => state.components.firstWhereOrNull((value) => value.name == component.name);
-    } else if (component.isUpgrade || component.isGear) {
+    if (component.hasRestriction(Restriction.exclusive)) {
+      compFinder = () => state.components.firstWhereOrNull((value) => value.hasRestriction(Restriction.exclusive));
+    }
+    else if (component.isDriver || component.isGunner) {
+      compFinder = () => state.components.firstWhereOrNull((value) => value.type == component.type && value.subtype == component.subtype);
+    }
+    else if (component.isAccessory || component.isSidearm) {
+      compFinder = () => state.components.firstWhereOrNull((value) => value.type == component.type && value.name == component.name);
+    }
+    else if (component.isUpgrade || component.isGear) {
       compFinder = () => state.components
-          .firstWhereOrNull((value) => value.name == component.name || value.subtype == component.subtype);
-    } else if (component.isStructure && component.loc == loc) {
+          .firstWhereOrNull((value) => value.type == component.type && (value.name == component.name || (value.hasSubtype && value.subtype == component.subtype)));
+    }
+    else if (component.isStructure && component.loc == loc) {
       compFinder = () => state.components
-          .firstWhereOrNull((value) => value.type == ComponentType.structure && value.loc == component.loc);
+          .firstWhereOrNull((value) => value.type == component.type && value.loc == component.loc);
     }
 
     final existingComp = compFinder();
