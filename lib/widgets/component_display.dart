@@ -139,7 +139,7 @@ class ComponentHeader extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: med, vertical: med),
                       child: Text(
-                        "${component.loc.toVehicleGuideString().isNotEmpty ? '${component.loc.toVehicleGuideString()} ' : ''}$endash ${component.source.toAbbrString()}",
+                        "${component.loc.toVehicleGuideString().isNotEmpty ? '${component.loc.toVehicleGuideString()} $endash ' : ''}${component.source.toAbbrString()}",
                         style: TextStyle(
                           fontSize: 10,
                           color: component.type != ComponentType.sidearm ? Colors.white : Colors.black,
