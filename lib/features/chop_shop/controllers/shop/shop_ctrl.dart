@@ -60,11 +60,32 @@ class ShopCtrl extends _$ShopCtrl {
   }
 
   void addComponent(Location loc, InstalledComponent component) {
-    final comps = state.components.toList()
-      ..addAll([
-        component,
-        if (component.hasAttribute(Attribute.paired)) component,
-      ]);
+    InstalledComponent? Function() compFinder = () => null;
+
+    if (component.isDriver || component.isGunner) {
+      compFinder = () => state.components.firstWhereOrNull((value) => value.subtype == component.subtype);
+    } else if (component.isAccessory || component.isSidearm) {
+      compFinder = () => state.components.firstWhereOrNull((value) => value.name == component.name);
+    } else if (component.isUpgrade || component.isGear) {
+      compFinder = () => state.components
+          .firstWhereOrNull((value) => value.name == component.name || value.subtype == component.subtype);
+    } else if (component.isStructure && component.loc == loc) {
+      compFinder = () => state.components
+          .firstWhereOrNull((value) => value.type == ComponentType.structure && value.loc == component.loc);
+    }
+
+    final existingComp = compFinder();
+
+    final comps = state.components.toList();
+
+    if (existingComp != null) {
+      comps.remove(existingComp);
+    }
+
+    comps.addAll([
+      component,
+      if (component.hasAttribute(Attribute.paired)) component,
+    ]);
 
     final newState = state.copyWith(
       components: List<InstalledComponent>.unmodifiable(comps),

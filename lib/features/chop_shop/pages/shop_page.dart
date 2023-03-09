@@ -196,6 +196,7 @@ class ShopPage extends ConsumerWidget {
                       onSelected: (value) => ctrl.addComponent(Location.upgrade, value),
                       onRemoved: (value) => ctrl.removeComponent(value),
                     ),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -352,9 +353,6 @@ class LocationComps extends ConsumerWidget {
   }
 
   Widget _buildAddMenu(BuildContext context, WidgetRef ref) {
-    final initialState = ref.read(appServiceProvider).initialCarBuilderState;
-    final state = ref.read(shopCtrlProvider(initialState));
-
     if (loc == Location.crew) {
       return PopupMenuButton<String>(
         tooltip: "Add crew",
@@ -388,16 +386,14 @@ class LocationComps extends ConsumerWidget {
           );
         },
         itemBuilder: (BuildContext context) => [
-          if (!state.hasDriver)
-            const PopupMenuItem<String>(
-              value: "Driver",
-              child: Text('Driver'),
-            ),
-          if (!state.hasGunner)
-            const PopupMenuItem<String>(
-              value: "Gunner",
-              child: Text('Gunner'),
-            ),
+          const PopupMenuItem<String>(
+            value: "Driver",
+            child: Text('Driver'),
+          ),
+          const PopupMenuItem<String>(
+            value: "Gunner",
+            child: Text('Gunner'),
+          ),
           const PopupMenuItem<String>(
             value: "Sidearm",
             child: Text('Sidearm'),
@@ -450,11 +446,6 @@ class LocationComps extends ConsumerWidget {
         child: const Icon(Icons.add),
       );
     } else {
-      final List<bool> structureDisqualifiers = [
-        state.hasComponentTypeByLoc(loc, ComponentType.structure),
-        state.componentTypeCount(ComponentType.structure) >= 4,
-      ];
-
       return PopupMenuButton<ComponentType>(
         tooltip: "Add car components",
         shape: RoundedRectangleBorder(borderRadius: radiusM),
@@ -487,8 +478,7 @@ class LocationComps extends ConsumerWidget {
         itemBuilder: (BuildContext context) => [
           PopupMenuItem(value: ComponentType.weapon, child: Text(ComponentType.weapon.toString())),
           PopupMenuItem(value: ComponentType.accessory, child: Text(ComponentType.accessory.toString())),
-          if (!structureDisqualifiers.anyTrue)
-            PopupMenuItem(value: ComponentType.structure, child: Text(ComponentType.structure.toString())),
+          PopupMenuItem(value: ComponentType.structure, child: Text(ComponentType.structure.toString())),
         ],
         child: const Icon(Icons.add),
       );

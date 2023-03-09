@@ -173,6 +173,14 @@ class InstalledComponent implements Comparable {
   bool get isExpendable =>
       hasAttribute(Attribute.expendable) || hasRestriction(Restriction.oneShot);
 
+  bool get isDriver => subtype == ComponentSubtype.driver;
+  bool get isGunner => subtype == ComponentSubtype.gunner;
+  bool get isSidearm => type == ComponentType.sidearm;
+  bool get isGear => type == ComponentType.gear;
+  bool get isAccessory => type == ComponentType.accessory;
+  bool get isUpgrade => type == ComponentType.upgrade;
+  bool get isStructure => type == ComponentType.structure;
+
   bool get isWeapon => component is Weapon;
   Weapon get weapon => component as Weapon;
   bool get hasWrenchResult => isWeapon && (component as Weapon).hasWrenchResult;

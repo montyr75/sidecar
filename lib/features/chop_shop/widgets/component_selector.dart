@@ -62,15 +62,11 @@ class _ComponentSelectorState extends ConsumerState<ComponentSelector> {
 
     return value.map<ExpandableItem<InstalledComponent>>((component) {
       final disqualifiers = [
-        component.type != ComponentType.weapon && state.hasMatchingComponentByLoc(widget.loc, component),
         component.hasRestriction(Restriction.exclusive) && state.hasRestriction(Restriction.exclusive),
         component.hasRestriction(Restriction.frontOnly) && widget.loc != Location.front,
         component.hasRestriction(Restriction.backOnly) && widget.loc != Location.back,
         component.hasRestriction(Restriction.frontBack) && (widget.loc != Location.front && widget.loc != Location.back),
         component.hasAttribute(Attribute.requiresDiv6) && state.division < 6,
-        component.type == ComponentType.upgrade && component.hasSubtype && state.hasComponentBySubtype(component.subtype!),
-        component.type == ComponentType.gear && component.hasSubtype && state.hasComponentBySubtype(component.subtype!),
-        component.type == ComponentType.accessory && state.hasComponentByName(component.name),
       ];
 
       return ExpandableItem<InstalledComponent>(
