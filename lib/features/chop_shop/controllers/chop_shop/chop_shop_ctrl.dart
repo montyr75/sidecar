@@ -30,7 +30,7 @@ class ChopShopCtrl extends _$ChopShopCtrl {
   Future<bool> saveBuild(Vehicle vehicle) async {
     final vehicles = state.savedBuilds.vehicles.toList();
 
-    final existingVehicle = state.savedBuilds.getVehicleByID(vehicle.id);
+    final existingVehicle = state.savedBuilds.getVehicleByNameAndDivision(vehicle.name, vehicle.division);
 
     if (existingVehicle != null) {
       vehicles.replaceWith(existingVehicle, vehicle);

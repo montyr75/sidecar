@@ -72,7 +72,7 @@ class VehicleBrowser extends StatelessWidget {
                     ),
                     if (selectionTypes.contains(VehicleSelectionType.delete)) IconButton(
                       onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.delete, vehicle: carState.car)),
-                      icon: const Icon(Icons.delete),
+                      icon: Icon(Icons.delete, color: Theme.of(context).primaryColor,),
                       tooltip: "Dump Vehicle",
                     ),
                   ].joinWidgetList(boxM).toList(),

@@ -28,5 +28,5 @@ class SavedBuilds {
   }
 
   bool vehicleExists(String name, int division) => vehicles.any((value) => value.name == name.trim() && value.division == division);
-  Vehicle? getVehicleByID(String id) => vehicles.firstWhereOrNull((value) => value.id == id);
+  Vehicle? getVehicleByNameAndDivision(String name, int division) => vehicles.firstWhereOrNull((value) => value.name == name.trim() && value.division == division);
 }

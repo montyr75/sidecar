@@ -65,30 +65,48 @@ class _EmailInput extends ConsumerWidget {
   }
 }
 
-class _PasswordInput extends ConsumerWidget {
-  static const inputName = "Password";
-
-  const _PasswordInput({Key? key}) : super(key: key);
+class _PasswordInput extends ConsumerStatefulWidget {
+  const _PasswordInput({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState createState() => __PasswordInputState();
+}
+
+class __PasswordInputState extends ConsumerState<_PasswordInput> {
+  static const inputName = "Password";
+
+  bool _obscure = true;
+
+  @override
+  Widget build(BuildContext context) {
     final field = ref.watch(loginFormCtrlProvider.select((state) => state.password));
 
     return TextFormField(
       key: const Key('${formName}_${inputName}_textField'),
       initialValue: field.value,
-      obscureText: true,
+      obscureText: _obscure,
       onChanged: ref.read(loginFormCtrlProvider.notifier).passwordChanged,
       onFieldSubmitted: (_) => ref.read(loginFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.go,
-      enableSuggestions: false,
       autocorrect: false,
+      enableSuggestions: false,
+      enableIMEPersonalizedLearning: false,
       autofillHints: const [AutofillHints.password],
       decoration: InputDecoration(
         labelText: inputName,
         errorText: field.invalid ? field.error!.errorMsg : null,
         isDense: true,
+        suffixIcon: IconButton(
+          onPressed: () {
+            setState(() {
+              _obscure = !_obscure;
+            });
+          },
+          icon: _obscure ? const Icon(Icons.visibility) : const Icon(Icons.visibility_off),
+        ),
       ),
     );
   }

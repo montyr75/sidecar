@@ -5,13 +5,13 @@ flutter_icons:
 #  min_sdk_android: 21 # android min sdk min:16, default 21
   web:
     generate: true
-    image_path: "assets/images/icons/launcher/Web/icons8-speed-windows-11-outline-32.png"
+    image_path: "assets/images/icons/launcher/Web/icons8-car-smashingstocks-flat-32.png"
     background_color: "#888888"
 #    theme_color: "#hexcode"
   windows:
     generate: true
-    image_path: "assets/images/icons/launcher/Windows/icons8-speed-windows-11-outline-70.png"
+    image_path: "assets/images/icons/launcher/Windows/icons8-car-smashingstocks-flat-70.png"
     icon_size: 70 # min:48, max:256, default: 48
   macos:
     generate: false
-    image_path: "assets/images/icons/launcher/Windows/icons8-speed-windows-11-outline-70.png"
+    image_path: "assets/images/icons/launcher/Windows/icons8-car-smashingstocks-flat-70.png"

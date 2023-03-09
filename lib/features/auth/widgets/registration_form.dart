@@ -114,8 +114,9 @@ class _PasswordInput extends ConsumerWidget {
       onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.next,
-      enableSuggestions: false,
       autocorrect: false,
+      enableSuggestions: false,
+      enableIMEPersonalizedLearning: false,
       autofillHints: const [AutofillHints.newPassword],
       decoration: InputDecoration(
         labelText: inputName,
@@ -143,8 +144,9 @@ class _ConfirmPasswordInput extends ConsumerWidget {
       onFieldSubmitted: (_) => ref.read(registrationFormCtrlProvider.notifier).submit(),
       keyboardType: TextInputType.visiblePassword,
       textInputAction: TextInputAction.go,
-      enableSuggestions: false,
       autocorrect: false,
+      enableSuggestions: false,
+      enableIMEPersonalizedLearning: false,
       autofillHints: const [AutofillHints.newPassword],
       decoration: InputDecoration(
         labelText: inputName,

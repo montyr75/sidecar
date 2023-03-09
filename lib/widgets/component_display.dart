@@ -108,7 +108,11 @@ class ComponentHeader extends StatelessWidget {
                     ),
                     if (onSelected != null) ...[
                       const Spacer(),
-                      TextButton(
+                      OutlinedButton(
+                        style: OutlinedButton.styleFrom(
+                          side: const BorderSide(color: Colors.black),
+                          shape: const StadiumBorder(),
+                        ),
                         onPressed: onSelected,
                         child: Text(
                           selectionText,

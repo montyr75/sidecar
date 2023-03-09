@@ -1,5 +1,6 @@
 import 'dart:math' as math;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Widget, EdgeInsets, Padding, Color, Colors;
 import 'package:oktoast/oktoast.dart';
 import 'package:tinycolor2/tinycolor2.dart';
@@ -125,7 +126,13 @@ T strToEnum<T extends Enum>(List<T> values, String str) => values.firstWhere((va
 T fullStrToEnum<T extends Enum>(List<T> values, String str) => values.firstWhere((value) => value.toString() == str);
 
 void showSuccessToast(String msg) {
-  showToast(msg, backgroundColor: Colors.green);
+  showToast(
+    msg,
+    backgroundColor: Colors.green,
+    textStyle: const TextStyle(
+      fontSize: 22,
+    ),
+  );
 }
 
 void showErrorToast(String msg) {
