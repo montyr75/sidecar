@@ -2,53 +2,57 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../data/cars.dart';
-import '../../data/components.dart' as db;
-import '../../models/components.dart';
-import '../../models/enums.dart';
-import '../../routes.dart';
-import '../../services/app/app_service.dart';
-import '../../utils/screen_utils.dart';
-import '../../utils/utils.dart';
-import '../../widgets/component_display.dart';
-import '../../widgets/panel_list.dart';
-import '../car_record_sheet/controller/car_state.dart';
-import '../car_selector/chassis_page.dart';
-import '../car_selector/chassis_selector_page.dart';
-import 'controller/car_builder_ctrl.dart';
-import 'controller/car_builder_state.dart';
-import 'widgets/component_selector.dart';
+import '../../../data/components.dart' as db;
+import '../../../models/components.dart';
+import '../../../models/enums.dart';
+import '../../../models/form_models.dart';
+import '../../../routes.dart';
+import '../../../services/app/app_service.dart';
+import '../../../utils/popup_utils.dart';
+import '../../../utils/screen_utils.dart';
+import '../../../utils/utils.dart';
+import '../../../widgets/component_display.dart';
+import '../../../widgets/panel_list.dart';
+import '../../car_record_sheet/controller/car_state.dart';
+import '../controllers/chop_shop/chop_shop_ctrl.dart';
+import '../controllers/shop/shop_ctrl.dart';
+import '../controllers/shop/shop_state.dart';
+import '../widgets/component_selector.dart';
 
 final divisions = List<int>.generate(12, (i) => i + 1);
 
-class CarBuilderPage extends ConsumerWidget {
+class ShopPage extends ConsumerWidget {
   static const labelStyle = TextStyle(fontFamily: 'Facon', color: Colors.blueGrey);
 
-  const CarBuilderPage({Key? key}) : super(key: key);
+  const ShopPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final initialState = ref.watch(appServiceProvider.select((value) => value.initialCarBuilderState));
 
-    final ctrl = ref.read(carBuilderCtrlProvider(initialState).notifier);
-    final state = ref.watch(carBuilderCtrlProvider(initialState));
+    final ctrl = ref.read(shopCtrlProvider(initialState).notifier);
+    final state = ref.watch(shopCtrlProvider(initialState));
 
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: IconButton(
-          tooltip: "Home",
-          onPressed: () => context.goNamed(AppRoute.home.name),
-          icon: const Icon(Icons.home),
-        ),
         actions: [
+          TextButton(
+            onPressed: state.canSave ? () => _saveBuild(context, ref, state) : null,
+            child: const Text(
+              "Save",
+              style: TextStyle(fontFamily: 'Facon'),
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(right: med),
             child: TextButton(
-              onPressed: state.canDrive ? () {
-                ref.read(appServiceProvider.notifier).driveCar(CarState.fromCar(state.toCar()));
-                context.goNamed(AppRoute.carRecordSheet.name);
-              } : null,
+              onPressed: state.isValid
+                  ? () {
+                      ref.read(appServiceProvider.notifier).drive((state.toCarState()));
+                      context.goNamed(AppRoute.carRecordSheet.name);
+                    }
+                  : null,
               child: const Text(
                 "Drive",
                 style: TextStyle(fontFamily: 'Facon'),
@@ -57,7 +61,7 @@ class CarBuilderPage extends ConsumerWidget {
           ),
         ],
         title: const Text(
-          "Car Builder",
+          "The Shop",
           style: TextStyle(
             fontSize: 22,
             fontFamily: 'Blazed',
@@ -76,6 +80,14 @@ class CarBuilderPage extends ConsumerWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
+                    SizedBox(
+                      width: 350,
+                      child: _NameInput(
+                        field: state.name,
+                        onChanged: (value) => ctrl.nameChanged(value),
+                      ),
+                    ),
+                    boxXXL,
                     _PointBar(state: state),
                     boxXXL,
                     Row(
@@ -89,7 +101,7 @@ class CarBuilderPage extends ConsumerWidget {
                             children: [
                               const Text("Chassis", style: labelStyle),
                               boxS,
-                              DropdownButtonFormField<CarChassisType>(
+                              DropdownButtonFormField<Chassis>(
                                 value: state.chassis,
                                 onChanged: (value) => ctrl.onChassisChanged(value!),
                                 decoration: InputDecoration(
@@ -100,8 +112,8 @@ class CarBuilderPage extends ConsumerWidget {
                                   ),
                                   filled: false,
                                 ),
-                                items: CarChassisType.values.map<DropdownMenuItem<CarChassisType>>((value) {
-                                  return DropdownMenuItem<CarChassisType>(
+                                items: Chassis.values.map<DropdownMenuItem<Chassis>>((value) {
+                                  return DropdownMenuItem<Chassis>(
                                     value: value,
                                     child: SizedBox(
                                       width: 175,
@@ -154,14 +166,6 @@ class CarBuilderPage extends ConsumerWidget {
                         ),
                       ],
                     ),
-                    if (state.chassis != CarChassisType.custom) ...[
-                      boxM,
-                      TextButton(
-                        onPressed: () =>
-                            showChassisPage(context, mode: CarSelectorMode.build, chassis: cars[state.chassis]!),
-                        child: Text("Load ${state.chassis.toString()}"),
-                      ),
-                    ],
                     boxXXL,
                     LocationComps(
                       loc: Location.crew,
@@ -192,6 +196,7 @@ class CarBuilderPage extends ConsumerWidget {
                       onSelected: (value) => ctrl.addComponent(Location.upgrade, value),
                       onRemoved: (value) => ctrl.removeComponent(value),
                     ),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -201,10 +206,31 @@ class CarBuilderPage extends ConsumerWidget {
       ),
     );
   }
+
+  Future<void> _saveBuild(BuildContext context, WidgetRef ref, ShopState state) async {
+    final chopShopState = ref.read(chopShopCtrlProvider);
+
+    if (chopShopState.savedBuilds.vehicleExists(state.name.value.trim(), state.division)) {
+      final confirm = await showConfirmDialog(
+        context: context,
+        message: "This vehicle name/division combination already exists. Are you sure you want to overwrite it?",
+      );
+
+      if (!confirm) {
+        return;
+      }
+    }
+
+    final success = await ref.read(chopShopCtrlProvider.notifier).saveBuild(state.toVehicle());
+
+    if (success) {
+      showSuccessToast("${state.name.value.trim()} saved.");
+    }
+  }
 }
 
 class _PointBar extends StatelessWidget {
-  final CarBuilderState state;
+  final ShopState state;
 
   const _PointBar({Key? key, required this.state}) : super(key: key);
 
@@ -281,7 +307,7 @@ class _PointDisplay extends StatelessWidget {
               alignment: Alignment.bottomRight,
               child: Padding(
                 padding: paddingAllM,
-                child: Text(label, style: CarBuilderPage.labelStyle),
+                child: Text(label, style: ShopPage.labelStyle),
               ),
             ),
           ],
@@ -316,7 +342,7 @@ class LocationComps extends ConsumerWidget {
           children: [
             Text(
               "${loc.toString()}${loc == Location.upgrade ? 's' : ''}",
-              style: CarBuilderPage.labelStyle,
+              style: ShopPage.labelStyle,
             ),
             _buildAddMenu(context, ref),
           ],
@@ -327,12 +353,11 @@ class LocationComps extends ConsumerWidget {
   }
 
   Widget _buildAddMenu(BuildContext context, WidgetRef ref) {
-    final initialState = ref.read(appServiceProvider).initialCarBuilderState;
-    final state = ref.read(carBuilderCtrlProvider(initialState));
-
     if (loc == Location.crew) {
       return PopupMenuButton<String>(
         tooltip: "Add crew",
+        shape: RoundedRectangleBorder(borderRadius: radiusM),
+        offset: const Offset(0, 30),
         onSelected: (item) {
           List<Component> selectables;
 
@@ -361,16 +386,14 @@ class LocationComps extends ConsumerWidget {
           );
         },
         itemBuilder: (BuildContext context) => [
-          if (!state.hasDriver)
-            const PopupMenuItem<String>(
-              value: "Driver",
-              child: Text('Driver'),
-            ),
-          if (!state.hasGunner)
-            const PopupMenuItem<String>(
-              value: "Gunner",
-              child: Text('Gunner'),
-            ),
+          const PopupMenuItem<String>(
+            value: "Driver",
+            child: Text('Driver'),
+          ),
+          const PopupMenuItem<String>(
+            value: "Gunner",
+            child: Text('Gunner'),
+          ),
           const PopupMenuItem<String>(
             value: "Sidearm",
             child: Text('Sidearm'),
@@ -385,6 +408,8 @@ class LocationComps extends ConsumerWidget {
     } else if (loc == Location.turret) {
       return PopupMenuButton<String>(
         tooltip: "Add turreted weapon",
+        shape: RoundedRectangleBorder(borderRadius: radiusM),
+        offset: const Offset(0, 30),
         onSelected: (item) {
           List<Component> selectables = db.components.values.getCompByAttr(Attribute.turret);
 
@@ -403,6 +428,8 @@ class LocationComps extends ConsumerWidget {
     } else if (loc == Location.upgrade) {
       return PopupMenuButton<String>(
         tooltip: "Add upgrade",
+        shape: RoundedRectangleBorder(borderRadius: radiusM),
+        offset: const Offset(0, 30),
         onSelected: (item) {
           List<Component> selectables = db.components.values.upgrades;
 
@@ -419,13 +446,10 @@ class LocationComps extends ConsumerWidget {
         child: const Icon(Icons.add),
       );
     } else {
-      final structureDisqualifiers = [
-        state.hasComponentTypeByLoc(loc, ComponentType.structure),
-        state.componentTypeCount(ComponentType.structure) >= 4,
-      ];
-
       return PopupMenuButton<ComponentType>(
         tooltip: "Add car components",
+        shape: RoundedRectangleBorder(borderRadius: radiusM),
+        offset: const Offset(0, 30),
         onSelected: (item) {
           List<Component> selectables;
 
@@ -454,8 +478,7 @@ class LocationComps extends ConsumerWidget {
         itemBuilder: (BuildContext context) => [
           PopupMenuItem(value: ComponentType.weapon, child: Text(ComponentType.weapon.toString())),
           PopupMenuItem(value: ComponentType.accessory, child: Text(ComponentType.accessory.toString())),
-          if (!structureDisqualifiers.anyTrue)
-            PopupMenuItem(value: ComponentType.structure, child: Text(ComponentType.structure.toString())),
+          PopupMenuItem(value: ComponentType.structure, child: Text(ComponentType.structure.toString())),
         ],
         child: const Icon(Icons.add),
       );
@@ -489,33 +512,43 @@ class LocationComps extends ConsumerWidget {
           padding: const EdgeInsets.only(top: sm),
           child: ComponentHeader(
             component: component,
+            onSelected: component.name != 'Hand Cannon' ? () => onRemoved(component) : null,
+            selectionText: "Remove",
           ),
         ),
         bodyBuilder: (context, isExpanded) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ComponentBody(component: component, expandable: true),
-              if (component.name != 'Hand Cannon')
-                Container(
-                  height: 40,
-                  margin: const EdgeInsets.only(right: 64),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    border: Border.all(color: Colors.grey),
-                  ),
-                  child: Center(
-                    child: TextButton(
-                      onPressed: () => onRemoved(component),
-                      child: const Text('Remove'),
-                    ),
-                  ),
-                ),
-            ],
-          );
+          return ComponentBody(component: component, expandable: true);
         },
         data: component,
       );
     }).toList();
+  }
+}
+
+class _NameInput extends StatelessWidget {
+  static const inputName = "Name";
+
+  final RequiredStringFormField field;
+  final ValueChanged<String> onChanged;
+
+  const _NameInput({Key? key, required this.field, required this.onChanged}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      key: const Key('cb_${inputName}_textField'),
+      initialValue: field.value,
+      autofocus: true,
+      onChanged: onChanged,
+      // onChanged: (value) => ref.read(carBuilderCtrlProvider.notifier).usernameChanged(value),
+      keyboardType: TextInputType.name,
+      enableSuggestions: false,
+      autocorrect: false,
+      decoration: InputDecoration(
+        labelText: inputName,
+        errorText: field.invalid ? field.error!.errorMsg : null,
+        isDense: true,
+      ),
+    );
   }
 }

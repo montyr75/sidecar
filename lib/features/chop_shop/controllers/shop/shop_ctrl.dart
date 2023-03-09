@@ -3,18 +3,19 @@ import 'dart:async';
 import 'package:collection/collection.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../../data/components.dart';
-import '../../../models/components.dart';
-import '../../../models/enums.dart';
-import '../../car_record_sheet/controller/car_state.dart';
-import 'car_builder_state.dart';
+import '../../../../data/components.dart';
+import '../../../../models/components.dart';
+import '../../../../models/enums.dart';
+import '../../../../models/form_models.dart';
+import '../../../car_record_sheet/controller/car_state.dart';
+import '../shop/shop_state.dart';
 
-part 'car_builder_ctrl.g.dart';
+part 'shop_ctrl.g.dart';
 
 @riverpod
-class CarBuilderCtrl extends _$CarBuilderCtrl {
+class ShopCtrl extends _$ShopCtrl {
   @override
-  CarBuilderState build([CarBuilderState? initialValue]) {
+  ShopState build([ShopState? initialValue]) {
     if (initialValue == null) {
       scheduleMicrotask(() {
         addComponent(
@@ -27,14 +28,18 @@ class CarBuilderCtrl extends _$CarBuilderCtrl {
         );
       });
 
-      return const CarBuilderState();
+      return const ShopState();
     }
 
     scheduleMicrotask(() => onDivisionChanged(initialValue.division));
     return initialValue;
   }
 
-  void onChassisChanged(CarChassisType value) {
+  void nameChanged(String value) {
+    state = state.copyWith(name: RequiredStringFormField.dirty(value));
+  }
+
+  void onChassisChanged(Chassis value) {
     state = state.copyWith(chassis: value);
   }
 
@@ -55,11 +60,32 @@ class CarBuilderCtrl extends _$CarBuilderCtrl {
   }
 
   void addComponent(Location loc, InstalledComponent component) {
-    final comps = state.components.toList()
-      ..addAll([
-        component,
-        if (component.hasAttribute(Attribute.paired)) component,
-      ]);
+    InstalledComponent? Function() compFinder = () => null;
+
+    if (component.isDriver || component.isGunner) {
+      compFinder = () => state.components.firstWhereOrNull((value) => value.subtype == component.subtype);
+    } else if (component.isAccessory || component.isSidearm) {
+      compFinder = () => state.components.firstWhereOrNull((value) => value.name == component.name);
+    } else if (component.isUpgrade || component.isGear) {
+      compFinder = () => state.components
+          .firstWhereOrNull((value) => value.name == component.name || value.subtype == component.subtype);
+    } else if (component.isStructure && component.loc == loc) {
+      compFinder = () => state.components
+          .firstWhereOrNull((value) => value.type == ComponentType.structure && value.loc == component.loc);
+    }
+
+    final existingComp = compFinder();
+
+    final comps = state.components.toList();
+
+    if (existingComp != null) {
+      comps.remove(existingComp);
+    }
+
+    comps.addAll([
+      component,
+      if (component.hasAttribute(Attribute.paired)) component,
+    ]);
 
     final newState = state.copyWith(
       components: List<InstalledComponent>.unmodifiable(comps),
@@ -99,5 +125,11 @@ class CarBuilderCtrl extends _$CarBuilderCtrl {
     );
 
     onDivisionChanged(state.division);
+  }
+
+  void saveBuild() {
+    if (state.isValid) {
+      // TODO: Save the build to the db.
+    }
   }
 }

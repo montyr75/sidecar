@@ -1,9 +1,11 @@
-import '../../features/car_builder/controller/car_builder_state.dart';
+import 'package:quiver/core.dart' show Optional;
+
 import '../../features/car_record_sheet/controller/car_state.dart';
+import '../../features/chop_shop/controllers/shop/shop_state.dart';
 
 class AppState {
   final CarState? initialCarState;
-  final CarBuilderState? initialCarBuilderState;
+  final ShopState? initialCarBuilderState;
 
   const AppState({
     this.initialCarState,
@@ -12,11 +14,11 @@ class AppState {
 
   AppState copyWith({
     CarState? initialCarState,
-    CarBuilderState? initialCarBuilderState,
+    Optional<ShopState?>? initialCarBuilderState,
   }) {
     return AppState(
       initialCarState: initialCarState ?? this.initialCarState,
-      initialCarBuilderState: initialCarBuilderState ?? this.initialCarBuilderState,
+      initialCarBuilderState: initialCarBuilderState != null ? initialCarBuilderState.orNull : this.initialCarBuilderState,
     );
   }
 }

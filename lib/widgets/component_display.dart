@@ -63,11 +63,15 @@ void showComponentDialog({
 class ComponentHeader extends StatelessWidget {
   final InstalledComponent component;
   final bool showLocationAndSource;
+  final VoidCallback? onSelected;
+  final String selectionText;
 
   const ComponentHeader({
     Key? key,
     required this.component,
     this.showLocationAndSource = false,
+    this.onSelected,
+    this.selectionText = "Select",
   }) : super(key: key);
 
   @override
@@ -83,16 +87,37 @@ class ComponentHeader extends StatelessWidget {
           children: [
             Container(
               width: double.infinity,
-              decoration: BoxDecoration(gradient: cardGradient),
+              decoration: BoxDecoration(
+                borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(med),
+                  topLeft: Radius.circular(med),
+                ),
+                gradient: cardGradient,
+              ),
               child: Padding(
                 padding: paddingAllS,
-                child: Text(
-                  component.name.toUpperCase(),
-                  style: TextStyle(
-                    color: component.nameColor,
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+                child: Row(
+                  children: [
+                    Text(
+                      component.name.toUpperCase(),
+                      style: TextStyle(
+                        color: component.nameColor,
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    if (onSelected != null) ...[
+                      const Spacer(),
+                      TextButton(
+                        onPressed: onSelected,
+                        child: Text(
+                          selectionText,
+                          style: const TextStyle(color: Colors.black),
+                        ),
+                      ),
+                      const SizedBox(width: 40),
+                    ],
+                  ],
                 ),
               ),
             ),
@@ -114,7 +139,7 @@ class ComponentHeader extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: med, vertical: med),
                       child: Text(
-                        "${component.loc.toVehicleGuideString().isNotEmpty ? '${component.loc.toVehicleGuideString()}, ' : ''}${component.source.toAbbrString()}",
+                        "${component.loc.toVehicleGuideString().isNotEmpty ? '${component.loc.toVehicleGuideString()} ' : ''}$endash ${component.source.toAbbrString()}",
                         style: TextStyle(
                           fontSize: 10,
                           color: component.type != ComponentType.sidearm ? Colors.white : Colors.black,
@@ -182,6 +207,10 @@ class ComponentBody extends StatelessWidget {
           height: expandable ? null : 255,
           padding: expandable ? paddingAllM : paddingAllXL,
           decoration: BoxDecoration(
+            borderRadius: const BorderRadius.only(
+              bottomRight: Radius.circular(med),
+              bottomLeft: Radius.circular(med),
+            ),
             gradient: cardGradient,
           ),
           child: Center(

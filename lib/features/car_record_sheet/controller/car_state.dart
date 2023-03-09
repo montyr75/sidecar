@@ -1,10 +1,10 @@
-import 'package:collection/collection.dart';
+import 'package:collection/collection.dart' hide IterableIntegerExtension;
 
 import '../../../data/components.dart' as db;
-import '../../../models/car.dart';
 import '../../../models/components.dart';
 import '../../../models/damage_dice.dart';
 import '../../../models/enums.dart';
+import '../../../models/vehicle.dart';
 import '../../../utils/utils.dart';
 
 class CarState {
@@ -12,7 +12,7 @@ class CarState {
   static const defaultPowerPlant = 10;
   static const defaultTires = 10;
 
-  final Car car;
+  final Vehicle car;
   final List<InstalledComponent> components;
   final Map<Location, LocationState> locs;
   final List<Attribute> attributes;
@@ -34,10 +34,10 @@ class CarState {
     this.ace = 0,
   });
 
-  factory CarState.fromCar(Car car) {
+  factory CarState.fromVehicle(Vehicle vehicle) {
     final List<InstalledComponent> comps = [];
     for (final loc in Location.values) {
-      final locComps = car.locs[loc]?.map((key) => db.components[key]!) ?? const [];
+      final locComps = vehicle.locs[loc]?.map((key) => db.components[key]!) ?? const [];
       comps.addAll(createInstalledComponents(locComps, loc));
     }
 
@@ -65,13 +65,13 @@ class CarState {
     }
 
     return CarState(
-      car: car,
+      car: vehicle,
       components: List<InstalledComponent>.unmodifiable(comps),
       locs: Map<Location, LocationState>.unmodifiable({
         for (final loc in Location.carLocs)
           loc: LocationState.fromCar(
             loc: loc,
-            car: car,
+            car: vehicle,
             bonusAP: attributes.hasAttribute(Attribute.awardsAP) ? 1 : 0,
           ),
       }),
@@ -80,7 +80,7 @@ class CarState {
   }
 
   CarState copyWith({
-    Car? car,
+    Vehicle? car,
     List<InstalledComponent>? components,
     Map<Location, LocationState>? locs,
     List<Attribute>? attributes,
@@ -238,6 +238,7 @@ class CarState {
   List<InstalledComponent> get structure => components.structure;
 
   bool get hasGear => gear.isNotEmpty;
+  bool get hasWeapons => weapons.isNotEmpty;
   bool get hasAccessories => accessories.isNotEmpty;
   bool get hasUpgrades => upgrades.isNotEmpty;
   bool get hasStructure => structure.isNotEmpty;
@@ -328,7 +329,7 @@ class LocationState {
     this.paint = false,
   });
 
-  factory LocationState.fromCar({required Location loc, required Car car, int bonusAP = 0}) {
+  factory LocationState.fromCar({required Location loc, required Vehicle car, int bonusAP = 0}) {
     return LocationState(
       loc: loc,
       armor: ArmorState.fromDivision(car.division, bonusAP: bonusAP),
@@ -468,6 +469,8 @@ extension ListInstCompX on List<InstalledComponent> {
 
     return List<Restriction>.unmodifiable(list);
   }
+
+  int get totalCost => map((value) => value.cost).sum();
 }
 
 extension ListSpecialAttributeX on List<Attribute> {

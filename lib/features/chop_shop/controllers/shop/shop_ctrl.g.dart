@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'car_builder_ctrl.dart';
+part of 'shop_ctrl.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$carBuilderCtrlHash() => r'6ddcbe899190714557078351ac6cd117e9a135ae';
+String _$shopCtrlHash() => r'fc069dbe5b6180d984ec5b562178270f1c73d913';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,36 +29,35 @@ class _SystemHash {
   }
 }
 
-abstract class _$CarBuilderCtrl
-    extends BuildlessAutoDisposeNotifier<CarBuilderState> {
-  late final CarBuilderState? initialValue;
+abstract class _$ShopCtrl extends BuildlessAutoDisposeNotifier<ShopState> {
+  late final ShopState? initialValue;
 
-  CarBuilderState build([
-    CarBuilderState? initialValue,
+  ShopState build([
+    ShopState? initialValue,
   ]);
 }
 
-/// See also [CarBuilderCtrl].
-@ProviderFor(CarBuilderCtrl)
-const carBuilderCtrlProvider = CarBuilderCtrlFamily();
+/// See also [ShopCtrl].
+@ProviderFor(ShopCtrl)
+const shopCtrlProvider = ShopCtrlFamily();
 
-/// See also [CarBuilderCtrl].
-class CarBuilderCtrlFamily extends Family<CarBuilderState> {
-  /// See also [CarBuilderCtrl].
-  const CarBuilderCtrlFamily();
+/// See also [ShopCtrl].
+class ShopCtrlFamily extends Family<ShopState> {
+  /// See also [ShopCtrl].
+  const ShopCtrlFamily();
 
-  /// See also [CarBuilderCtrl].
-  CarBuilderCtrlProvider call([
-    CarBuilderState? initialValue,
+  /// See also [ShopCtrl].
+  ShopCtrlProvider call([
+    ShopState? initialValue,
   ]) {
-    return CarBuilderCtrlProvider(
+    return ShopCtrlProvider(
       initialValue,
     );
   }
 
   @override
-  CarBuilderCtrlProvider getProviderOverride(
-    covariant CarBuilderCtrlProvider provider,
+  ShopCtrlProvider getProviderOverride(
+    covariant ShopCtrlProvider provider,
   ) {
     return call(
       provider.initialValue,
@@ -77,34 +76,32 @@ class CarBuilderCtrlFamily extends Family<CarBuilderState> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'carBuilderCtrlProvider';
+  String? get name => r'shopCtrlProvider';
 }
 
-/// See also [CarBuilderCtrl].
-class CarBuilderCtrlProvider
-    extends AutoDisposeNotifierProviderImpl<CarBuilderCtrl, CarBuilderState> {
-  /// See also [CarBuilderCtrl].
-  CarBuilderCtrlProvider([
+/// See also [ShopCtrl].
+class ShopCtrlProvider
+    extends AutoDisposeNotifierProviderImpl<ShopCtrl, ShopState> {
+  /// See also [ShopCtrl].
+  ShopCtrlProvider([
     this.initialValue,
   ]) : super.internal(
-          () => CarBuilderCtrl()..initialValue = initialValue,
-          from: carBuilderCtrlProvider,
-          name: r'carBuilderCtrlProvider',
+          () => ShopCtrl()..initialValue = initialValue,
+          from: shopCtrlProvider,
+          name: r'shopCtrlProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$carBuilderCtrlHash,
-          dependencies: CarBuilderCtrlFamily._dependencies,
-          allTransitiveDependencies:
-              CarBuilderCtrlFamily._allTransitiveDependencies,
+                  : _$shopCtrlHash,
+          dependencies: ShopCtrlFamily._dependencies,
+          allTransitiveDependencies: ShopCtrlFamily._allTransitiveDependencies,
         );
 
-  final CarBuilderState? initialValue;
+  final ShopState? initialValue;
 
   @override
   bool operator ==(Object other) {
-    return other is CarBuilderCtrlProvider &&
-        other.initialValue == initialValue;
+    return other is ShopCtrlProvider && other.initialValue == initialValue;
   }
 
   @override
@@ -116,8 +113,8 @@ class CarBuilderCtrlProvider
   }
 
   @override
-  CarBuilderState runNotifierBuild(
-    covariant CarBuilderCtrl notifier,
+  ShopState runNotifierBuild(
+    covariant ShopCtrl notifier,
   ) {
     return notifier.build(
       initialValue,

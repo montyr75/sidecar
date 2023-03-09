@@ -6,7 +6,7 @@ part of 'error_service.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$errorServiceHash() => r'27778dc499c9146d028840c8492ab47b2dc313fc';
+String _$errorServiceHash() => r'2b2c082378ab12c425f533cc9deb01e42ddad24a';
 
 /// See also [ErrorService].
 @ProviderFor(ErrorService)

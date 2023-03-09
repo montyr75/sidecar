@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart' show Widget, EdgeInsets, Padding, Color, Colors;
+import 'package:oktoast/oktoast.dart';
 import 'package:tinycolor2/tinycolor2.dart';
 import 'package:uuid/uuid.dart';
 
@@ -10,6 +11,7 @@ import '../services/theme/theme.dart';
 const uuid = Uuid();
 
 final infinity = String.fromCharCode(0x221E);
+const endash = '–';
 
 extension NumberX on num {
   T bounded<T extends num>({T? min, T? max}) {
@@ -18,12 +20,10 @@ extension NumberX on num {
     if (min != null) {
       if (max != null) {
         return math.min<T>(math.max<T>(this as T, min), max);
-      }
-      else {
+      } else {
         return math.max<T>(this as T, min);
       }
-    }
-    else if (max != null) {
+    } else if (max != null) {
       return math.min<T>(this as T, max);
     }
 
@@ -32,7 +32,12 @@ extension NumberX on num {
 
   /// These reverse the meaning of min/max. [min] means "restrict to minimum value", and vice versa.
   T min<T extends num>(T minimum) => math.max(this as T, minimum);
+
   T max<T extends num>(T maximum) => math.min(this as T, maximum);
+}
+
+extension StringX on String {
+  bool toBool() => this == "true" ? true : false;
 }
 
 extension IterableIntX on Iterable<int> {
@@ -41,6 +46,7 @@ extension IterableIntX on Iterable<int> {
 
 extension IterableBoolX on Iterable<bool> {
   bool get anyTrue => any((value) => value);
+
   bool get allTrue => !any((value) => !value);
 }
 
@@ -88,8 +94,7 @@ extension ListX on List {
 
     if (index > -1) {
       replaceWith(original, replacement);
-    }
-    else {
+    } else {
       add(replacement);
     }
   }
@@ -98,6 +103,7 @@ extension ListX on List {
 }
 
 Color dimColor(Color value, {int amount = 30}) => value.isLight ? value.darken(amount) : value.lighten(amount);
+
 Color foregroundColorForBackground(Color bgColor, {Color light = Colors.white, Color dark = Colors.black}) {
   return bgColor.computeLuminance() > 0.5 ? dark : light;
 }
@@ -106,8 +112,7 @@ extension InstalledComponentX on InstalledComponent {
   Color get nameColor {
     if (isDestroyed) {
       return destroyedColor;
-    }
-    else if (isExpended) {
+    } else if (isExpended) {
       return depletedColor;
     }
 
@@ -116,4 +121,13 @@ extension InstalledComponentX on InstalledComponent {
 }
 
 T strToEnum<T extends Enum>(List<T> values, String str) => values.firstWhere((value) => value.name == str);
+
 T fullStrToEnum<T extends Enum>(List<T> values, String str) => values.firstWhere((value) => value.toString() == str);
+
+void showSuccessToast(String msg) {
+  showToast(msg, backgroundColor: Colors.green);
+}
+
+void showErrorToast(String msg) {
+  showToast(msg, backgroundColor: Colors.red);
+}

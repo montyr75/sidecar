@@ -8,7 +8,7 @@ import '../../../utils/screen_utils.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/component_display.dart';
 import '../../../widgets/panel_list.dart';
-import '../controller/car_builder_ctrl.dart';
+import '../controllers/shop/shop_ctrl.dart';
 
 class ComponentSelector extends ConsumerStatefulWidget {
   final Location loc;
@@ -58,51 +58,30 @@ class _ComponentSelectorState extends ConsumerState<ComponentSelector> {
 
   List<ExpandableItem<InstalledComponent>> _generateComponentItems(List<InstalledComponent> value) {
     final initialState = ref.read(appServiceProvider).initialCarBuilderState;
-    final state = ref.read(carBuilderCtrlProvider(initialState));
+    final state = ref.read(shopCtrlProvider(initialState));
 
     return value.map<ExpandableItem<InstalledComponent>>((component) {
+      final disqualifiers = [
+        component.hasRestriction(Restriction.exclusive) && state.hasRestriction(Restriction.exclusive),
+        component.hasRestriction(Restriction.frontOnly) && widget.loc != Location.front,
+        component.hasRestriction(Restriction.backOnly) && widget.loc != Location.back,
+        component.hasRestriction(Restriction.frontBack) && (widget.loc != Location.front && widget.loc != Location.back),
+        component.hasAttribute(Attribute.requiresDiv6) && state.division < 6,
+      ];
+
       return ExpandableItem<InstalledComponent>(
         headerBuilder: (context, isExpanded) => Padding(
           padding: const EdgeInsets.only(top: sm),
           child: ComponentHeader(
             component: component,
+            onSelected: !disqualifiers.anyTrue ? () {
+              widget.onSelected(component);
+              Navigator.of(context).pop();
+            } : null,
           ),
         ),
         bodyBuilder: (context, isExpanded) {
-          final disqualifiers = [
-            component.type != ComponentType.weapon && state.hasMatchingComponentByLoc(widget.loc, component),
-            component.hasRestriction(Restriction.exclusive) && state.hasRestriction(Restriction.exclusive),
-            component.hasRestriction(Restriction.frontOnly) && widget.loc != Location.front,
-            component.hasRestriction(Restriction.backOnly) && widget.loc != Location.back,
-            component.hasRestriction(Restriction.frontBack) && (widget.loc != Location.front && widget.loc != Location.back),
-            component.hasAttribute(Attribute.requiresDiv6) && state.division < 6,
-            component.type == ComponentType.upgrade && component.hasSubtype && state.hasComponentBySubtype(component.subtype!),
-            component.type == ComponentType.gear && component.hasSubtype && state.hasComponentBySubtype(component.subtype!),
-          ];
-          
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ComponentBody(component: component, expandable: true),
-              if (!disqualifiers.anyTrue) Container(
-                height: 40,
-                margin: const EdgeInsets.only(right: 64),
-                decoration: BoxDecoration(
-                  color: Colors.black,
-                  border: Border.all(color: Colors.grey),
-                ),
-                child: Center(
-                  child: TextButton(
-                    onPressed: () {
-                      widget.onSelected(component);
-                      Navigator.of(context).pop();
-                    },
-                    child: const Text('Select'),
-                  ),
-                ),
-              ),
-            ],
-          );
+          return ComponentBody(component: component, expandable: true);
         },
         data: component,
       );

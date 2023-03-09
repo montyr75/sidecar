@@ -28,8 +28,7 @@ class App extends ConsumerWidget {
     final themeState = ref.watch(themeServiceProvider);
 
     return OKToast(
-      duration: const Duration(seconds: 3),
-      backgroundColor: Colors.red,
+      duration: const Duration(seconds: 4),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
         title: 'CW Companion',

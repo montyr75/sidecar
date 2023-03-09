@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'services/logger_service.dart';
 
 // app info
-const appName = "cw_companion";
+const appName = "sidecar";
 const version = "0.0.1";
 const debugMode = !kReleaseMode;
 

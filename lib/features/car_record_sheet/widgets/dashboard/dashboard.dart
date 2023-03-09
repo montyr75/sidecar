@@ -7,7 +7,7 @@ import '../../../../services/app/app_service.dart';
 import '../../../../utils/screen_utils.dart';
 import '../../../../widgets/mod_display.dart';
 import '../../../../widgets/token_pile.dart';
-import '../../../car_builder/car_builder_page.dart';
+import '../../../chop_shop/pages/shop_page.dart';
 import '../../controller/car_ctrl.dart';
 import '../../controller/car_state.dart';
 import '../maneuvers_display.dart';
@@ -209,7 +209,7 @@ class Dashboard extends ConsumerWidget {
             child: const Text("Maneuvers"),
           ),
         ),
-        titleTextStyle: CarBuilderPage.labelStyle.copyWith(fontSize: 18),
+        titleTextStyle: ShopPage.labelStyle.copyWith(fontSize: 18),
         titlePadding: noPadding,
         children: [
           Padding(
