@@ -31,7 +31,7 @@ class App extends ConsumerWidget {
       duration: const Duration(seconds: 4),
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
-        title: 'CW Companion',
+        title: 'Sidecar',
         theme: themeState.light,
         darkTheme: themeState.dark,
         themeMode: themeState.mode,
