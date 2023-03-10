@@ -6,7 +6,7 @@ part of 'shop_ctrl.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$shopCtrlHash() => r'fc069dbe5b6180d984ec5b562178270f1c73d913';
+String _$shopCtrlHash() => r'1cf7995b4edee5174cc96e15dde3fb6c1a5f525e';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart' hide IterableIntegerExtension;
+import 'package:json_annotation/json_annotation.dart';
 
 import '../../../data/components.dart' as db;
 import '../../../models/components.dart';
@@ -7,11 +8,14 @@ import '../../../models/enums.dart';
 import '../../../models/vehicle.dart';
 import '../../../utils/utils.dart';
 
-class CarState {
-  static const defaultSpeed = 2;
-  static const defaultPowerPlant = 10;
-  static const defaultTires = 10;
+part 'car_state.g.dart';
 
+const defaultSpeed = 2;
+const defaultPowerPlant = 10;
+const defaultTires = 10;
+
+@JsonSerializable()
+class CarState {
   final Vehicle car;
   final List<InstalledComponent> components;
   final Map<Location, LocationState> locs;
@@ -21,6 +25,8 @@ class CarState {
   final int tires;
   final int control;
   final int ace;
+
+  final String? saveName;
 
   const CarState({
     required this.car,
@@ -32,6 +38,7 @@ class CarState {
     this.tires = defaultTires,
     this.control = 0,
     this.ace = 0,
+    this.saveName,
   });
 
   factory CarState.fromVehicle(Vehicle vehicle) {
@@ -89,6 +96,7 @@ class CarState {
     int? tires,
     int? control,
     int? ace,
+    String? saveName,
   }) {
     return CarState(
       car: car ?? this.car,
@@ -100,6 +108,7 @@ class CarState {
       tires: tires ?? this.tires,
       control: control ?? this.control,
       ace: ace ?? this.ace,
+      saveName: saveName ?? this.saveName,
     );
   }
 
@@ -314,8 +323,12 @@ class CarState {
         return 1;
     }
   }
+
+  factory CarState.fromJson(Map<String, dynamic> json) => _$CarStateFromJson(json);
+  Map<String, dynamic> toJson() => _$CarStateToJson(this);
 }
 
+@JsonSerializable()
 class LocationState {
   final Location loc;
   final ArmorState armor;
@@ -349,8 +362,12 @@ class LocationState {
       paint: paint ?? this.paint,
     );
   }
+
+  factory LocationState.fromJson(Map<String, dynamic> json) => _$LocationStateFromJson(json);
+  Map<String, dynamic> toJson() => _$LocationStateToJson(this);
 }
 
+@JsonSerializable()
 class ArmorState {
   final int value;
   final int max;
@@ -372,6 +389,9 @@ class ArmorState {
       max: max ?? this.max,
     );
   }
+
+  factory ArmorState.fromJson(Map<String, dynamic> json) => _$ArmorStateFromJson(json);
+  Map<String, dynamic> toJson() => _$ArmorStateToJson(this);
 }
 
 Iterable<InstalledComponent> createInstalledComponents(Iterable<Component> comps, Location loc) {

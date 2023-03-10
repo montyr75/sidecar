@@ -228,7 +228,7 @@ class ShopPage extends ConsumerWidget {
   Future<void> _saveBuild(BuildContext context, WidgetRef ref, ShopState state) async {
     final chopShopState = ref.read(chopShopCtrlProvider);
 
-    if (chopShopState.savedBuilds.vehicleExists(state.name.value.trim(), state.division)) {
+    if (chopShopState.savedBuilds.exists(state.name.value.trim(), state.division)) {
       final confirm = await showConfirmDialog(
         context: context,
         message: "This vehicle name/division combination already exists. Are you sure you want to overwrite it?",

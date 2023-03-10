@@ -27,6 +27,6 @@ class SavedBuilds {
     return map;
   }
 
-  bool vehicleExists(String name, int division) => vehicles.any((value) => value.name == name.trim() && value.division == division);
+  bool exists(String name, int division) => vehicles.any((value) => value.name == name.trim() && value.division == division);
   Vehicle? getVehicleByNameAndDivision(String name, int division) => vehicles.firstWhereOrNull((value) => value.name == name.trim() && value.division == division);
 }

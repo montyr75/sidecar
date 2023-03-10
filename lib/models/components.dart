@@ -1,8 +1,13 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import '../utils/utils.dart';
 import 'damage_dice.dart';
 import 'enums.dart';
 
+part 'components.g.dart';
+
 /// Text will include encoded graphics, maybe enums or something like "[[Die.red:1]]" or "[[DamageType.basic:1]]" or "[[DamageType.explosion]]"
+@JsonSerializable()
 class Mod {
   final ModType type;
   final String text;
@@ -11,9 +16,20 @@ class Mod {
   const Mod({required this.text, this.abbrText, this.type = ModType.text});
 
   bool get hasAbbrText => abbrText != null;
+
+  factory Mod.fromJson(Map<String, dynamic> json) => _$ModFromJson(json);
+  Map<String, dynamic> toJson() => _$ModToJson(this);
 }
 
+enum ComponentClassType {
+  component,
+  weapon,
+}
+
+@JsonSerializable()
 class Component {
+  final ComponentClassType classType;
+
   final String name;
   final int cost;
   final bool asterisk; // an asterisk on the cost?
@@ -26,6 +42,7 @@ class Component {
   final Source source;
 
   const Component({
+    this.classType = ComponentClassType.component,
     required this.name,
     required this.cost,
     this.asterisk = false,
@@ -48,6 +65,7 @@ class Component {
   bool hasAttribute(Attribute value) => hasAttributes && attributes.contains(value);
 
   Component copyWith({
+    ComponentClassType? classType,
     String? name,
     int? cost,
     bool? asterisk,
@@ -60,6 +78,7 @@ class Component {
     Source? source,
   }) {
     return Component(
+      classType: classType ?? this.classType,
       name: name ?? this.name,
       cost: cost ?? this.cost,
       asterisk: asterisk ?? this.asterisk,
@@ -82,14 +101,19 @@ class Component {
       default: return name;
     }
   }
+
+  factory Component.fromJson(Map<String, dynamic> json) => _$ComponentFromJson(json);
+  Map<String, dynamic> toJson() => _$ComponentToJson(this);
 }
 
 /// This includes any build card that can cause damage, like sidearms or weapons, etc.
+@JsonSerializable()
 class Weapon extends Component {
   final DamageDice? damageDice;
   final DamageType? wrenchResult;
 
   const Weapon({
+    super.classType = ComponentClassType.weapon,
     required super.name,
     required super.cost,
     super.asterisk = false,
@@ -119,10 +143,21 @@ class Weapon extends Component {
 
     return infinity;
   }
+
+  factory Weapon.fromJson(Map<String, dynamic> json) => _$WeaponFromJson(json);
+  @override
+  Map<String, dynamic> toJson() => _$WeaponToJson(this);
+}
+
+enum InstalledComponentClassType {
+  installedComponent,
+  installedComponentWithControl,
 }
 
 /// Currently active component... Allows for health tracking, etc.
+@JsonSerializable()
 class InstalledComponent implements Comparable {
+  final InstalledComponentClassType classType;
   final String id;
   final Component component;
   final Location loc;
@@ -130,6 +165,7 @@ class InstalledComponent implements Comparable {
   final bool isExpended;
 
   InstalledComponent({
+    this.classType = InstalledComponentClassType.installedComponent,
     required this.id,
     required this.component,
     required this.loc,
@@ -138,6 +174,7 @@ class InstalledComponent implements Comparable {
   });
 
   InstalledComponent copyWith({
+    InstalledComponentClassType? classType,
     String? id,
     Component? component,
     Location? loc,
@@ -145,6 +182,7 @@ class InstalledComponent implements Comparable {
     bool? isExpended,
   }) {
     return InstalledComponent(
+      classType: classType ?? this.classType,
       id: id ?? this.id,
       component: component ?? this.component,
       loc: loc ?? this.loc,
@@ -201,13 +239,18 @@ class InstalledComponent implements Comparable {
 
     return loc.toArcString();
   }
+
+  factory InstalledComponent.fromJson(Map<String, dynamic> json) => _$InstalledComponentFromJson(json);
+  Map<String, dynamic> toJson() => _$InstalledComponentToJson(this);
 }
 
 /// Currently active component... Allows for health tracking, control tracking (for accessories like Autopilot), etc..
+@JsonSerializable()
 class InstalledComponentWithControl extends InstalledComponent {
   final int control;
 
   InstalledComponentWithControl({
+    super.classType = InstalledComponentClassType.installedComponentWithControl,
     required super.id,
     required super.component,
     required super.loc,
@@ -218,6 +261,7 @@ class InstalledComponentWithControl extends InstalledComponent {
 
   @override
   InstalledComponentWithControl copyWith({
+    InstalledComponentClassType? classType,
     String? id,
     Component? component,
     Location? loc,
@@ -226,6 +270,7 @@ class InstalledComponentWithControl extends InstalledComponent {
     int? control,
   }) {
     return InstalledComponentWithControl(
+      classType: classType ?? this.classType,
       id: id ?? this.id,
       component: component ?? this.component,
       loc: loc ?? this.loc,
@@ -234,4 +279,8 @@ class InstalledComponentWithControl extends InstalledComponent {
       control: control ?? this.control,
     );
   }
+
+  factory InstalledComponentWithControl.fromJson(Map<String, dynamic> json) => _$InstalledComponentWithControlFromJson(json);
+  @override
+  Map<String, dynamic> toJson() => _$InstalledComponentWithControlToJson(this);
 }
