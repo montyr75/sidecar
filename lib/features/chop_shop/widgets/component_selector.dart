@@ -10,10 +10,12 @@ import '../../../widgets/component_display.dart';
 import '../../../widgets/panel_list.dart';
 import '../controllers/shop/shop_ctrl.dart';
 
+typedef CompSelectorCallback = Future<bool> Function(InstalledComponent value);
+
 class ComponentSelector extends ConsumerStatefulWidget {
   final Location loc;
   final List<InstalledComponent> components;
-  final ValueChanged<InstalledComponent> onSelected;
+  final CompSelectorCallback onSelected;
 
   const ComponentSelector({
     Key? key,
@@ -73,9 +75,14 @@ class _ComponentSelectorState extends ConsumerState<ComponentSelector> {
           padding: const EdgeInsets.only(top: sm),
           child: ComponentHeader(
             component: component,
-            onSelected: !disqualifiers.anyTrue ? () {
-              widget.onSelected(component);
-              Navigator.of(context).pop();
+            onSelected: !disqualifiers.anyTrue ? () async {
+              final nav = Navigator.of(context);
+
+              final shouldPop = await widget.onSelected(component);
+
+              if (shouldPop) {
+                nav.pop();
+              }
             } : null,
           ),
         ),

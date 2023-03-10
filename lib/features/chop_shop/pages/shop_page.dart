@@ -170,7 +170,7 @@ class ShopPage extends ConsumerWidget {
                     LocationComps(
                       loc: Location.crew,
                       components: state.components.allCrewComponents,
-                      onSelected: (value) => ctrl.addComponent(Location.crew, value),
+                      onSelected: (value) => addComponent(context, ctrl, Location.crew, value),
                       onRemoved: (value) => ctrl.removeComponent(value),
                     ),
                     for (final loc in Location.carLocs) ...[
@@ -178,7 +178,7 @@ class ShopPage extends ConsumerWidget {
                       LocationComps(
                         loc: loc,
                         components: state.components.getCarCompsByLoc(loc),
-                        onSelected: (value) => ctrl.addComponent(loc, value),
+                        onSelected: (value) => addComponent(context, ctrl, loc, value),
                         onRemoved: (value) => ctrl.removeComponent(value),
                       ),
                     ],
@@ -186,14 +186,14 @@ class ShopPage extends ConsumerWidget {
                     LocationComps(
                       loc: Location.turret,
                       components: state.components.getCompsByLoc(Location.turret),
-                      onSelected: (value) => ctrl.addComponent(Location.turret, value),
+                      onSelected: (value) => addComponent(context, ctrl, Location.turret, value),
                       onRemoved: (value) => ctrl.removeComponent(value),
                     ),
                     boxXXL,
                     LocationComps(
                       loc: Location.upgrade,
                       components: state.components.getCompsByLoc(Location.upgrade),
-                      onSelected: (value) => ctrl.addComponent(Location.upgrade, value),
+                      onSelected: (value) => addComponent(context, ctrl, Location.upgrade, value),
                       onRemoved: (value) => ctrl.removeComponent(value),
                     ),
                     const SizedBox(height: 40),
@@ -205,6 +205,24 @@ class ShopPage extends ConsumerWidget {
         ),
       ),
     );
+  }
+
+  Future<bool> addComponent(BuildContext context, ShopCtrl ctrl, Location loc, InstalledComponent comp) async {
+    final result = ctrl.addComponentPrecheck(loc, comp);
+
+    if (result.hasConflict) {
+      final confirm = await showConfirmDialog(
+        context: context,
+        message: result.toReasonString(),
+      );
+
+      if (!confirm) {
+        return false;
+      }
+    }
+
+    ctrl.addComponent(loc: loc, component: comp, existingComp: result.existingComp);
+    return true;
   }
 
   Future<void> _saveBuild(BuildContext context, WidgetRef ref, ShopState state) async {
@@ -320,7 +338,7 @@ class _PointDisplay extends StatelessWidget {
 class LocationComps extends ConsumerWidget {
   final Location loc;
   final List<InstalledComponent> components;
-  final ValueChanged<InstalledComponent> onSelected;
+  final CompSelectorCallback onSelected;
   final ValueChanged<InstalledComponent> onRemoved;
 
   const LocationComps({
@@ -489,7 +507,7 @@ class LocationComps extends ConsumerWidget {
     required BuildContext context,
     required Location loc,
     required List<Component> components,
-    required ValueChanged<InstalledComponent> onSelected,
+    required CompSelectorCallback onSelected,
   }) {
     final sortedComps = components.toList()..sort((a, b) => a.cost.compareTo(b.cost));
     final instComps = sortedComps.map((value) => InstalledComponent(id: '', component: value, loc: loc));

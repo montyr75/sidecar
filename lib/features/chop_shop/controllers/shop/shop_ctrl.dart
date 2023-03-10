@@ -19,8 +19,8 @@ class ShopCtrl extends _$ShopCtrl {
     if (initialValue == null) {
       scheduleMicrotask(() {
         addComponent(
-          Location.crew,
-          InstalledComponent(
+          loc: Location.crew,
+          component: InstalledComponent(
             id: '',
             component: components['Hand Cannon']!,
             loc: Location.crew,
@@ -59,29 +59,47 @@ class ShopCtrl extends _$ShopCtrl {
     );
   }
 
-  void addComponent(Location loc, InstalledComponent component) {
+  PrecheckResult addComponentPrecheck(Location loc, InstalledComponent component) {
     InstalledComponent? Function() compFinder = () => null;
+    late final ConflictReason reason;
 
     if (component.hasRestriction(Restriction.exclusive)) {
       compFinder = () => state.components.firstWhereOrNull((value) => value.hasRestriction(Restriction.exclusive));
+      reason = ConflictReason.exclusive;
     }
     else if (component.isDriver || component.isGunner) {
-      compFinder = () => state.components.firstWhereOrNull((value) => value.type == component.type && value.subtype == component.subtype);
+      compFinder = () => state.components
+          .firstWhereOrNull((value) => value.type == component.type && value.subtype == component.subtype);
+      reason = ConflictReason.crew;
     }
     else if (component.isAccessory || component.isSidearm) {
-      compFinder = () => state.components.firstWhereOrNull((value) => value.type == component.type && value.name == component.name);
+      compFinder = () =>
+          state.components.firstWhereOrNull((value) => value.type == component.type && value.name == component.name);
+      reason = ConflictReason.accessoryOrSidearm;
     }
     else if (component.isUpgrade || component.isGear) {
-      compFinder = () => state.components
-          .firstWhereOrNull((value) => value.type == component.type && (value.name == component.name || (value.hasSubtype && value.subtype == component.subtype)));
+      compFinder = () => state.components.firstWhereOrNull((value) =>
+          value.type == component.type &&
+          (value.name == component.name || (value.hasSubtype && value.subtype == component.subtype)));
+      reason = ConflictReason.upgradeOrGear;
     }
     else if (component.isStructure && component.loc == loc) {
-      compFinder = () => state.components
-          .firstWhereOrNull((value) => value.type == component.type && value.loc == component.loc);
+      compFinder = () =>
+          state.components.firstWhereOrNull((value) => value.type == component.type && value.loc == component.loc);
+      reason = ConflictReason.structure;
     }
 
     final existingComp = compFinder();
 
+    return PrecheckResult(
+      loc: loc,
+      compToAdd: component,
+      existingComp: existingComp,
+      reason: existingComp == null ? ConflictReason.noConflict : reason,
+    );
+  }
+
+  void addComponent({required Location loc, required InstalledComponent component, InstalledComponent? existingComp}) {
     final comps = state.components.toList();
 
     if (existingComp != null) {
@@ -132,10 +150,43 @@ class ShopCtrl extends _$ShopCtrl {
 
     onDivisionChanged(state.division);
   }
+}
 
-  void saveBuild() {
-    if (state.isValid) {
-      // TODO: Save the build to the db.
+enum ConflictReason {
+  noConflict,
+  exclusive,
+  crew,
+  accessoryOrSidearm,
+  upgradeOrGear,
+  structure,
+}
+
+class PrecheckResult {
+  final Location loc;
+  final InstalledComponent compToAdd;
+  final InstalledComponent? existingComp;
+  final ConflictReason reason;
+
+  const PrecheckResult({
+    required this.loc,
+    required this.compToAdd,
+    this.existingComp,
+    required this.reason,
+  });
+
+  String toReasonString() {
+    switch (reason) {
+      case ConflictReason.exclusive:
+        return "Your vehicle can have only one exclusive component. Do you want to replace the ${existingComp!.name} with the ${compToAdd.name}?";
+      case ConflictReason.crew: return "Your vehicle can have only one ${compToAdd.subtype.toString().toLowerCase()}. Do you want to replace ${existingComp!.name} with ${compToAdd.name}?";
+      case ConflictReason.accessoryOrSidearm: return "Your ${compToAdd.type == ComponentType.accessory ? 'vehicle' : 'crew'} can have only one ${compToAdd.type.toString().toLowerCase()} of the same name. Do you want to replace the ${existingComp!.name} with the ${compToAdd.name}?";
+      case ConflictReason.upgradeOrGear: return compToAdd.type == ComponentType.upgrade
+          ? "Your vehicle can have only one upgrade of the same name or type. Do you want to replace the ${existingComp!.name} with the ${compToAdd.name}?"
+          : "Your crew can have only one piece of gear of the same name or type. Do you want to replace the ${existingComp!.name} with the ${compToAdd.name}?";
+      case ConflictReason.structure: return "Your vehicle can have only one structure enhancement per side. Do you want to replace the ${existingComp!.name} with the ${compToAdd.name}?";
+      default: return '';
     }
   }
+
+  bool get hasConflict => reason != ConflictReason.noConflict;
 }

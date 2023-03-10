@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../services/error/error_service.dart';
+import 'screen_utils.dart';
 
 void showErrorDialog({
   required BuildContext context,
@@ -17,7 +18,7 @@ void showErrorDialog({
 
 Future<bool> showConfirmDialog({
   required BuildContext context,
-  String title = "Are you sure?",
+  String title = "???",
   required String message,
   String cancelText = "No",
   String confirmText = "Yes",
@@ -97,8 +98,23 @@ AlertDialog _buildMaterialDialog({
   String? confirmText,
 }) {
   return AlertDialog(
-    title: title != null ? Text(title) : null,
-    content: Text(message),
+    title: title != null
+        ? Text(
+            title,
+            style: const TextStyle(fontFamily: 'Facon'),
+          )
+        : null,
+    shape: const BeveledRectangleBorder(
+      side: BorderSide(width: 2, color: Colors.white30),
+      borderRadius: BorderRadius.all(
+        Radius.circular(med),
+      ),
+    ),
+    backgroundColor: Colors.black87,
+    content: ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 500),
+      child: Text(message),
+    ),
     actions: [
       if (cancelText != null)
         TextButton(
