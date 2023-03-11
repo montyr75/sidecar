@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
+import '../../../../models/components.dart';
 import '../../../../models/enums.dart';
 import '../../../../services/app/app_service.dart';
 import '../../../../utils/screen_utils.dart';
@@ -49,12 +50,32 @@ class Dashboard extends ConsumerWidget {
                   onPressedInc: ctrl.incrementControl,
                   onPressedDec: ctrl.decrementControl,
                 ),
-                boxM,
+              ],
+            ),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
                 Tooltip(
                   message: "Collect CONTROL and ACE for the Take Control step",
-                  child: TextButton(
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.grey),
+                      shape: const StadiumBorder(),
+                    ),
                     onPressed: () => ctrl.takeControlStep(),
                     child: const Text("Take Control"),
+                  ),
+                ),
+                boxL,
+                Tooltip(
+                  message: "Show maneuver dice",
+                  child: OutlinedButton(
+                    style: OutlinedButton.styleFrom(
+                      side: const BorderSide(color: Colors.grey),
+                      shape: const StadiumBorder(),
+                    ),
+                    onPressed: () => _showManeuversDisplay(state, ref),
+                    child: const Text("Maneuvers"),
                   ),
                 ),
               ],
@@ -75,18 +96,11 @@ class Dashboard extends ConsumerWidget {
                   onPressedInc: ctrl.incrementAce,
                   onPressedDec: ctrl.decrementAce,
                 ),
-                boxM,
-                Tooltip(
-                  message: "Show maneuver dice",
-                  child: TextButton(
-                    onPressed: () => _showManeuversDisplay(state, ref),
-                    child: const Text("Maneuvers"),
-                  ),
-                ),
               ],
             ),
           ],
         ),
+        boxL,
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
           mainAxisSize: MainAxisSize.min,
@@ -220,14 +234,28 @@ class Dashboard extends ConsumerWidget {
           Container(
             alignment: Alignment.center,
             color: Colors.black,
+            padding: paddingAllM,
             child: Tooltip(
               message: "Receive 1 Ace token",
-              child: TextButton(
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  side: const BorderSide(color: Colors.grey),
+                  shape: const StadiumBorder(),
+                ),
                 onPressed: () {
                   final initialState = ref.read(appServiceProvider).initialCarState!;
                   ref.read(carCtrlProvider(initialState).notifier).incrementAce();
                 },
-                child: const Text("Perform Maneuver"),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: const [
+                      Text("Maneuver: +"),
+                      ModDisplay(mod: Mod(text: "[[Token.ace]]"),),
+                    ],
+                  ),
+                ),
               ),
             ),
           ),

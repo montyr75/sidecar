@@ -935,7 +935,7 @@ const Map<String, Component> components = {
     source: Source.drop,
   ),
   "Gator": Weapon(
-    name: "Heavy Recoilless Rifle",
+    name: "Gator",
     cost: 5,
     type: ComponentType.weapon,
     subtype: ComponentSubtype.slug,
