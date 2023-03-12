@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 
-import '../../../../models/components.dart';
 import '../../../../models/enums.dart';
 import '../../../../services/app/app_service.dart';
 import '../../../../utils/screen_utils.dart';
@@ -246,14 +245,15 @@ class Dashboard extends ConsumerWidget {
                   final initialState = ref.read(appServiceProvider).initialCarState!;
                   ref.read(carCtrlProvider(initialState).notifier).incrementAce();
                 },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: const [
-                      Text("Maneuver: +"),
-                      ModDisplay(mod: Mod(text: "[[Token.ace]]"),),
-                    ],
+                child: const Padding(
+                  padding: EdgeInsets.all(med),
+                  child: Text.rich(
+                    TextSpan(
+                      text: "Maneuver: +",
+                      children: [
+                        WidgetSpan(child: AceToken()),
+                      ]
+                    ),
                   ),
                 ),
               ),
