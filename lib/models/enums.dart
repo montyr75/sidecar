@@ -1,8 +1,11 @@
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/material.dart' show Color, Colors;
 import 'package:recase/recase.dart';
 
 import '../utils/utils.dart';
 import 'damage_dice.dart';
+
+part 'enums.mapper.dart';
 
 enum Source {
   custom,
@@ -50,6 +53,7 @@ enum Source {
   }
 }
 
+@MappableEnum()
 enum Location {
   crew,
   front,
@@ -94,6 +98,7 @@ enum Location {
   }
 }
 
+@MappableEnum()
 enum Chassis {
   custom(Source.custom, ''),
   apollo(Source.set2, "Apollo is tough and very effective in a crowd, where its fire weapons and the crew's grenades can wreak the most havoc.\n\nThe long wheelbase means it isn't the easiest car to drive, so most Apollo drivers cruise around the perimeter of the arena until there is an ideal opportunity to dive into the mix."),

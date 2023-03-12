@@ -1,0 +1,71 @@
+{
+  "vehicles": [
+    {
+      "version": "0.0.1",
+      "id": "",
+      "name": "Apollo",
+      "vehicleType": "car",
+      "chassis": "apollo",
+      "division": 4,
+      "locs": {
+        "crew": [
+          "Rookie Driver",
+          "Pyro",
+          "Hand Cannon",
+          "Paint Grenades",
+          "Thermite Grenades"
+        ],
+        "front": [
+          "Peppermill",
+          "Peppermill",
+          "Light Ceramic Plate"
+        ],
+        "back": [
+          "Light Ceramic Plate"
+        ],
+        "left": [
+          "Javelin",
+          "Flamethrower",
+          "Light Ceramic Plate"
+        ],
+        "right": [
+          "Javelin",
+          "Flamethrower",
+          "Light Ceramic Plate"
+        ]
+      }
+    },
+    {
+      "version": "0.0.1",
+      "id": "",
+      "name": "Dragon",
+      "vehicleType": "car",
+      "chassis": "dragon",
+      "division": 4,
+      "locs": {
+        "crew": [
+          "Amateur Driver",
+          "Pyro",
+          "Hand Cannon"
+        ],
+        "front": [
+          "Stinger",
+          "Stinger"
+        ],
+        "back": [
+          "Light Incendiary Rocket",
+          "Light Incendiary Rocket",
+          "Advanced Firing Interface"
+        ],
+        "left": [
+          "Fire Lance",
+          "Light Rocket"
+        ],
+        "right": [
+          "Fire Lance",
+          "Light Rocket"
+        ]
+      }
+    }
+  ]
+}

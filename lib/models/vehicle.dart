@@ -1,11 +1,11 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import 'enums.dart';
 
-part 'vehicle.g.dart';
+part 'vehicle.mapper.dart';
 
-@JsonSerializable()
-class Vehicle implements Comparable<Vehicle> {
+@MappableClass()
+class Vehicle with VehicleMappable implements Comparable<Vehicle> {
   final String version;
   final String id;
   final String name;
@@ -24,20 +24,14 @@ class Vehicle implements Comparable<Vehicle> {
     required this.locs,
   });
 
-  int get ap => division;
-  int get bp => division * 4;
-  int get cp => division;
-
-  @override
-  String toString() => "$name: $chassis (Division $division)";
-
   @override
   int compareTo(Vehicle other) => name.compareTo(other.name);
 
-  Map<String, dynamic> toJson() => _$VehicleToJson(this);
-  factory Vehicle.fromJson(Map<String, dynamic> json) => _$VehicleFromJson(json);
+  static final fromMap = VehicleMapper.fromMap;
+  static final fromJson = VehicleMapper.fromJson;
 }
 
+@MappableEnum()
 enum VehicleType {
   car,
 }

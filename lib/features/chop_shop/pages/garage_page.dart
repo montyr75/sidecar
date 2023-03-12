@@ -45,6 +45,7 @@ class GaragePage extends ConsumerWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     VehicleBrowser(
+                      key: ObjectKey(savedBuilds),
                       carStates: carStates,
                       selectionTypes: const [
                         VehicleSelectionType.drive,

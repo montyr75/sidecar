@@ -24,6 +24,7 @@ class VehicleBrowser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PanelList(
+      key: ObjectKey(carStates),
       items: carStates.map<ExpandableItem>(
         (carState) {
           return ExpandableItem(

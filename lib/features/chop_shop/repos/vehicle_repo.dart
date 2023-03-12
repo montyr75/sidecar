@@ -28,17 +28,17 @@ class VehicleRepo {
   }) : _db = db;
 
   Future<void> createSavedBuilds() async {
-    try {
-      await _db.createDocument(
-        databaseId: dbID,
-        collectionId: savedBuildsCollectionID,
-        documentId: ref.read(authServiceProvider).uid,
-        data: const SavedBuilds().toJson(),
-      );
-    }
-    catch (e, st) {
-      _handleError(e, st);
-    }
+    // try {
+    //   await _db.createDocument(
+    //     databaseId: dbID,
+    //     collectionId: savedBuildsCollectionID,
+    //     documentId: ref.read(authServiceProvider).uid,
+    //     data: const SavedBuilds().toJson(),
+    //   );
+    // }
+    // catch (e, st) {
+    //   _handleError(e, st);
+    // }
   }
 
   Future<SavedBuilds?> getSavedBuilds() async {

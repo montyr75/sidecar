@@ -1,12 +1,8 @@
 import 'package:collection/collection.dart';
-import 'package:json_annotation/json_annotation.dart';
 
 import '../utils/utils.dart';
 import 'enums.dart';
 
-part 'damage_dice.g.dart';
-
-@JsonSerializable()
 class Dice implements Comparable<Dice> {
   final Die die;
   final int qty;
@@ -26,11 +22,10 @@ class Dice implements Comparable<Dice> {
   @override
   int compareTo(Dice other) => die.index.compareTo(other.die.index);
 
-  factory Dice.fromJson(Map<String, dynamic> json) => _$DiceFromJson(json);
-  Map<String, dynamic> toJson() => _$DiceToJson(this);
+  // factory Dice.fromJson(Map<String, dynamic> json) => _$DiceFromJson(json);
+  // Map<String, dynamic> toJson() => _$DiceToJson(this);
 }
 
-@JsonSerializable()
 class DamageDice {
   final int basicDamage;
   final int tiresDamage;
@@ -88,11 +83,10 @@ class DamageDice {
     );
   }
 
-  factory DamageDice.fromJson(Map<String, dynamic> json) => _$DamageDiceFromJson(json);
-  Map<String, dynamic> toJson() => _$DamageDiceToJson(this);
+  // factory DamageDice.fromJson(Map<String, dynamic> json) => _$DamageDiceFromJson(json);
+  // Map<String, dynamic> toJson() => _$DamageDiceToJson(this);
 }
 
-@JsonSerializable()
 class CrewDamageDice {
   final DamageDice? driverDamage;
   final DamageDice? gunnerDamage;
@@ -102,6 +96,6 @@ class CrewDamageDice {
     this.gunnerDamage,
   });
 
-  factory CrewDamageDice.fromJson(Map<String, dynamic> json) => _$CrewDamageDiceFromJson(json);
-  Map<String, dynamic> toJson() => _$CrewDamageDiceToJson(this);
+  // factory CrewDamageDice.fromJson(Map<String, dynamic> json) => _$CrewDamageDiceFromJson(json);
+  // Map<String, dynamic> toJson() => _$CrewDamageDiceToJson(this);
 }

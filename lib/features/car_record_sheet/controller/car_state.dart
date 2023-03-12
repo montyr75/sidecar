@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart' hide IterableIntegerExtension;
-import 'package:json_annotation/json_annotation.dart';
 
 import '../../../data/components.dart' as db;
 import '../../../models/components.dart';
@@ -8,13 +7,10 @@ import '../../../models/enums.dart';
 import '../../../models/vehicle.dart';
 import '../../../utils/utils.dart';
 
-part 'car_state.g.dart';
-
 const defaultSpeed = 2;
 const defaultPowerPlant = 10;
 const defaultTires = 10;
 
-@JsonSerializable()
 class CarState {
   final Vehicle car;
   final List<InstalledComponent> components;
@@ -324,11 +320,10 @@ class CarState {
     }
   }
 
-  factory CarState.fromJson(Map<String, dynamic> json) => _$CarStateFromJson(json);
-  Map<String, dynamic> toJson() => _$CarStateToJson(this);
+  // factory CarState.fromJson(Map<String, dynamic> json) => _$CarStateFromJson(json);
+  // Map<String, dynamic> toJson() => _$CarStateToJson(this);
 }
 
-@JsonSerializable()
 class LocationState {
   final Location loc;
   final ArmorState armor;
@@ -363,11 +358,10 @@ class LocationState {
     );
   }
 
-  factory LocationState.fromJson(Map<String, dynamic> json) => _$LocationStateFromJson(json);
-  Map<String, dynamic> toJson() => _$LocationStateToJson(this);
+  // factory LocationState.fromJson(Map<String, dynamic> json) => _$LocationStateFromJson(json);
+  // Map<String, dynamic> toJson() => _$LocationStateToJson(this);
 }
 
-@JsonSerializable()
 class ArmorState {
   final int value;
   final int max;
@@ -390,8 +384,8 @@ class ArmorState {
     );
   }
 
-  factory ArmorState.fromJson(Map<String, dynamic> json) => _$ArmorStateFromJson(json);
-  Map<String, dynamic> toJson() => _$ArmorStateToJson(this);
+  // factory ArmorState.fromJson(Map<String, dynamic> json) => _$ArmorStateFromJson(json);
+  // Map<String, dynamic> toJson() => _$ArmorStateToJson(this);
 }
 
 Iterable<InstalledComponent> createInstalledComponents(Iterable<Component> comps, Location loc) {
