@@ -4,8 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:oktoast/oktoast.dart';
 
-import 'data/vehicle_guide.dart';
-import 'features/record_sheet/controller/vehicle_state.dart';
 import 'routes.dart';
 import 'services/theme/theme.dart';
 
@@ -29,10 +27,10 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeState = ref.watch(themeServiceProvider);
 
-    final vs = VehicleState.fromVehicle('', vg[1]);
-    print(vs);
-    print('\n\n');
-    print(vs.toJson());
+    // final vs = VehicleState.fromVehicle(vg[1]);
+    // print(vs);
+    // print('\n\n');
+    // print(vs.toJson());
 
     return OKToast(
       duration: const Duration(seconds: 4),

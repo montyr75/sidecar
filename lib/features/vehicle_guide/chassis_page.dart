@@ -51,9 +51,9 @@ class ChassisPage extends ConsumerWidget {
                     child: Text(chassis.description),
                   ),
                   VehicleBrowser(
-                    carStates: vehicles,
+                    vehicleStates: vehicles,
                     selectionTypes: [selectionType],
-                    onSelected: (result) => onSelected(result.vehicle),
+                    onSelected: (result) => onSelected(result.state.vehicle),
                   ),
                   const SizedBox(height: 40),
                 ],

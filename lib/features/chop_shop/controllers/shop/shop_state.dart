@@ -149,5 +149,5 @@ class ShopState {
     );
   }
 
-  VehicleState toCarState(String uid) => VehicleState.fromVehicle(uid, toVehicle());
+  VehicleState toState(String uid) => VehicleState.fromVehicle(toVehicle());
 }

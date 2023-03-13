@@ -43,7 +43,7 @@ class VehicleState with VehicleStateMappable {
     this.saveName,
   });
 
-  factory VehicleState.fromVehicle(String uid, Vehicle vehicle) {
+  factory VehicleState.fromVehicle(Vehicle vehicle) {
     final List<ComponentState> comps = [];
     for (final loc in Location.values) {
       final locComps = vehicle.locs[loc]?.map((key) => db.components[key]!) ?? const [];

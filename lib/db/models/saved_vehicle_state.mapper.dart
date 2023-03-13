@@ -24,21 +24,30 @@ class SavedVehicleStateMapper extends ClassMapperBase<SavedVehicleState> {
   @override
   final String id = 'SavedVehicleState';
 
+  static String _$id(SavedVehicleState v) => v.id;
   static String _$uid(SavedVehicleState v) => v.uid;
   static String _$username(SavedVehicleState v) => v.username;
+  static String _$name(SavedVehicleState v) => v.name;
+  static int _$timestamp(SavedVehicleState v) => v.timestamp;
   static VehicleState _$state(SavedVehicleState v) => v.state;
 
   @override
   final Map<Symbol, Field<SavedVehicleState, dynamic>> fields = const {
+    #id: Field<SavedVehicleState, String>('id', _$id),
     #uid: Field<SavedVehicleState, String>('uid', _$uid),
     #username: Field<SavedVehicleState, String>('username', _$username),
+    #name: Field<SavedVehicleState, String>('name', _$name),
+    #timestamp: Field<SavedVehicleState, int>('timestamp', _$timestamp),
     #state: Field<SavedVehicleState, VehicleState>('state', _$state),
   };
 
   static SavedVehicleState _instantiate(DecodingData data) {
     return SavedVehicleState(
+        id: data.get(#id),
         uid: data.get(#uid),
         username: data.get(#username),
+        name: data.get(#name),
+        timestamp: data.get(#timestamp),
         state: data.get(#state));
   }
 
@@ -99,7 +108,13 @@ typedef SavedVehicleStateCopyWithBound = SavedVehicleState;
 abstract class SavedVehicleStateCopyWith<$R, $In extends SavedVehicleState,
     $Out extends SavedVehicleState> implements ClassCopyWith<$R, $In, $Out> {
   VehicleStateCopyWith<$R, VehicleState, VehicleState> get state;
-  $R call({String? uid, String? username, VehicleState? state});
+  $R call(
+      {String? id,
+      String? uid,
+      String? username,
+      String? name,
+      int? timestamp,
+      VehicleState? state});
   SavedVehicleStateCopyWith<$R2, $In, $Out2>
       $chain<$R2, $Out2 extends SavedVehicleState>(
           Then<SavedVehicleState, $Out2> t, Then<$Out2, $R2> t2);
@@ -117,16 +132,28 @@ class _SavedVehicleStateCopyWithImpl<$R, $Out extends SavedVehicleState>
   VehicleStateCopyWith<$R, VehicleState, VehicleState> get state =>
       $value.state.copyWith.$chain($identity, (v) => call(state: v));
   @override
-  $R call({String? uid, String? username, VehicleState? state}) =>
+  $R call(
+          {String? id,
+          String? uid,
+          String? username,
+          String? name,
+          int? timestamp,
+          VehicleState? state}) =>
       $apply(FieldCopyWithData({
+        if (id != null) #id: id,
         if (uid != null) #uid: uid,
         if (username != null) #username: username,
+        if (name != null) #name: name,
+        if (timestamp != null) #timestamp: timestamp,
         if (state != null) #state: state
       }));
   @override
   SavedVehicleState $make(CopyWithData data) => SavedVehicleState(
+      id: data.get(#id, or: $value.id),
       uid: data.get(#uid, or: $value.uid),
       username: data.get(#username, or: $value.username),
+      name: data.get(#name, or: $value.name),
+      timestamp: data.get(#timestamp, or: $value.timestamp),
       state: data.get(#state, or: $value.state));
 
   @override

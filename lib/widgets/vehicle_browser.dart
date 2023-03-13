@@ -3,20 +3,19 @@ import 'package:recase/recase.dart';
 
 import '../features/record_sheet/controller/vehicle_state.dart';
 import '../models/components.dart';
-import '../models/vehicle.dart';
 import '../utils/screen_utils.dart';
 import '../utils/utils.dart';
 import 'component_display.dart';
 import 'panel_list.dart';
 
 class VehicleBrowser extends StatelessWidget {
-  final List<VehicleState> carStates;
+  final List<VehicleState> vehicleStates;
   final ValueChanged<VehicleSelectionResult> onSelected;
   final List<VehicleSelectionType> selectionTypes;
 
   const VehicleBrowser({
     Key? key,
-    required this.carStates,
+    required this.vehicleStates,
     required this.onSelected,
     this.selectionTypes = const [VehicleSelectionType.drive],
   }) : super(key: key);
@@ -24,14 +23,14 @@ class VehicleBrowser extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return PanelList(
-      key: ObjectKey(carStates),
-      items: carStates.map<ExpandableItem>(
-        (carState) {
+      key: ObjectKey(vehicleStates),
+      items: vehicleStates.map<ExpandableItem>(
+        (vehicleState) {
           return ExpandableItem(
             headerBuilder: (context, isExpanded) {
               return ListTile(
                 title: Text(
-                  carState.vehicle.name,
+                  vehicleState.vehicle.name,
                   style: const TextStyle(fontSize: 18, fontFamily: 'Audiowide'),
                 ),
                 subtitle: Padding(
@@ -44,12 +43,12 @@ class VehicleBrowser extends StatelessWidget {
                           text: "Chassis: ",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextSpan(text: carState.vehicle.chassis.toString()),
+                        TextSpan(text: vehicleState.vehicle.chassis.toString()),
                         const TextSpan(
                           text: "   Division: ",
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
-                        TextSpan(text: carState.vehicle.division.toString()),
+                        TextSpan(text: vehicleState.vehicle.division.toString()),
                       ],
                     ),
                   ),
@@ -58,23 +57,23 @@ class VehicleBrowser extends StatelessWidget {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     if (selectionTypes.contains(VehicleSelectionType.drive)) TextButton(
-                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.drive, vehicle: carState.vehicle)),
+                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.drive, state: vehicleState)),
                       child: Text(
                         VehicleSelectionType.drive.toString(),
                         style: const TextStyle(fontFamily: 'Facon'),
                       ),
                     ),
                     if (selectionTypes.contains(VehicleSelectionType.build)) TextButton(
-                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.build, vehicle: carState.vehicle)),
+                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.build, state: vehicleState)),
                       child: Text(
                         VehicleSelectionType.build.toString(),
                         style: const TextStyle(fontFamily: 'Facon'),
                       ),
                     ),
                     if (selectionTypes.contains(VehicleSelectionType.delete)) IconButton(
-                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.delete, vehicle: carState.vehicle)),
+                      onPressed: () => onSelected(VehicleSelectionResult(type: VehicleSelectionType.delete, state: vehicleState)),
                       icon: Icon(Icons.delete, color: Theme.of(context).primaryColor,),
-                      tooltip: "Dump Vehicle",
+                      tooltip: "Dump it",
                     ),
                   ].joinWidgetList(boxM).toList(),
                 ),
@@ -84,7 +83,7 @@ class VehicleBrowser extends StatelessWidget {
               return Padding(
                 padding: const EdgeInsets.symmetric(horizontal: xl),
                 child: ComponentPanelList(
-                  carState: carState,
+                  carState: vehicleState,
                 ),
               );
             },
@@ -160,11 +159,11 @@ class _ComponentPanelListState extends State<ComponentPanelList> {
 
 class VehicleSelectionResult {
   final VehicleSelectionType type;
-  final Vehicle vehicle;
+  final VehicleState state;
 
   const VehicleSelectionResult({
     required this.type,
-    required this.vehicle,
+    required this.state,
   });
 }
 

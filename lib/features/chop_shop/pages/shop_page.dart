@@ -51,8 +51,8 @@ class ShopPage extends ConsumerWidget {
             child: TextButton(
               onPressed: state.isValid
                   ? () {
-                      ref.read(appServiceProvider.notifier).drive((state.toCarState(uid)));
-                      context.goNamed(AppRoute.carRecordSheet.name);
+                      ref.read(appServiceProvider.notifier).drive((state.toState(uid)));
+                      context.goNamed(AppRoute.recordSheet.name);
                     }
                   : null,
               child: const Text(

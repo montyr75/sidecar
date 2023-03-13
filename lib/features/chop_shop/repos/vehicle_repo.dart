@@ -120,11 +120,27 @@ class VehicleRepo {
 
   Future<bool> saveVehicleState(SavedVehicleState data) async {
     try {
-      await _db.updateDocument(
+      await _db.createDocument(
         databaseId: dbID,
         collectionId: savedVehicleStatesCollectionID,
-        documentId: ID.unique(),
+        documentId: data.id,
         data: data.toDb(),
+      );
+
+      return true;
+    }
+    catch (e, st) {
+      _handleError(e, st);
+      return false;
+    }
+  }
+
+  Future<bool> deleteVehicleState(String id) async {
+    try {
+      await _db.deleteDocument(
+        databaseId: dbID,
+        collectionId: savedVehicleStatesCollectionID,
+        documentId: id,
       );
 
       return true;

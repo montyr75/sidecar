@@ -6,7 +6,6 @@ import '../../models/enums.dart';
 import '../../models/vehicle.dart';
 import '../../utils/screen_utils.dart';
 import '../../widgets/vehicle_browser.dart';
-import '../auth/services/auth_service.dart';
 import '../record_sheet/controller/vehicle_state.dart';
 import 'chassis_page.dart';
 
@@ -27,7 +26,7 @@ class VehicleGuideSelectorPage extends ConsumerStatefulWidget {
 class _VehicleGuideSelectorPageState extends ConsumerState<VehicleGuideSelectorPage> {
   int _page = 0;
   Chassis _selectedChassis = Chassis.apollo;
-  List<VehicleState> _carStates = const [];
+  List<VehicleState> _vehicleStates = const [];
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +59,8 @@ class _VehicleGuideSelectorPageState extends ConsumerState<VehicleGuideSelectorP
                         onSelected: () {
                           setState(() {
                             _selectedChassis = chassis;
-                            _carStates = vg.getByChassis(chassis).map((value) =>
-                                VehicleState.fromVehicle(ref.read(authServiceProvider).uid, value)).toList();
+                            _vehicleStates = vg.getByChassis(chassis).map((value) =>
+                                VehicleState.fromVehicle(value)).toList();
                             _page = 1;
                           });
                         },
@@ -76,7 +75,7 @@ class _VehicleGuideSelectorPageState extends ConsumerState<VehicleGuideSelectorP
         ChassisPage(
           selectionType: widget.selectionType,
           chassis: _selectedChassis,
-          vehicles: _carStates,
+          vehicles: _vehicleStates,
           onBack: () {
             setState(() {
               _page = 0;

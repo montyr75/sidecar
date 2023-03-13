@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
 // import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
@@ -7,9 +9,12 @@ import 'package:go_router/go_router.dart';
 import '../../data/damage.dart';
 import '../../routes.dart';
 import '../../utils/screen_utils.dart';
+import '../../utils/utils.dart';
 import '../../widgets/internal_damage_sequence_display.dart';
 import '../../widgets/panel_list.dart';
 import '../../widgets/png_icon.dart';
+import '../pit/controllers/pit_ctrl.dart';
+import 'controller/vehicle_ctrl.dart';
 import 'controller/vehicle_state.dart';
 import 'widgets/crew/crew_body.dart';
 import 'widgets/dashboard/dashboard.dart';
@@ -124,6 +129,13 @@ class _VehicleRecordSheetPageState extends ConsumerState<VehicleRecordSheetPage>
         actions: [
           Builder(builder: (context) {
             return IconButton(
+              tooltip: "Save Vehicle State",
+              onPressed: !_internalDamageSequenceShowing ? () => _showSaveDialog(context) : null,
+              icon: const Icon(Icons.save),
+            );
+          }),
+          Builder(builder: (context) {
+            return IconButton(
               tooltip: "Dice Matrix",
               onPressed: !_internalDamageSequenceShowing ? () => _showDiceMatrix(context) : null,
               icon: const PngIcon(name: "dice"),
@@ -193,6 +205,15 @@ class _VehicleRecordSheetPageState extends ConsumerState<VehicleRecordSheetPage>
     });
   }
 
+  void _showSaveDialog(BuildContext context) {
+    SmartDialog.show(builder: (_) {
+      return SaveDialog(
+        pitCtrl: ref.read(pitCtrlProvider.notifier),
+        vehicleState: ref.read(vehicleCtrlProvider(widget.initialState)),
+      );
+    });
+  }
+
   void _showDiceMatrix(BuildContext context) {
     SmartDialog.show(builder: (_) {
       return const SimpleDialog(
@@ -242,5 +263,77 @@ class PanelHeader extends StatelessWidget {
       alignment: Alignment.center,
       child: Text(text, style: const TextStyle(fontFamily: 'Facon', color: Colors.blueGrey)),
     );
+  }
+}
+
+class SaveDialog extends StatefulWidget {
+  final PitCtrl pitCtrl;
+  final VehicleState vehicleState;
+
+  const SaveDialog({
+    Key? key,
+    required this.pitCtrl,
+    required this.vehicleState,
+  }) : super(key: key);
+
+  @override
+  State<SaveDialog> createState() => _SaveDialogState();
+}
+
+class _SaveDialogState extends State<SaveDialog> {
+  final textCtrl = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      // backgroundColor: Colors.grey,
+      title: const Text("Save Current Vehicle State"),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextFormField(
+            controller: textCtrl,
+            autofocus: true,
+            onChanged: (_) => setState(() {}),
+            onFieldSubmitted: (_) => _save(),
+            textInputAction: TextInputAction.go,
+            enableSuggestions: false,
+            autocorrect: false,
+            maxLength: 55,
+            maxLengthEnforcement: MaxLengthEnforcement.enforced,
+            decoration: const InputDecoration(
+              labelText: "Name/Description",
+              isDense: true,
+            ),
+          ),
+        ],
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => SmartDialog.dismiss(),
+          child: const Text("Cancel"),
+        ),
+        OutlinedButton(
+          onPressed: textCtrl.text.isNotEmpty ? _save : null,
+          child: const Text("Save"),
+        ),
+      ],
+    );
+  }
+
+  Future<void> _save() async {
+    final name = textCtrl.text.trim();
+
+    if (name.isNotEmpty) {
+      final success = await widget.pitCtrl.saveState(
+        name,
+        widget.vehicleState,
+      );
+
+      if (success) {
+        showSuccessToast("$name saved.");
+        SmartDialog.dismiss();
+      }
+    }
   }
 }

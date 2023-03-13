@@ -79,6 +79,12 @@ class HomePage extends ConsumerWidget {
                 desc: "Build/Modify vehicles",
                 onPressed: () => context.goNamed(AppRoute.chopShop.name),
               ),
+              boxXXL,
+              PageNavButton(
+                label: "The Pit",
+                desc: "Load/Manage saved games",
+                onPressed: () => context.goNamed(AppRoute.pit.name),
+              ),
             ],
           ),
         ),

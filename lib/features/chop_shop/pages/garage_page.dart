@@ -7,7 +7,6 @@ import '../../../services/app/app_service.dart';
 import '../../../utils/popup_utils.dart';
 import '../../../utils/screen_utils.dart';
 import '../../../widgets/vehicle_browser.dart';
-import '../../auth/services/auth_service.dart';
 import '../../record_sheet/controller/vehicle_state.dart';
 import '../controllers/chop_shop/chop_shop_ctrl.dart';
 import '../controllers/shop/shop_state.dart';
@@ -19,9 +18,8 @@ class GaragePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final uid = ref.read(authServiceProvider.select((value) => value.uid));
     final savedBuilds = ref.watch(chopShopCtrlProvider.select((value) => value.savedBuilds));
-    final carStates = savedBuilds.vehicles.map((value) => VehicleState.fromVehicle(uid, value)).toList();
+    final vehicleStates = savedBuilds.vehicles.map((value) => VehicleState.fromVehicle(value)).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -48,7 +46,7 @@ class GaragePage extends ConsumerWidget {
                   children: [
                     VehicleBrowser(
                       key: ObjectKey(savedBuilds),
-                      carStates: carStates,
+                      vehicleStates: vehicleStates,
                       selectionTypes: const [
                         VehicleSelectionType.drive,
                         VehicleSelectionType.build,
@@ -57,15 +55,15 @@ class GaragePage extends ConsumerWidget {
                       onSelected: (result) {
                         switch (result.type) {
                           case VehicleSelectionType.drive:
-                            ref.read(appServiceProvider.notifier).drive(VehicleState.fromVehicle(uid, result.vehicle));
-                            context.goNamed(AppRoute.carRecordSheet.name);
+                            ref.read(appServiceProvider.notifier).drive(result.state);
+                            context.goNamed(AppRoute.recordSheet.name);
                             break;
                           case VehicleSelectionType.build:
-                            ref.read(appServiceProvider.notifier).buildVehicle(ShopState.fromVehicle(result.vehicle));
+                            ref.read(appServiceProvider.notifier).buildVehicle(ShopState.fromVehicle(result.state.vehicle));
                             context.pushNamed(AppRoute.shop.name);
                             break;
                           case VehicleSelectionType.delete:
-                            _deleteBuild(context, ref, result.vehicle.id);
+                            _deleteBuild(context, ref, result.state.id);
                             break;
                         }
                       },

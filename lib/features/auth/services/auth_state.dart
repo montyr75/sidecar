@@ -32,4 +32,5 @@ class AuthState {
   bool get isLoggedIn => hasSession;
 
   String get uid => account?.$id ?? '';
+  String get username => account?.name ?? '';
 }

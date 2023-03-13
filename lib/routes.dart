@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -9,6 +10,7 @@ import 'features/auth/services/auth_service.dart';
 import 'features/chop_shop/pages/chop_shop_page.dart';
 import 'features/chop_shop/pages/garage_page.dart';
 import 'features/chop_shop/pages/shop_page.dart';
+import 'features/pit/pit_page.dart';
 import 'features/record_sheet/record_sheet_page.dart';
 import 'features/vehicle_guide/vehicle_guide_build.dart';
 import 'features/vehicle_guide/vehicle_guide_drive.dart';
@@ -18,9 +20,10 @@ part 'routes.g.dart';
 
 enum AppRoute {
   home('/'),
-  carRecordSheet,
+  recordSheet,
   vehicleGuideDrive,
   chopShop,
+  pit,
   shop,
   vehicleGuideBuild,
   garage,
@@ -79,8 +82,13 @@ GoRouter goRouter(GoRouterRef ref) {
             ],
           ),
           GoRoute(
-            name: AppRoute.carRecordSheet.name,
-            path: AppRoute.carRecordSheet.path,
+            name: AppRoute.pit.name,
+            path: AppRoute.pit.path,
+            builder: (context, state) => const PitPage(),
+          ),
+          GoRoute(
+            name: AppRoute.recordSheet.name,
+            path: AppRoute.recordSheet.path,
             builder: (context, state) => VehicleRecordSheetPage(initialState: ref.read(appServiceProvider).initialCarState!),
           ),
         ],
