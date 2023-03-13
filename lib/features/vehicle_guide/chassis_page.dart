@@ -5,12 +5,12 @@ import '../../models/enums.dart';
 import '../../models/vehicle.dart';
 import '../../utils/screen_utils.dart';
 import '../../widgets/vehicle_browser.dart';
-import '../car_record_sheet/controller/car_state.dart';
+import '../record_sheet/controller/vehicle_state.dart';
 
 class ChassisPage extends ConsumerWidget {
   final VehicleSelectionType selectionType;
   final Chassis chassis;
-  final List<CarState> vehicles;
+  final List<VehicleState> vehicles;
   final ValueChanged<Vehicle> onSelected;
   final VoidCallback onBack;
 

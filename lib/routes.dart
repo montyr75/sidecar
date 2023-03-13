@@ -6,10 +6,10 @@ import 'features/app/pages/home_page.dart';
 import 'features/app/pages/not_found_page.dart';
 import 'features/auth/pages/login_page.dart';
 import 'features/auth/services/auth_service.dart';
-import 'features/car_record_sheet/car_record_sheet_page.dart';
 import 'features/chop_shop/pages/chop_shop_page.dart';
 import 'features/chop_shop/pages/garage_page.dart';
 import 'features/chop_shop/pages/shop_page.dart';
+import 'features/record_sheet/record_sheet_page.dart';
 import 'features/vehicle_guide/vehicle_guide_build.dart';
 import 'features/vehicle_guide/vehicle_guide_drive.dart';
 import 'services/app/app_service.dart';
@@ -81,7 +81,7 @@ GoRouter goRouter(GoRouterRef ref) {
           GoRoute(
             name: AppRoute.carRecordSheet.name,
             path: AppRoute.carRecordSheet.path,
-            builder: (context, state) => CarRecordSheetPage(initialState: ref.read(appServiceProvider).initialCarState!),
+            builder: (context, state) => VehicleRecordSheetPage(initialState: ref.read(appServiceProvider).initialCarState!),
           ),
         ],
       ),

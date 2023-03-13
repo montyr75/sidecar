@@ -245,18 +245,18 @@ packages:
     dependency: "direct main"
     description:
       name: dart_mappable
-      sha256: "1371f34bd1a7c238d665a023ce65b306c65064610d9644200b81124e0b87682d"
+      sha256: "21134d2bc2bff093da330031046fbb4d005eba1975518484e67a5e101618845a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "3.0.0-dev.1"
   dart_mappable_builder:
     dependency: "direct dev"
     description:
       name: dart_mappable_builder
-      sha256: cdb562c5d97d50eb1122df7d8a0b49d6859b45ff7cee9013e78db8364d45245d
+      sha256: "094ebb00b520b25311e997078a4bad9ec7b1ca46e9e1dd7ccba6fc6b9897a27d"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "3.0.0-dev.1"
   dart_style:
     dependency: transitive
     description:

@@ -1,9 +1,13 @@
 import 'package:collection/collection.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../utils/utils.dart';
 import 'enums.dart';
 
-class Dice implements Comparable<Dice> {
+part 'damage_dice.mapper.dart';
+
+@MappableClass()
+class Dice with DiceMappable implements Comparable<Dice> {
   final Die die;
   final int qty;
 
@@ -22,11 +26,12 @@ class Dice implements Comparable<Dice> {
   @override
   int compareTo(Dice other) => die.index.compareTo(other.die.index);
 
-  // factory Dice.fromJson(Map<String, dynamic> json) => _$DiceFromJson(json);
-  // Map<String, dynamic> toJson() => _$DiceToJson(this);
+  static const fromMap = DiceMapper.fromMap;
+  static const fromJson = DiceMapper.fromJson;
 }
 
-class DamageDice {
+@MappableClass()
+class DamageDice with DamageDiceMappable {
   final int basicDamage;
   final int tiresDamage;
   final List<Dice> dice;
@@ -71,20 +76,8 @@ class DamageDice {
   bool get hasTiresDamage => tiresDamage > 0;
   bool get hasDice => dice.isNotEmpty;
 
-  DamageDice copyWith({
-    int? basicDamage,
-    int? tiresDamage,
-    List<Dice>? dice,
-  }) {
-    return DamageDice(
-      basicDamage: basicDamage ?? this.basicDamage,
-      tiresDamage: tiresDamage ?? this.tiresDamage,
-      dice: dice ?? this.dice,
-    );
-  }
-
-  // factory DamageDice.fromJson(Map<String, dynamic> json) => _$DamageDiceFromJson(json);
-  // Map<String, dynamic> toJson() => _$DamageDiceToJson(this);
+ static const fromMap = DamageDiceMapper.fromMap;
+  static const fromJson = DamageDiceMapper.fromJson;
 }
 
 class CrewDamageDice {
@@ -95,7 +88,4 @@ class CrewDamageDice {
     this.driverDamage,
     this.gunnerDamage,
   });
-
-  // factory CrewDamageDice.fromJson(Map<String, dynamic> json) => _$CrewDamageDiceFromJson(json);
-  // Map<String, dynamic> toJson() => _$CrewDamageDiceToJson(this);
 }

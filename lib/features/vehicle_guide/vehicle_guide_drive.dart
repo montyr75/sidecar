@@ -4,7 +4,8 @@ import 'package:go_router/go_router.dart';
 
 import '../../routes.dart';
 import '../../services/app/app_service.dart';
-import '../car_record_sheet/controller/car_state.dart';
+import '../auth/services/auth_service.dart';
+import '../record_sheet/controller/vehicle_state.dart';
 import 'vehicle_guide_selector_page.dart';
 
 class VehicleGuideDrive extends ConsumerWidget {
@@ -14,7 +15,7 @@ class VehicleGuideDrive extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return VehicleGuideSelectorPage(
       onSelected: (vehicle) {
-        ref.read(appServiceProvider.notifier).drive(CarState.fromVehicle(vehicle));
+        ref.read(appServiceProvider.notifier).drive(VehicleState.fromVehicle(ref.read(authServiceProvider).uid, vehicle));
         context.goNamed(AppRoute.carRecordSheet.name);
       },
     );

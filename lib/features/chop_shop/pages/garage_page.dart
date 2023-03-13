@@ -7,7 +7,8 @@ import '../../../services/app/app_service.dart';
 import '../../../utils/popup_utils.dart';
 import '../../../utils/screen_utils.dart';
 import '../../../widgets/vehicle_browser.dart';
-import '../../car_record_sheet/controller/car_state.dart';
+import '../../auth/services/auth_service.dart';
+import '../../record_sheet/controller/vehicle_state.dart';
 import '../controllers/chop_shop/chop_shop_ctrl.dart';
 import '../controllers/shop/shop_state.dart';
 
@@ -18,8 +19,9 @@ class GaragePage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uid = ref.read(authServiceProvider.select((value) => value.uid));
     final savedBuilds = ref.watch(chopShopCtrlProvider.select((value) => value.savedBuilds));
-    final carStates = savedBuilds.vehicles.map((value) => CarState.fromVehicle(value)).toList();
+    final carStates = savedBuilds.vehicles.map((value) => VehicleState.fromVehicle(uid, value)).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -55,7 +57,7 @@ class GaragePage extends ConsumerWidget {
                       onSelected: (result) {
                         switch (result.type) {
                           case VehicleSelectionType.drive:
-                            ref.read(appServiceProvider.notifier).drive(CarState.fromVehicle(result.vehicle));
+                            ref.read(appServiceProvider.notifier).drive(VehicleState.fromVehicle(uid, result.vehicle));
                             context.goNamed(AppRoute.carRecordSheet.name);
                             break;
                           case VehicleSelectionType.build:

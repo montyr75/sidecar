@@ -10,23 +10,23 @@ import '../../utils/screen_utils.dart';
 import '../../widgets/internal_damage_sequence_display.dart';
 import '../../widgets/panel_list.dart';
 import '../../widgets/png_icon.dart';
-import 'controller/car_state.dart';
-import 'widgets/car_enhancements/car_enhancements_body.dart';
+import 'controller/vehicle_state.dart';
 import 'widgets/crew/crew_body.dart';
 import 'widgets/dashboard/dashboard.dart';
 import 'widgets/dice_matrix.dart';
+import 'widgets/enhancements/enhancements_body.dart';
 import 'widgets/weapons/weapons_body.dart';
 
-class CarRecordSheetPage extends ConsumerStatefulWidget {
-  final CarState initialState;
+class VehicleRecordSheetPage extends ConsumerStatefulWidget {
+  final VehicleState initialState;
 
-  const CarRecordSheetPage({Key? key, required this.initialState}) : super(key: key);
+  const VehicleRecordSheetPage({Key? key, required this.initialState}) : super(key: key);
 
   @override
-  ConsumerState createState() => _CarRecordSheetPageState();
+  ConsumerState createState() => _VehicleRecordSheetPageState();
 }
 
-class _CarRecordSheetPageState extends ConsumerState<CarRecordSheetPage> {
+class _VehicleRecordSheetPageState extends ConsumerState<VehicleRecordSheetPage> {
   late final List<ExpandableItem> _allItems;
 
   bool _internalDamageSequenceShowing = false;
@@ -93,7 +93,7 @@ class _CarRecordSheetPageState extends ConsumerState<CarRecordSheetPage> {
           ),
           bodyBuilder: (context, isExpanded) => Padding(
             padding: itemPadding,
-            child: CarEnhancementsBody(initialState: widget.initialState),
+            child: EnhancementsBody(initialState: widget.initialState),
           ),
           isExpanded: false,
         ),
@@ -113,7 +113,7 @@ class _CarRecordSheetPageState extends ConsumerState<CarRecordSheetPage> {
         title: Padding(
           padding: const EdgeInsets.only(right: 60.0),
           child: Text(
-            widget.initialState.car.name,
+            widget.initialState.vehicle.name,
             style: const TextStyle(
               fontSize: 22,
               fontFamily: 'Blazed',
@@ -151,7 +151,7 @@ class _CarRecordSheetPageState extends ConsumerState<CarRecordSheetPage> {
   }
 
   void _showInternalDamageSequence(BuildContext context) {
-    final size = widget.initialState.car.division <= 6 ? InternalDamageCarSize.small : InternalDamageCarSize.big;
+    final size = widget.initialState.vehicle.division <= 6 ? InternalDamageCarSize.small : InternalDamageCarSize.big;
 
     final seq = internalDamageSequences[size]!.toList()..shuffle();
 

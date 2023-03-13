@@ -27,6 +27,6 @@ class SavedBuilds with SavedBuildsMappable {
   bool exists(String name, int division) => vehicles.any((value) => value.name == name.trim() && value.division == division);
   Vehicle? getVehicleByNameAndDivision(String name, int division) => vehicles.firstWhereOrNull((value) => value.name == name.trim() && value.division == division);
 
-  static final fromMap = SavedBuildsMapper.fromMap;
-  static final fromJson = SavedBuildsMapper.fromJson;
+  static const fromMap = SavedBuildsMapper.fromMap;
+  static const fromJson = SavedBuildsMapper.fromJson;
 }

@@ -8,8 +8,8 @@ import '../../../../utils/screen_utils.dart';
 import '../../../../widgets/mod_display.dart';
 import '../../../../widgets/token_pile.dart';
 import '../../../chop_shop/pages/shop_page.dart';
-import '../../controller/car_ctrl.dart';
-import '../../controller/car_state.dart';
+import '../../controller/vehicle_ctrl.dart';
+import '../../controller/vehicle_state.dart';
 import '../maneuvers_display.dart';
 import 'armor_gauge.dart';
 import 'control_readout.dart';
@@ -24,8 +24,8 @@ class Dashboard extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final initialState = ref.watch(appServiceProvider).initialCarState!;
 
-    final state = ref.watch(carCtrlProvider(initialState));
-    final ctrl = ref.read(carCtrlProvider(initialState).notifier);
+    final state = ref.watch(vehicleCtrlProvider(initialState));
+    final ctrl = ref.read(vehicleCtrlProvider(initialState).notifier);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -208,7 +208,7 @@ class Dashboard extends ConsumerWidget {
     );
   }
 
-  void _showManeuversDisplay(CarState state, WidgetRef ref) {
+  void _showManeuversDisplay(VehicleState state, WidgetRef ref) {
     final data = state.calculateManeuverDice();
 
     SmartDialog.show(builder: (_) {
@@ -243,7 +243,7 @@ class Dashboard extends ConsumerWidget {
                 ),
                 onPressed: () {
                   final initialState = ref.read(appServiceProvider).initialCarState!;
-                  ref.read(carCtrlProvider(initialState).notifier).incrementAce();
+                  ref.read(vehicleCtrlProvider(initialState).notifier).incrementAce();
                 },
                 child: const Padding(
                   padding: EdgeInsets.all(med),

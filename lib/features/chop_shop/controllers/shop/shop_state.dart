@@ -5,7 +5,7 @@ import '../../../../models/enums.dart';
 import '../../../../models/form_models.dart';
 import '../../../../models/vehicle.dart';
 import '../../../../utils/utils.dart';
-import '../../../car_record_sheet/controller/car_state.dart';
+import '../../../record_sheet/controller/vehicle_state.dart';
 
 class ShopState {
   static const defaultDivision = 4;
@@ -149,5 +149,5 @@ class ShopState {
     );
   }
 
-  CarState toCarState() => CarState.fromVehicle(toVehicle());
+  VehicleState toCarState(String uid) => VehicleState.fromVehicle(uid, toVehicle());
 }

@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart' hide IterableIntegerExtension;
+import 'package:dart_mappable/dart_mappable.dart';
 
 import '../../../data/components.dart' as db;
 import '../../../models/components.dart';
@@ -7,12 +8,17 @@ import '../../../models/enums.dart';
 import '../../../models/vehicle.dart';
 import '../../../utils/utils.dart';
 
+part 'vehicle_state.mapper.dart';
+
 const defaultSpeed = 2;
 const defaultPowerPlant = 10;
 const defaultTires = 10;
 
-class CarState {
-  final Vehicle car;
+@MappableClass()
+class VehicleState with VehicleStateMappable {
+  final String id;
+  final String uid;
+  final Vehicle vehicle;
   final List<InstalledComponent> components;
   final Map<Location, LocationState> locs;
   final List<Attribute> attributes;
@@ -24,8 +30,10 @@ class CarState {
 
   final String? saveName;
 
-  const CarState({
-    required this.car,
+  const VehicleState({
+    required this.id,
+    required this.uid,
+    required this.vehicle,
     required this.components,
     required this.locs,
     required this.attributes,
@@ -37,7 +45,7 @@ class CarState {
     this.saveName,
   });
 
-  factory CarState.fromVehicle(Vehicle vehicle) {
+  factory VehicleState.fromVehicle(String uid, Vehicle vehicle) {
     final List<InstalledComponent> comps = [];
     for (final loc in Location.values) {
       final locComps = vehicle.locs[loc]?.map((key) => db.components[key]!) ?? const [];
@@ -67,8 +75,10 @@ class CarState {
       );
     }
 
-    return CarState(
-      car: vehicle,
+    return VehicleState(
+      id: uuid.v4(),
+      uid: uid,
+      vehicle: vehicle,
       components: List<InstalledComponent>.unmodifiable(comps),
       locs: Map<Location, LocationState>.unmodifiable({
         for (final loc in Location.carLocs)
@@ -79,32 +89,6 @@ class CarState {
           ),
       }),
       attributes: attributes,
-    );
-  }
-
-  CarState copyWith({
-    Vehicle? car,
-    List<InstalledComponent>? components,
-    Map<Location, LocationState>? locs,
-    List<Attribute>? attributes,
-    int? speed,
-    int? powerPlant,
-    int? tires,
-    int? control,
-    int? ace,
-    String? saveName,
-  }) {
-    return CarState(
-      car: car ?? this.car,
-      components: components ?? this.components,
-      locs: locs ?? this.locs,
-      attributes: attributes ?? this.attributes,
-      speed: speed ?? this.speed,
-      powerPlant: powerPlant ?? this.powerPlant,
-      tires: tires ?? this.tires,
-      control: control ?? this.control,
-      ace: ace ?? this.ace,
-      saveName: saveName ?? this.saveName,
     );
   }
 
@@ -252,7 +236,7 @@ class CarState {
 
   InstalledComponent? findComponentById(String id) => components.firstWhereOrNull((value) => value.id == id);
 
-  String get name => car.chassis.toString();
+  String get name => vehicle.chassis.toString();
 
   // get the max amount of control the tires allow (based on damage)
   int get tireHandling {
@@ -320,11 +304,12 @@ class CarState {
     }
   }
 
-  // factory CarState.fromJson(Map<String, dynamic> json) => _$CarStateFromJson(json);
-  // Map<String, dynamic> toJson() => _$CarStateToJson(this);
+  static const fromMap = VehicleStateMapper.fromMap;
+  static const fromJson = VehicleStateMapper.fromJson;
 }
 
-class LocationState {
+@MappableClass()
+class LocationState with LocationStateMappable {
   final Location loc;
   final ArmorState armor;
   final bool fire;
@@ -344,25 +329,12 @@ class LocationState {
     );
   }
 
-  LocationState copyWith({
-    Location? loc,
-    ArmorState? armor,
-    bool? fire,
-    bool? paint,
-  }) {
-    return LocationState(
-      loc: loc ?? this.loc,
-      armor: armor ?? this.armor,
-      fire: fire ?? this.fire,
-      paint: paint ?? this.paint,
-    );
-  }
-
-  // factory LocationState.fromJson(Map<String, dynamic> json) => _$LocationStateFromJson(json);
-  // Map<String, dynamic> toJson() => _$LocationStateToJson(this);
+  static const fromMap = LocationStateMapper.fromMap;
+  static const fromJson = LocationStateMapper.fromJson;
 }
 
-class ArmorState {
+@MappableClass()
+class ArmorState with ArmorStateMappable {
   final int value;
   final int max;
 
@@ -374,18 +346,8 @@ class ArmorState {
   factory ArmorState.fromDivision(int division, {int bonusAP = 0}) =>
       ArmorState(value: division + bonusAP, max: division + bonusAP);
 
-  ArmorState copyWith({
-    int? value,
-    int? max,
-  }) {
-    return ArmorState(
-      value: value ?? this.value,
-      max: max ?? this.max,
-    );
-  }
-
-  // factory ArmorState.fromJson(Map<String, dynamic> json) => _$ArmorStateFromJson(json);
-  // Map<String, dynamic> toJson() => _$ArmorStateToJson(this);
+  static const fromMap = ArmorStateMapper.fromMap;
+  static const fromJson = ArmorStateMapper.fromJson;
 }
 
 Iterable<InstalledComponent> createInstalledComponents(Iterable<Component> comps, Location loc) {

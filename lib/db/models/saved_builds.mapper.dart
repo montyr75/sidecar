@@ -5,99 +5,118 @@
 
 part of 'saved_builds.dart';
 
-class SavedBuildsMapper extends MapperBase<SavedBuilds> {
-  static MapperContainer container = MapperContainer(
-    mappers: {SavedBuildsMapper()},
-  )..linkAll({VehicleMapper.container});
+class SavedBuildsMapper extends ClassMapperBase<SavedBuilds> {
+  SavedBuildsMapper._();
+  static SavedBuildsMapper? _instance;
+  static SavedBuildsMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = SavedBuildsMapper._());
+      VehicleMapper.ensureInitialized();
+    }
+    return _instance!;
+  }
 
-  @override
-  SavedBuildsMapperElement createElement(MapperContainer container) {
-    return SavedBuildsMapperElement._(this, container);
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'SavedBuilds';
+  final String id = 'SavedBuilds';
 
-  static final fromMap = container.fromMap<SavedBuilds>;
-  static final fromJson = container.fromJson<SavedBuilds>;
-}
-
-class SavedBuildsMapperElement extends MapperElementBase<SavedBuilds> {
-  SavedBuildsMapperElement._(super.mapper, super.container);
+  static List<Vehicle> _$vehicles(SavedBuilds v) => v.vehicles;
 
   @override
-  Function get decoder => decode;
-  SavedBuilds decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  SavedBuilds fromMap(Map<String, dynamic> map) =>
-      SavedBuilds(container.$getOpt(map, 'vehicles') ?? const []);
+  final Map<Symbol, Field<SavedBuilds, dynamic>> fields = const {
+    #vehicles: Field<SavedBuilds, List<Vehicle>>('vehicles', _$vehicles,
+        opt: true, def: const []),
+  };
+
+  static SavedBuilds _instantiate(DecodingData data) {
+    return SavedBuilds(data.get(#vehicles));
+  }
 
   @override
-  Function get encoder => encode;
-  dynamic encode(SavedBuilds v) => toMap(v);
-  Map<String, dynamic> toMap(SavedBuilds s) =>
-      {'vehicles': container.$enc(s.vehicles, 'vehicles')};
+  final Function instantiate = _instantiate;
 
-  @override
-  String stringify(SavedBuilds self) =>
-      'SavedBuilds(vehicles: ${container.asString(self.vehicles)})';
-  @override
-  int hash(SavedBuilds self) => container.hash(self.vehicles);
-  @override
-  bool equals(SavedBuilds self, SavedBuilds other) =>
-      container.isEqual(self.vehicles, other.vehicles);
+  static SavedBuilds fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<SavedBuilds>(map));
+  }
+
+  static SavedBuilds fromJson(String json) {
+    return _guard((c) => c.fromJson<SavedBuilds>(json));
+  }
 }
 
 mixin SavedBuildsMappable {
-  String toJson() => SavedBuildsMapper.container.toJson(this as SavedBuilds);
-  Map<String, dynamic> toMap() =>
-      SavedBuildsMapper.container.toMap(this as SavedBuilds);
+  String toJson() {
+    return SavedBuildsMapper._guard((c) => c.toJson(this as SavedBuilds));
+  }
+
+  Map<String, dynamic> toMap() {
+    return SavedBuildsMapper._guard((c) => c.toMap(this as SavedBuilds));
+  }
+
   SavedBuildsCopyWith<SavedBuilds, SavedBuilds, SavedBuilds> get copyWith =>
       _SavedBuildsCopyWithImpl(this as SavedBuilds, $identity, $identity);
   @override
-  String toString() => SavedBuildsMapper.container.asString(this);
+  String toString() {
+    return SavedBuildsMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          SavedBuildsMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            SavedBuildsMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => SavedBuildsMapper.container.hash(this);
+  int get hashCode {
+    return SavedBuildsMapper._guard((c) => c.hash(this));
+  }
 }
 
 extension SavedBuildsValueCopy<$R, $Out extends SavedBuilds>
     on ObjectCopyWith<$R, SavedBuilds, $Out> {
-  SavedBuildsCopyWith<$R, SavedBuilds, $Out> get asSavedBuilds =>
-      base.as((v, t, t2) => _SavedBuildsCopyWithImpl(v, t, t2));
+  SavedBuildsCopyWith<$R, SavedBuilds, $Out> get $asSavedBuilds =>
+      $base.as((v, t, t2) => _SavedBuildsCopyWithImpl(v, t, t2));
 }
 
 typedef SavedBuildsCopyWithBound = SavedBuilds;
 
 abstract class SavedBuildsCopyWith<$R, $In extends SavedBuilds,
-    $Out extends SavedBuilds> implements ObjectCopyWith<$R, $In, $Out> {
-  SavedBuildsCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends SavedBuilds>(
-      Then<SavedBuilds, $Out2> t, Then<$Out2, $R2> t2);
+    $Out extends SavedBuilds> implements ClassCopyWith<$R, $In, $Out> {
   ListCopyWith<$R, Vehicle, VehicleCopyWith<$R, Vehicle, Vehicle>> get vehicles;
   $R call({List<Vehicle>? vehicles});
+  SavedBuildsCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2 extends SavedBuilds>(
+      Then<SavedBuilds, $Out2> t, Then<$Out2, $R2> t2);
 }
 
 class _SavedBuildsCopyWithImpl<$R, $Out extends SavedBuilds>
-    extends CopyWithBase<$R, SavedBuilds, $Out>
+    extends ClassCopyWithBase<$R, SavedBuilds, $Out>
     implements SavedBuildsCopyWith<$R, SavedBuilds, $Out> {
   _SavedBuildsCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  SavedBuildsCopyWith<$R2, SavedBuilds, $Out2>
-      chain<$R2, $Out2 extends SavedBuilds>(
-              Then<SavedBuilds, $Out2> t, Then<$Out2, $R2> t2) =>
-          _SavedBuildsCopyWithImpl($value, t, t2);
 
+  @override
+  late final ClassMapperBase<SavedBuilds> $mapper =
+      SavedBuildsMapper.ensureInitialized();
   @override
   ListCopyWith<$R, Vehicle, VehicleCopyWith<$R, Vehicle, Vehicle>>
       get vehicles => ListCopyWith(
           $value.vehicles,
-          (v, t) => v.copyWith.chain<$R, Vehicle>($identity, t),
+          (v, t) => v.copyWith.$chain<$R, Vehicle>($identity, t),
           (v) => call(vehicles: v));
   @override
   $R call({List<Vehicle>? vehicles}) =>
-      $then(SavedBuilds(vehicles ?? $value.vehicles));
+      $apply(FieldCopyWithData({if (vehicles != null) #vehicles: vehicles}));
+  @override
+  SavedBuilds $make(CopyWithData data) =>
+      SavedBuilds(data.get(#vehicles, or: $value.vehicles));
+
+  @override
+  SavedBuildsCopyWith<$R2, SavedBuilds, $Out2>
+      $chain<$R2, $Out2 extends SavedBuilds>(
+              Then<SavedBuilds, $Out2> t, Then<$Out2, $R2> t2) =>
+          _SavedBuildsCopyWithImpl($value, t, t2);
 }

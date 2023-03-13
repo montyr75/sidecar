@@ -7,12 +7,12 @@ import '../../../../models/enums.dart';
 import '../../../../utils/screen_utils.dart';
 import '../../../../widgets/component_display.dart';
 import '../../../../widgets/mod_display.dart';
-import '../../controller/car_state.dart';
+import '../../controller/vehicle_state.dart';
 import '../../utils/component_table_utils.dart';
 import '../crew_damage_dice_display.dart';
 
 class WeaponTable extends ConsumerWidget {
-  final CarState state;
+  final VehicleState state;
   final ComponentType type;
 
   final bool showType;
@@ -80,7 +80,7 @@ class WeaponTable extends ConsumerWidget {
     ]);
   }
 
-  void _showCrewDamageDice(CarState state, Weapon weapon) {
+  void _showCrewDamageDice(VehicleState state, Weapon weapon) {
     SmartDialog.show(builder: (_) {
       return SimpleDialog(
         backgroundColor: Colors.grey,

@@ -5,108 +5,109 @@
 
 part of 'vehicle.dart';
 
-class VehicleMapper extends MapperBase<Vehicle> {
-  static MapperContainer container = MapperContainer(
-    mappers: {VehicleMapper()},
-  )..linkAll({
-      VehicleTypeMapper.container,
-      ChassisMapper.container,
-      LocationMapper.container,
-    });
+class VehicleMapper extends ClassMapperBase<Vehicle> {
+  VehicleMapper._();
+  static VehicleMapper? _instance;
+  static VehicleMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = VehicleMapper._());
+      VehicleTypeMapper.ensureInitialized();
+      ChassisMapper.ensureInitialized();
+      LocationMapper.ensureInitialized();
+    }
+    return _instance!;
+  }
 
-  @override
-  VehicleMapperElement createElement(MapperContainer container) {
-    return VehicleMapperElement._(this, container);
+  static T _guard<T>(T Function(MapperContainer) fn) {
+    ensureInitialized();
+    return fn(MapperContainer.globals);
   }
 
   @override
-  String get id => 'Vehicle';
+  final String id = 'Vehicle';
 
-  static final fromMap = container.fromMap<Vehicle>;
-  static final fromJson = container.fromJson<Vehicle>;
-}
-
-class VehicleMapperElement extends MapperElementBase<Vehicle> {
-  VehicleMapperElement._(super.mapper, super.container);
-
-  @override
-  Function get decoder => decode;
-  Vehicle decode(dynamic v) =>
-      checkedType(v, (Map<String, dynamic> map) => fromMap(map));
-  Vehicle fromMap(Map<String, dynamic> map) => Vehicle(
-      version: container.$get(map, 'version'),
-      id: container.$getOpt(map, 'id') ?? '',
-      name: container.$get(map, 'name'),
-      vehicleType: container.$getOpt(map, 'vehicleType') ?? VehicleType.car,
-      chassis: container.$get(map, 'chassis'),
-      division: container.$get(map, 'division'),
-      locs: container.$get(map, 'locs'));
+  static String _$version(Vehicle v) => v.version;
+  static String _$id(Vehicle v) => v.id;
+  static String _$name(Vehicle v) => v.name;
+  static VehicleType _$vehicleType(Vehicle v) => v.vehicleType;
+  static Chassis _$chassis(Vehicle v) => v.chassis;
+  static int _$division(Vehicle v) => v.division;
+  static Map<Location, List<String>> _$locs(Vehicle v) => v.locs;
 
   @override
-  Function get encoder => encode;
-  dynamic encode(Vehicle v) => toMap(v);
-  Map<String, dynamic> toMap(Vehicle v) => {
-        'version': container.$enc(v.version, 'version'),
-        'id': container.$enc(v.id, 'id'),
-        'name': container.$enc(v.name, 'name'),
-        'vehicleType': container.$enc(v.vehicleType, 'vehicleType'),
-        'chassis': container.$enc(v.chassis, 'chassis'),
-        'division': container.$enc(v.division, 'division'),
-        'locs': container.$enc(v.locs, 'locs')
-      };
+  final Map<Symbol, Field<Vehicle, dynamic>> fields = const {
+    #version: Field<Vehicle, String>('version', _$version),
+    #id: Field<Vehicle, String>('id', _$id, opt: true, def: ''),
+    #name: Field<Vehicle, String>('name', _$name),
+    #vehicleType: Field<Vehicle, VehicleType>('vehicleType', _$vehicleType,
+        opt: true, def: VehicleType.car),
+    #chassis: Field<Vehicle, Chassis>('chassis', _$chassis),
+    #division: Field<Vehicle, int>('division', _$division),
+    #locs: Field<Vehicle, Map<Location, List<String>>>('locs', _$locs),
+  };
+
+  static Vehicle _instantiate(DecodingData data) {
+    return Vehicle(
+        version: data.get(#version),
+        id: data.get(#id),
+        name: data.get(#name),
+        vehicleType: data.get(#vehicleType),
+        chassis: data.get(#chassis),
+        division: data.get(#division),
+        locs: data.get(#locs));
+  }
 
   @override
-  String stringify(Vehicle self) =>
-      'Vehicle(version: ${container.asString(self.version)}, id: ${container.asString(self.id)}, name: ${container.asString(self.name)}, vehicleType: ${container.asString(self.vehicleType)}, chassis: ${container.asString(self.chassis)}, division: ${container.asString(self.division)}, locs: ${container.asString(self.locs)})';
-  @override
-  int hash(Vehicle self) =>
-      container.hash(self.version) ^
-      container.hash(self.id) ^
-      container.hash(self.name) ^
-      container.hash(self.vehicleType) ^
-      container.hash(self.chassis) ^
-      container.hash(self.division) ^
-      container.hash(self.locs);
-  @override
-  bool equals(Vehicle self, Vehicle other) =>
-      container.isEqual(self.version, other.version) &&
-      container.isEqual(self.id, other.id) &&
-      container.isEqual(self.name, other.name) &&
-      container.isEqual(self.vehicleType, other.vehicleType) &&
-      container.isEqual(self.chassis, other.chassis) &&
-      container.isEqual(self.division, other.division) &&
-      container.isEqual(self.locs, other.locs);
+  final Function instantiate = _instantiate;
+
+  static Vehicle fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<Vehicle>(map));
+  }
+
+  static Vehicle fromJson(String json) {
+    return _guard((c) => c.fromJson<Vehicle>(json));
+  }
 }
 
 mixin VehicleMappable {
-  String toJson() => VehicleMapper.container.toJson(this as Vehicle);
-  Map<String, dynamic> toMap() =>
-      VehicleMapper.container.toMap(this as Vehicle);
+  String toJson() {
+    return VehicleMapper._guard((c) => c.toJson(this as Vehicle));
+  }
+
+  Map<String, dynamic> toMap() {
+    return VehicleMapper._guard((c) => c.toMap(this as Vehicle));
+  }
+
   VehicleCopyWith<Vehicle, Vehicle, Vehicle> get copyWith =>
       _VehicleCopyWithImpl(this as Vehicle, $identity, $identity);
   @override
-  String toString() => VehicleMapper.container.asString(this);
+  String toString() {
+    return VehicleMapper._guard((c) => c.asString(this));
+  }
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      (runtimeType == other.runtimeType &&
-          VehicleMapper.container.isEqual(this, other));
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (runtimeType == other.runtimeType &&
+            VehicleMapper._guard((c) => c.isEqual(this, other)));
+  }
+
   @override
-  int get hashCode => VehicleMapper.container.hash(this);
+  int get hashCode {
+    return VehicleMapper._guard((c) => c.hash(this));
+  }
 }
 
 extension VehicleValueCopy<$R, $Out extends Vehicle>
     on ObjectCopyWith<$R, Vehicle, $Out> {
-  VehicleCopyWith<$R, Vehicle, $Out> get asVehicle =>
-      base.as((v, t, t2) => _VehicleCopyWithImpl(v, t, t2));
+  VehicleCopyWith<$R, Vehicle, $Out> get $asVehicle =>
+      $base.as((v, t, t2) => _VehicleCopyWithImpl(v, t, t2));
 }
 
 typedef VehicleCopyWithBound = Vehicle;
 
 abstract class VehicleCopyWith<$R, $In extends Vehicle, $Out extends Vehicle>
-    implements ObjectCopyWith<$R, $In, $Out> {
-  VehicleCopyWith<$R2, $In, $Out2> chain<$R2, $Out2 extends Vehicle>(
-      Then<Vehicle, $Out2> t, Then<$Out2, $R2> t2);
+    implements ClassCopyWith<$R, $In, $Out> {
   MapCopyWith<$R, Location, List<String>,
       ObjectCopyWith<$R, List<String>, List<String>>> get locs;
   $R call(
@@ -117,17 +118,18 @@ abstract class VehicleCopyWith<$R, $In extends Vehicle, $Out extends Vehicle>
       Chassis? chassis,
       int? division,
       Map<Location, List<String>>? locs});
+  VehicleCopyWith<$R2, $In, $Out2> $chain<$R2, $Out2 extends Vehicle>(
+      Then<Vehicle, $Out2> t, Then<$Out2, $R2> t2);
 }
 
 class _VehicleCopyWithImpl<$R, $Out extends Vehicle>
-    extends CopyWithBase<$R, Vehicle, $Out>
+    extends ClassCopyWithBase<$R, Vehicle, $Out>
     implements VehicleCopyWith<$R, Vehicle, $Out> {
   _VehicleCopyWithImpl(super.value, super.then, super.then2);
-  @override
-  VehicleCopyWith<$R2, Vehicle, $Out2> chain<$R2, $Out2 extends Vehicle>(
-          Then<Vehicle, $Out2> t, Then<$Out2, $R2> t2) =>
-      _VehicleCopyWithImpl($value, t, t2);
 
+  @override
+  late final ClassMapperBase<Vehicle> $mapper =
+      VehicleMapper.ensureInitialized();
   @override
   MapCopyWith<$R, Location, List<String>,
           ObjectCopyWith<$R, List<String>, List<String>>>
@@ -142,22 +144,45 @@ class _VehicleCopyWithImpl<$R, $Out extends Vehicle>
           Chassis? chassis,
           int? division,
           Map<Location, List<String>>? locs}) =>
-      $then(Vehicle(
-          version: version ?? $value.version,
-          id: id ?? $value.id,
-          name: name ?? $value.name,
-          vehicleType: vehicleType ?? $value.vehicleType,
-          chassis: chassis ?? $value.chassis,
-          division: division ?? $value.division,
-          locs: locs ?? $value.locs));
+      $apply(FieldCopyWithData({
+        if (version != null) #version: version,
+        if (id != null) #id: id,
+        if (name != null) #name: name,
+        if (vehicleType != null) #vehicleType: vehicleType,
+        if (chassis != null) #chassis: chassis,
+        if (division != null) #division: division,
+        if (locs != null) #locs: locs
+      }));
+  @override
+  Vehicle $make(CopyWithData data) => Vehicle(
+      version: data.get(#version, or: $value.version),
+      id: data.get(#id, or: $value.id),
+      name: data.get(#name, or: $value.name),
+      vehicleType: data.get(#vehicleType, or: $value.vehicleType),
+      chassis: data.get(#chassis, or: $value.chassis),
+      division: data.get(#division, or: $value.division),
+      locs: data.get(#locs, or: $value.locs));
+
+  @override
+  VehicleCopyWith<$R2, Vehicle, $Out2> $chain<$R2, $Out2 extends Vehicle>(
+          Then<Vehicle, $Out2> t, Then<$Out2, $R2> t2) =>
+      _VehicleCopyWithImpl($value, t, t2);
 }
 
 class VehicleTypeMapper extends EnumMapper<VehicleType> {
-  static MapperContainer container = MapperContainer(
-    mappers: {VehicleTypeMapper()},
-  );
+  VehicleTypeMapper._();
+  static VehicleTypeMapper? _instance;
+  static VehicleTypeMapper ensureInitialized() {
+    if (_instance == null) {
+      MapperContainer.globals.use(_instance = VehicleTypeMapper._());
+    }
+    return _instance!;
+  }
 
-  static final fromValue = container.fromValue<VehicleType>;
+  static VehicleType fromValue(dynamic value) {
+    ensureInitialized();
+    return MapperContainer.globals.fromValue(value);
+  }
 
   @override
   VehicleType decode(dynamic value) {
@@ -179,5 +204,8 @@ class VehicleTypeMapper extends EnumMapper<VehicleType> {
 }
 
 extension VehicleTypeMapperExtension on VehicleType {
-  String toValue() => VehicleTypeMapper.container.toValue(this) as String;
+  String toValue() {
+    VehicleTypeMapper.ensureInitialized();
+    return MapperContainer.globals.toValue(this) as String;
+  }
 }

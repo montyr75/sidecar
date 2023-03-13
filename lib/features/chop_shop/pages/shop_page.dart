@@ -13,7 +13,8 @@ import '../../../utils/screen_utils.dart';
 import '../../../utils/utils.dart';
 import '../../../widgets/component_display.dart';
 import '../../../widgets/panel_list.dart';
-import '../../car_record_sheet/controller/car_state.dart';
+import '../../auth/services/auth_service.dart';
+import '../../record_sheet/controller/vehicle_state.dart';
 import '../controllers/chop_shop/chop_shop_ctrl.dart';
 import '../controllers/shop/shop_ctrl.dart';
 import '../controllers/shop/shop_state.dart';
@@ -28,6 +29,7 @@ class ShopPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final uid = ref.watch(authServiceProvider.select((value) => value.uid));
     final initialState = ref.watch(appServiceProvider.select((value) => value.initialCarBuilderState));
 
     final ctrl = ref.read(shopCtrlProvider(initialState).notifier);
@@ -49,7 +51,7 @@ class ShopPage extends ConsumerWidget {
             child: TextButton(
               onPressed: state.isValid
                   ? () {
-                      ref.read(appServiceProvider.notifier).drive((state.toCarState()));
+                      ref.read(appServiceProvider.notifier).drive((state.toCarState(uid)));
                       context.goNamed(AppRoute.carRecordSheet.name);
                     }
                   : null,

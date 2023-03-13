@@ -7,6 +7,7 @@ import 'damage_dice.dart';
 
 part 'enums.mapper.dart';
 
+@MappableEnum()
 enum Source {
   custom,
   armory,
@@ -145,6 +146,7 @@ enum Chassis {
   String toString() => ReCase(name).titleCase;
 }
 
+@MappableEnum()
 enum ComponentType {
   accessory,
   crew,
@@ -173,6 +175,7 @@ enum ComponentType {
   String toString() => ReCase(name).titleCase;
 }
 
+@MappableEnum()
 enum ComponentSubtype {
   blast,
   coating,
@@ -196,6 +199,7 @@ enum ComponentSubtype {
   String toString() => ReCase(name).titleCase;
 }
 
+@MappableEnum()
 enum Restriction {
   backOnly,
   drop,
@@ -223,6 +227,7 @@ enum Restriction {
   }
 }
 
+@MappableEnum()
 enum Die {
   red(Colors.red),
   yellow(Colors.yellow, true),
@@ -239,6 +244,7 @@ enum Die {
   static Die fromString(String value) => fullStrToEnum<Die>(values, value);
 }
 
+@MappableEnum()
 enum DamageType {
   basic,
   explosion,
@@ -249,11 +255,13 @@ enum DamageType {
   static DamageType fromString(String value) => fullStrToEnum<DamageType>(values, value);
 }
 
+@MappableEnum()
 enum ModType {
   text,       // the default, normal type
   note,       // should display in small red type
 }
 
+@MappableEnum()
 enum Attribute {
   awardsAP,      // component adds one extra AP during a build
   awardsCP,      // component adds one extra CP during a build
@@ -304,6 +312,7 @@ enum Attribute {
   turret,       // a turreted weapon
 }
 
+@MappableEnum()
 enum InternalDamageLocation {
   accessory,
   crew,
@@ -320,6 +329,7 @@ enum InternalDamageLocation {
   String toString() => ReCase(name).titleCase;
 }
 
+@MappableEnum()
 enum Maneuver {
   slide(DamageDice()),
   turnD1(DamageDice(dice: [Dice(Die.green, 1)])),

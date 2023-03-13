@@ -3,18 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../models/enums.dart';
 import '../../../../utils/screen_utils.dart';
-import '../../controller/car_ctrl.dart';
-import '../../controller/car_state.dart';
+import '../../controller/vehicle_ctrl.dart';
+import '../../controller/vehicle_state.dart';
 import 'weapon_table.dart';
 
 class WeaponsBody extends ConsumerWidget {
-  final CarState initialState;
+  final VehicleState initialState;
 
   const WeaponsBody({Key? key, required this.initialState}) : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(carCtrlProvider(initialState));
+    final state = ref.watch(vehicleCtrlProvider(initialState));
 
     return Column(
       children: [

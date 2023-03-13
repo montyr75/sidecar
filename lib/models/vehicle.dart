@@ -27,8 +27,8 @@ class Vehicle with VehicleMappable implements Comparable<Vehicle> {
   @override
   int compareTo(Vehicle other) => name.compareTo(other.name);
 
-  static final fromMap = VehicleMapper.fromMap;
-  static final fromJson = VehicleMapper.fromJson;
+  static const fromMap = VehicleMapper.fromMap;
+  static const fromJson = VehicleMapper.fromJson;
 }
 
 @MappableEnum()

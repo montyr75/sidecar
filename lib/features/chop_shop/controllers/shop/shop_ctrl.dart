@@ -7,7 +7,7 @@ import '../../../../data/components.dart';
 import '../../../../models/components.dart';
 import '../../../../models/enums.dart';
 import '../../../../models/form_models.dart';
-import '../../../car_record_sheet/controller/car_state.dart';
+import '../../../record_sheet/controller/vehicle_state.dart';
 import '../shop/shop_state.dart';
 
 part 'shop_ctrl.g.dart';

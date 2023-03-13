@@ -3,7 +3,7 @@ import 'dart:math' show max;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../features/car_record_sheet/controller/car_ctrl.dart';
+import '../features/record_sheet/controller/vehicle_ctrl.dart';
 import '../models/components.dart';
 import '../models/enums.dart';
 import '../services/app/app_service.dart';
@@ -24,7 +24,7 @@ class ComponentDialog extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final initialState = ref.read(appServiceProvider).initialCarState!;
 
-    final carState = ref.watch(carCtrlProvider(initialState));
+    final carState = ref.watch(vehicleCtrlProvider(initialState));
 
     final instComp = carState.findComponentById(component.id)!;
 
@@ -37,7 +37,7 @@ class ComponentDialog extends ConsumerWidget {
             Checkbox(
               value: instComp.isExpended,
               onChanged: (value) =>
-                  ref.read(carCtrlProvider(initialState).notifier).markComponentExpended(instComp, value!),
+                  ref.read(vehicleCtrlProvider(initialState).notifier).markComponentExpended(instComp, value!),
             ),
           ],
         ),
@@ -56,8 +56,8 @@ class ComponentDialog extends ConsumerWidget {
               fontSize: 10,
             ),
           ),
-          onPressedInc: () => ref.read(carCtrlProvider(initialState).notifier).incrementComponentControl(instComp),
-          onPressedDec: () => ref.read(carCtrlProvider(initialState).notifier).decrementComponentControl(instComp),
+          onPressedInc: () => ref.read(vehicleCtrlProvider(initialState).notifier).incrementComponentControl(instComp),
+          onPressedDec: () => ref.read(vehicleCtrlProvider(initialState).notifier).decrementComponentControl(instComp),
         ),
       if (instComp.canBeDamaged) ...[
         const Spacer(),
@@ -75,8 +75,8 @@ class ComponentDialog extends ConsumerWidget {
               fontSize: 10,
             ),
           ),
-          onPressedInc: () => ref.read(carCtrlProvider(initialState).notifier).decrementComponentDurability(instComp),
-          onPressedDec: () => ref.read(carCtrlProvider(initialState).notifier).incrementComponentDurability(instComp),
+          onPressedInc: () => ref.read(vehicleCtrlProvider(initialState).notifier).decrementComponentDurability(instComp),
+          onPressedDec: () => ref.read(vehicleCtrlProvider(initialState).notifier).incrementComponentDurability(instComp),
         ),
       ],
     ];

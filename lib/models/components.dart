@@ -1,9 +1,14 @@
+import 'package:dart_mappable/dart_mappable.dart';
+
 import '../utils/utils.dart';
 import 'damage_dice.dart';
 import 'enums.dart';
 
+part 'components.mapper.dart';
+
 /// Text will include encoded graphics, maybe enums or something like "[[Die.red:1]]" or "[[DamageType.basic:1]]" or "[[DamageType.explosion]]"
-class Mod {
+@MappableClass()
+class Mod with ModMappable {
   final ModType type;
   final String text;
   final String? abbrText;
@@ -12,16 +17,12 @@ class Mod {
 
   bool get hasAbbrText => abbrText != null;
 
-  // factory Mod.fromJson(Map<String, dynamic> json) => _$ModFromJson(json);
-  // Map<String, dynamic> toJson() => _$ModToJson(this);
+  static const fromMap = ModMapper.fromMap;
+  static const fromJson = ModMapper.fromJson;
 }
 
-enum ComponentClassType {
-  component,
-  weapon,
-}
-
-class Component {
+@MappableClass(discriminatorKey: 'classType')
+class Component with ComponentMappable {
   final String name;
   final int cost;
   final bool asterisk; // an asterisk on the cost?
@@ -55,33 +56,6 @@ class Component {
   bool hasRestriction(Restriction value) => hasRestrictions && restrictions.contains(value);
   bool hasAttribute(Attribute value) => hasAttributes && attributes.contains(value);
 
-  Component copyWith({
-    ComponentClassType? classType,
-    String? name,
-    int? cost,
-    bool? asterisk,
-    ComponentType? type,
-    ComponentSubtype? subtype,
-    List<Restriction>? restrictions,
-    List<Mod>? mods,
-    List<Attribute>? attributes,
-    int? durability,
-    Source? source,
-  }) {
-    return Component(
-      name: name ?? this.name,
-      cost: cost ?? this.cost,
-      asterisk: asterisk ?? this.asterisk,
-      type: type ?? this.type,
-      subtype: subtype ?? this.subtype,
-      restrictions: restrictions ?? this.restrictions,
-      mods: mods ?? this.mods,
-      attributes: attributes ?? this.attributes,
-      durability: durability ?? this.durability,
-      source: source ?? this.source,
-    );
-  }
-
   String toKey() {
     switch (name) {
       case "Rookie": return "$name ${subtype.toString()}";
@@ -92,12 +66,13 @@ class Component {
     }
   }
 
-  // factory Component.fromJson(Map<String, dynamic> json) => _$ComponentFromJson(json);
-  // Map<String, dynamic> toJson() => _$ComponentToJson(this);
+  static const fromMap = ComponentMapper.fromMap;
+  static const fromJson = ComponentMapper.fromJson;
 }
 
 /// This includes any build card that can cause damage, like sidearms or weapons, etc.
-class Weapon extends Component {
+@MappableClass(discriminatorValue: 'weapon')
+class Weapon extends Component with WeaponMappable {
   final DamageDice? damageDice;
   final DamageType? wrenchResult;
 
@@ -132,18 +107,13 @@ class Weapon extends Component {
     return infinity;
   }
 
-  // factory Weapon.fromJson(Map<String, dynamic> json) => _$WeaponFromJson(json);
-  // @override
-  // Map<String, dynamic> toJson() => _$WeaponToJson(this);
-}
-
-enum InstalledComponentClassType {
-  installedComponent,
-  installedComponentWithControl,
+  static const fromMap = WeaponMapper.fromMap;
+  static const fromJson = WeaponMapper.fromJson;
 }
 
 /// Currently active component... Allows for health tracking, etc.
-class InstalledComponent implements Comparable {
+@MappableClass(discriminatorKey: 'classType')
+class InstalledComponent with InstalledComponentMappable implements Comparable {
   final String id;
   final Component component;
   final Location loc;
@@ -157,22 +127,6 @@ class InstalledComponent implements Comparable {
     this.currentDurability,
     this.isExpended = false,
   });
-
-  InstalledComponent copyWith({
-    String? id,
-    Component? component,
-    Location? loc,
-    int? currentDurability,
-    bool? isExpended,
-  }) {
-    return InstalledComponent(
-      id: id ?? this.id,
-      component: component ?? this.component,
-      loc: loc ?? this.loc,
-      currentDurability: currentDurability ?? this.currentDurability,
-      isExpended: isExpended ?? this.isExpended,
-    );
-  }
 
   @override
   int compareTo(other) => component.cost.compareTo(other.cost);
@@ -223,12 +177,13 @@ class InstalledComponent implements Comparable {
     return loc.toArcString();
   }
 
-  // factory InstalledComponent.fromJson(Map<String, dynamic> json) => _$InstalledComponentFromJson(json);
-  // Map<String, dynamic> toJson() => _$InstalledComponentToJson(this);
+  static const fromMap = InstalledComponentMapper.fromMap;
+  static const fromJson = InstalledComponentMapper.fromJson;
 }
 
 /// Currently active component... Allows for health tracking, control tracking (for accessories like Autopilot), etc..
-class InstalledComponentWithControl extends InstalledComponent {
+@MappableClass(discriminatorValue: 'instCompWithCtrl')
+class InstalledComponentWithControl extends InstalledComponent with InstalledComponentWithControlMappable {
   final int control;
 
   InstalledComponentWithControl({
@@ -240,26 +195,6 @@ class InstalledComponentWithControl extends InstalledComponent {
     this.control = 0,
   });
 
-  @override
-  InstalledComponentWithControl copyWith({
-    String? id,
-    Component? component,
-    Location? loc,
-    int? currentDurability,
-    bool? isExpended,
-    int? control,
-  }) {
-    return InstalledComponentWithControl(
-      id: id ?? this.id,
-      component: component ?? this.component,
-      loc: loc ?? this.loc,
-      currentDurability: currentDurability ?? this.currentDurability,
-      isExpended: isExpended ?? this.isExpended,
-      control: control ?? this.control,
-    );
-  }
-
-  // factory InstalledComponentWithControl.fromJson(Map<String, dynamic> json) => _$InstalledComponentWithControlFromJson(json);
-  // @override
-  // Map<String, dynamic> toJson() => _$InstalledComponentWithControlToJson(this);
+  static const fromMap = InstalledComponentWithControlMapper.fromMap;
+  static const fromJson = InstalledComponentWithControlMapper.fromJson;
 }

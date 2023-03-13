@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'car_ctrl.dart';
+part of 'vehicle_ctrl.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$carCtrlHash() => r'ed7c01d7c761929d2f842d10b70ecdc92dc2f431';
+String _$vehicleCtrlHash() => r'f4f2cc8f258dc8d4c1e3a8fc7e86532ba34fbe9e';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,35 +29,36 @@ class _SystemHash {
   }
 }
 
-abstract class _$CarCtrl extends BuildlessAutoDisposeNotifier<CarState> {
-  late final CarState value;
+abstract class _$VehicleCtrl
+    extends BuildlessAutoDisposeNotifier<VehicleState> {
+  late final VehicleState value;
 
-  CarState build(
-    CarState value,
+  VehicleState build(
+    VehicleState value,
   );
 }
 
-/// See also [CarCtrl].
-@ProviderFor(CarCtrl)
-const carCtrlProvider = CarCtrlFamily();
+/// See also [VehicleCtrl].
+@ProviderFor(VehicleCtrl)
+const vehicleCtrlProvider = VehicleCtrlFamily();
 
-/// See also [CarCtrl].
-class CarCtrlFamily extends Family<CarState> {
-  /// See also [CarCtrl].
-  const CarCtrlFamily();
+/// See also [VehicleCtrl].
+class VehicleCtrlFamily extends Family<VehicleState> {
+  /// See also [VehicleCtrl].
+  const VehicleCtrlFamily();
 
-  /// See also [CarCtrl].
-  CarCtrlProvider call(
-    CarState value,
+  /// See also [VehicleCtrl].
+  VehicleCtrlProvider call(
+    VehicleState value,
   ) {
-    return CarCtrlProvider(
+    return VehicleCtrlProvider(
       value,
     );
   }
 
   @override
-  CarCtrlProvider getProviderOverride(
-    covariant CarCtrlProvider provider,
+  VehicleCtrlProvider getProviderOverride(
+    covariant VehicleCtrlProvider provider,
   ) {
     return call(
       provider.value,
@@ -76,32 +77,33 @@ class CarCtrlFamily extends Family<CarState> {
       _allTransitiveDependencies;
 
   @override
-  String? get name => r'carCtrlProvider';
+  String? get name => r'vehicleCtrlProvider';
 }
 
-/// See also [CarCtrl].
-class CarCtrlProvider
-    extends AutoDisposeNotifierProviderImpl<CarCtrl, CarState> {
-  /// See also [CarCtrl].
-  CarCtrlProvider(
+/// See also [VehicleCtrl].
+class VehicleCtrlProvider
+    extends AutoDisposeNotifierProviderImpl<VehicleCtrl, VehicleState> {
+  /// See also [VehicleCtrl].
+  VehicleCtrlProvider(
     this.value,
   ) : super.internal(
-          () => CarCtrl()..value = value,
-          from: carCtrlProvider,
-          name: r'carCtrlProvider',
+          () => VehicleCtrl()..value = value,
+          from: vehicleCtrlProvider,
+          name: r'vehicleCtrlProvider',
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : _$carCtrlHash,
-          dependencies: CarCtrlFamily._dependencies,
-          allTransitiveDependencies: CarCtrlFamily._allTransitiveDependencies,
+                  : _$vehicleCtrlHash,
+          dependencies: VehicleCtrlFamily._dependencies,
+          allTransitiveDependencies:
+              VehicleCtrlFamily._allTransitiveDependencies,
         );
 
-  final CarState value;
+  final VehicleState value;
 
   @override
   bool operator ==(Object other) {
-    return other is CarCtrlProvider && other.value == value;
+    return other is VehicleCtrlProvider && other.value == value;
   }
 
   @override
@@ -113,8 +115,8 @@ class CarCtrlProvider
   }
 
   @override
-  CarState runNotifierBuild(
-    covariant CarCtrl notifier,
+  VehicleState runNotifierBuild(
+    covariant VehicleCtrl notifier,
   ) {
     return notifier.build(
       value,

@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import '../../features/car_record_sheet/controller/car_state.dart';
+import '../../features/record_sheet/controller/vehicle_state.dart';
 
 class SavedGameVehicles {
-  final List<CarState> states;
+  final List<VehicleState> states;
 
   const SavedGameVehicles([this.states = const []]);
 

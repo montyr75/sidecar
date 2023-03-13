@@ -3,16 +3,16 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../models/components.dart';
 import '../../../models/enums.dart';
 import '../../../utils/utils.dart';
-import 'car_state.dart';
+import 'vehicle_state.dart';
 
-part 'car_ctrl.g.dart';
+part 'vehicle_ctrl.g.dart';
 
 @riverpod
-class CarCtrl extends _$CarCtrl {
-  CarState? _initialState;
+class VehicleCtrl extends _$VehicleCtrl {
+  VehicleState? _initialState;
 
   @override
-  CarState build(CarState value) => _initialState = value;
+  VehicleState build(VehicleState value) => _initialState = value;
 
   void updateSpeed(int value) => state = state.copyWith(speed: value);
   void incrementSpeed() => updateSpeed(state.speed + 1);
