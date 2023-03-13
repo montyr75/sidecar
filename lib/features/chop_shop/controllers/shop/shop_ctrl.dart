@@ -20,7 +20,7 @@ class ShopCtrl extends _$ShopCtrl {
       scheduleMicrotask(() {
         addComponent(
           loc: Location.crew,
-          component: InstalledComponent(
+          component: ComponentState(
             id: '',
             component: components['Hand Cannon']!,
             loc: Location.crew,
@@ -59,8 +59,8 @@ class ShopCtrl extends _$ShopCtrl {
     );
   }
 
-  PrecheckResult addComponentPrecheck(Location loc, InstalledComponent component) {
-    InstalledComponent? Function() compFinder = () => null;
+  PrecheckResult addComponentPrecheck(Location loc, ComponentState component) {
+    ComponentState? Function() compFinder = () => null;
     late final ConflictReason reason;
 
     if (component.hasRestriction(Restriction.exclusive)) {
@@ -99,7 +99,7 @@ class ShopCtrl extends _$ShopCtrl {
     );
   }
 
-  void addComponent({required Location loc, required InstalledComponent component, InstalledComponent? existingComp}) {
+  void addComponent({required Location loc, required ComponentState component, ComponentState? existingComp}) {
     final comps = state.components.toList();
 
     if (existingComp != null) {
@@ -112,7 +112,7 @@ class ShopCtrl extends _$ShopCtrl {
     ]);
 
     final newState = state.copyWith(
-      components: List<InstalledComponent>.unmodifiable(comps),
+      components: List<ComponentState>.unmodifiable(comps),
       attributes: List<Attribute>.unmodifiable(comps.allAttributes),
       restrictions: List<Restriction>.unmodifiable(comps.allRestrictions),
     );
@@ -122,8 +122,8 @@ class ShopCtrl extends _$ShopCtrl {
     onDivisionChanged(state.division);
   }
 
-  void removeComponent(InstalledComponent component) {
-    List<InstalledComponent> comps = state.components.toList()..remove(component);
+  void removeComponent(ComponentState component) {
+    List<ComponentState> comps = state.components.toList()..remove(component);
 
     if (component.hasAttribute(Attribute.paired)) {
       final otherPairedComp = comps.firstWhereOrNull((value) => value.name == component.name);
@@ -131,7 +131,7 @@ class ShopCtrl extends _$ShopCtrl {
     }
 
     state = state.copyWith(
-      components: List<InstalledComponent>.unmodifiable(comps),
+      components: List<ComponentState>.unmodifiable(comps),
       attributes: List<Attribute>.unmodifiable(comps.allAttributes),
       restrictions: List<Restriction>.unmodifiable(comps.allRestrictions),
     );
@@ -143,7 +143,7 @@ class ShopCtrl extends _$ShopCtrl {
     final comps = state.components.toList()..removeWhere((value) => value.hasAttribute(attr));
 
     state = state.copyWith(
-      components: List<InstalledComponent>.unmodifiable(comps),
+      components: List<ComponentState>.unmodifiable(comps),
       attributes: List<Attribute>.unmodifiable(comps.allAttributes),
       restrictions: List<Restriction>.unmodifiable(comps.allRestrictions),
     );
@@ -163,8 +163,8 @@ enum ConflictReason {
 
 class PrecheckResult {
   final Location loc;
-  final InstalledComponent compToAdd;
-  final InstalledComponent? existingComp;
+  final ComponentState compToAdd;
+  final ComponentState? existingComp;
   final ConflictReason reason;
 
   const PrecheckResult({

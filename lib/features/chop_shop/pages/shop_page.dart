@@ -171,6 +171,7 @@ class ShopPage extends ConsumerWidget {
                     boxXXL,
                     LocationComps(
                       loc: Location.crew,
+                      division: state.division,
                       components: state.components.allCrewComponents,
                       onSelected: (value) => addComponent(context, ctrl, Location.crew, value),
                       onRemoved: (value) => ctrl.removeComponent(value),
@@ -179,6 +180,7 @@ class ShopPage extends ConsumerWidget {
                       boxXXL,
                       LocationComps(
                         loc: loc,
+                        division: state.division,
                         components: state.components.getCarCompsByLoc(loc),
                         onSelected: (value) => addComponent(context, ctrl, loc, value),
                         onRemoved: (value) => ctrl.removeComponent(value),
@@ -187,6 +189,7 @@ class ShopPage extends ConsumerWidget {
                     boxXXL,
                     LocationComps(
                       loc: Location.turret,
+                      division: state.division,
                       components: state.components.getCompsByLoc(Location.turret),
                       onSelected: (value) => addComponent(context, ctrl, Location.turret, value),
                       onRemoved: (value) => ctrl.removeComponent(value),
@@ -194,6 +197,7 @@ class ShopPage extends ConsumerWidget {
                     boxXXL,
                     LocationComps(
                       loc: Location.upgrade,
+                      division: state.division,
                       components: state.components.getCompsByLoc(Location.upgrade),
                       onSelected: (value) => addComponent(context, ctrl, Location.upgrade, value),
                       onRemoved: (value) => ctrl.removeComponent(value),
@@ -209,7 +213,7 @@ class ShopPage extends ConsumerWidget {
     );
   }
 
-  Future<bool> addComponent(BuildContext context, ShopCtrl ctrl, Location loc, InstalledComponent comp) async {
+  Future<bool> addComponent(BuildContext context, ShopCtrl ctrl, Location loc, ComponentState comp) async {
     final result = ctrl.addComponentPrecheck(loc, comp);
 
     if (result.hasConflict) {
@@ -339,13 +343,15 @@ class _PointDisplay extends StatelessWidget {
 
 class LocationComps extends ConsumerWidget {
   final Location loc;
-  final List<InstalledComponent> components;
+  final int division;
+  final List<ComponentState> components;
   final CompSelectorCallback onSelected;
-  final ValueChanged<InstalledComponent> onRemoved;
+  final ValueChanged<ComponentState> onRemoved;
 
   const LocationComps({
     Key? key,
     required this.loc,
+    required this.division,
     required this.components,
     required this.onSelected,
     required this.onRemoved,
@@ -364,7 +370,7 @@ class LocationComps extends ConsumerWidget {
               "${loc.toString()}${loc == Location.upgrade ? 's' : ''}",
               style: ShopPage.labelStyle,
             ),
-            _buildAddMenu(context, ref),
+            _buildAddMenu(context),
           ],
         ),
         if (components.isNotEmpty) PanelList(key: ObjectKey(loc), items: _generateComponentItems(components)),
@@ -372,7 +378,7 @@ class LocationComps extends ConsumerWidget {
     );
   }
 
-  Widget _buildAddMenu(BuildContext context, WidgetRef ref) {
+  Widget _buildAddMenu(BuildContext context) {
     if (loc == Location.crew) {
       return PopupMenuButton<String>(
         tooltip: "Add crew",
@@ -512,22 +518,23 @@ class LocationComps extends ConsumerWidget {
     required CompSelectorCallback onSelected,
   }) {
     final sortedComps = components.toList()..sort((a, b) => a.cost.compareTo(b.cost));
-    final instComps = sortedComps.map((value) => InstalledComponent(id: '', component: value, loc: loc));
+    final instComps = sortedComps.map((value) => ComponentState(id: '', component: value, loc: loc));
 
     Navigator.of(context).push(
       MaterialPageRoute(builder: (_) {
         return ComponentSelector(
           loc: loc,
-          components: List<InstalledComponent>.unmodifiable(instComps),
+          division: division,
+          components: List<ComponentState>.unmodifiable(instComps),
           onSelected: onSelected,
         );
       }),
     );
   }
 
-  List<ExpandableItem<InstalledComponent>> _generateComponentItems(List<InstalledComponent> value) {
-    return value.map<ExpandableItem<InstalledComponent>>((component) {
-      return ExpandableItem<InstalledComponent>(
+  List<ExpandableItem<ComponentState>> _generateComponentItems(List<ComponentState> value) {
+    return value.map<ExpandableItem<ComponentState>>((component) {
+      return ExpandableItem<ComponentState>(
         headerBuilder: (context, isExpanded) => Padding(
           padding: const EdgeInsets.only(top: sm),
           child: ComponentHeader(

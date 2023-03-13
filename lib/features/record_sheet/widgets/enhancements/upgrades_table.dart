@@ -5,7 +5,7 @@ import '../../../../models/components.dart';
 import '../../utils/component_table_utils.dart';
 
 class UpgradesTable extends ConsumerWidget {
-  final List<InstalledComponent> upgrades;
+  final List<ComponentState> upgrades;
 
   const UpgradesTable({Key? key, required this.upgrades}) : super(key: key);
 
@@ -35,7 +35,7 @@ class UpgradesTable extends ConsumerWidget {
   TableRow _buildRow({
     required BuildContext context,
     required WidgetRef ref,
-    required InstalledComponent component,
+    required ComponentState component,
   }) {
     return TableRow(children: [
       buildNameCell(context: context, ref: ref, component: component),

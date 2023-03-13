@@ -29,7 +29,7 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeState = ref.watch(themeServiceProvider);
 
-    final vs = VehicleState.fromVehicle('', vg.first);
+    final vs = VehicleState.fromVehicle('', vg[1]);
     print(vs);
     print('\n\n');
     print(vs.toJson());

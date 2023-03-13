@@ -15,7 +15,7 @@ class ComponentDisplay extends ConsumerWidget {
   static const defaultWidth = 400.0;
   static const abbrWidth = 225.0;
 
-  final InstalledComponent value;
+  final ComponentState value;
   final bool abbreviate;
 
   const ComponentDisplay({Key? key, required this.value, this.abbreviate = false}) : super(key: key);
@@ -53,7 +53,7 @@ class ComponentDisplay extends ConsumerWidget {
 void showComponentDialog({
   required BuildContext context,
   required WidgetRef ref,
-  required InstalledComponent component,
+  required ComponentState component,
 }) {
   SmartDialog.show(
     builder: (_) => ComponentDialog(component: component),
@@ -61,7 +61,7 @@ void showComponentDialog({
 }
 
 class ComponentHeader extends StatelessWidget {
-  final InstalledComponent component;
+  final ComponentState component;
   final bool showLocationAndSource;
   final VoidCallback? onSelected;
   final String selectionText;
@@ -188,7 +188,7 @@ class ComponentHeader extends StatelessWidget {
 }
 
 class ComponentBody extends StatelessWidget {
-  final InstalledComponent component;
+  final ComponentState component;
   final bool abbreviate; // show abbreviated mods?
   final bool expandable; // true when it's part of an expandable card
 

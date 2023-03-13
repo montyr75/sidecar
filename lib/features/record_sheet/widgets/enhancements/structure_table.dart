@@ -5,7 +5,7 @@ import '../../../../models/components.dart';
 import '../../utils/component_table_utils.dart';
 
 class StructureTable extends ConsumerWidget {
-  final List<InstalledComponent> structure;
+  final List<ComponentState> structure;
 
   const StructureTable({Key? key, required this.structure}) : super(key: key);
 
@@ -37,7 +37,7 @@ class StructureTable extends ConsumerWidget {
   TableRow _buildRow({
     required BuildContext context,
     required WidgetRef ref,
-    required InstalledComponent component,
+    required ComponentState component,
   }) {
     return TableRow(children: [
       buildNameCell(context: context, ref: ref, component: component),

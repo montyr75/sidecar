@@ -48,7 +48,7 @@ class ComponentTable extends StatelessWidget {
 TableCell buildNameCell({
   required BuildContext context,
   required WidgetRef ref,
-  required InstalledComponent component,
+  required ComponentState component,
   bool number = false,
 }) {
   return TableCell(
@@ -70,7 +70,7 @@ TableCell buildNameCell({
   );
 }
 
-TableCell buildCell({Widget? content, bool number = false, InstalledComponent? component}) {
+TableCell buildCell({Widget? content, bool number = false, ComponentState? component}) {
   Color? color = component != null
       ? component.type != ComponentType.crew
           ? component.type.getColor()

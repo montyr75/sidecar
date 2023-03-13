@@ -11,7 +11,7 @@ const _columnWidths = {
 };
 
 class CrewTable extends ConsumerWidget {
-  final InstalledComponent component;
+  final ComponentState component;
 
   const CrewTable({Key? key, required this.component}) : super(key: key);
 
@@ -35,7 +35,7 @@ class CrewTable extends ConsumerWidget {
   TableRow _buildRow({
     required BuildContext context,
     required WidgetRef ref,
-    required InstalledComponent component,
+    required ComponentState component,
   }) {
     return TableRow(children: [
       buildNameCell(context: context, ref: ref, component: component),

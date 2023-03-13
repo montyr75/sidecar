@@ -571,13 +571,13 @@ class _WeaponCopyWithImpl<$R, $Out extends Component>
       _WeaponCopyWithImpl($value, t, t2);
 }
 
-class InstalledComponentMapper extends ClassMapperBase<InstalledComponent> {
-  InstalledComponentMapper._();
-  static InstalledComponentMapper? _instance;
-  static InstalledComponentMapper ensureInitialized() {
+class ComponentStateMapper extends ClassMapperBase<ComponentState> {
+  ComponentStateMapper._();
+  static ComponentStateMapper? _instance;
+  static ComponentStateMapper ensureInitialized() {
     if (_instance == null) {
-      MapperContainer.globals.use(_instance = InstalledComponentMapper._());
-      InstalledComponentWithControlMapper.ensureInitialized();
+      MapperContainer.globals.use(_instance = ComponentStateMapper._());
+      ComponentStateWithControlMapper.ensureInitialized();
       ComponentMapper.ensureInitialized();
       LocationMapper.ensureInitialized();
     }
@@ -590,28 +590,28 @@ class InstalledComponentMapper extends ClassMapperBase<InstalledComponent> {
   }
 
   @override
-  final String id = 'InstalledComponent';
+  final String id = 'ComponentState';
 
-  static String _$id(InstalledComponent v) => v.id;
-  static Component _$component(InstalledComponent v) => v.component;
-  static Location _$loc(InstalledComponent v) => v.loc;
-  static int? _$currentDurability(InstalledComponent v) => v.currentDurability;
-  static bool _$isExpended(InstalledComponent v) => v.isExpended;
+  static String _$id(ComponentState v) => v.id;
+  static Component _$component(ComponentState v) => v.component;
+  static Location _$loc(ComponentState v) => v.loc;
+  static int? _$currentDurability(ComponentState v) => v.currentDurability;
+  static bool _$isExpended(ComponentState v) => v.isExpended;
 
   @override
-  final Map<Symbol, Field<InstalledComponent, dynamic>> fields = const {
-    #id: Field<InstalledComponent, String>('id', _$id),
-    #component: Field<InstalledComponent, Component>('component', _$component),
-    #loc: Field<InstalledComponent, Location>('loc', _$loc),
-    #currentDurability: Field<InstalledComponent, int?>(
+  final Map<Symbol, Field<ComponentState, dynamic>> fields = const {
+    #id: Field<ComponentState, String>('id', _$id),
+    #component: Field<ComponentState, Component>('component', _$component),
+    #loc: Field<ComponentState, Location>('loc', _$loc),
+    #currentDurability: Field<ComponentState, int?>(
         'currentDurability', _$currentDurability,
         opt: true),
-    #isExpended: Field<InstalledComponent, bool>('isExpended', _$isExpended,
+    #isExpended: Field<ComponentState, bool>('isExpended', _$isExpended,
         opt: true, def: false),
   };
 
-  static InstalledComponent _instantiate(DecodingData data) {
-    return InstalledComponent(
+  static ComponentState _instantiate(DecodingData data) {
+    return ComponentState(
         id: data.get(#id),
         component: data.get(#component),
         loc: data.get(#loc),
@@ -622,59 +622,55 @@ class InstalledComponentMapper extends ClassMapperBase<InstalledComponent> {
   @override
   final Function instantiate = _instantiate;
 
-  static InstalledComponent fromMap(Map<String, dynamic> map) {
-    return _guard((c) => c.fromMap<InstalledComponent>(map));
+  static ComponentState fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<ComponentState>(map));
   }
 
-  static InstalledComponent fromJson(String json) {
-    return _guard((c) => c.fromJson<InstalledComponent>(json));
+  static ComponentState fromJson(String json) {
+    return _guard((c) => c.fromJson<ComponentState>(json));
   }
 }
 
-mixin InstalledComponentMappable {
+mixin ComponentStateMappable {
   String toJson() {
-    return InstalledComponentMapper._guard(
-        (c) => c.toJson(this as InstalledComponent));
+    return ComponentStateMapper._guard((c) => c.toJson(this as ComponentState));
   }
 
   Map<String, dynamic> toMap() {
-    return InstalledComponentMapper._guard(
-        (c) => c.toMap(this as InstalledComponent));
+    return ComponentStateMapper._guard((c) => c.toMap(this as ComponentState));
   }
 
-  InstalledComponentCopyWith<InstalledComponent, InstalledComponent,
-          InstalledComponent>
-      get copyWith => _InstalledComponentCopyWithImpl(
-          this as InstalledComponent, $identity, $identity);
+  ComponentStateCopyWith<ComponentState, ComponentState, ComponentState>
+      get copyWith => _ComponentStateCopyWithImpl(
+          this as ComponentState, $identity, $identity);
   @override
   String toString() {
-    return InstalledComponentMapper._guard((c) => c.asString(this));
+    return ComponentStateMapper._guard((c) => c.asString(this));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (runtimeType == other.runtimeType &&
-            InstalledComponentMapper._guard((c) => c.isEqual(this, other)));
+            ComponentStateMapper._guard((c) => c.isEqual(this, other)));
   }
 
   @override
   int get hashCode {
-    return InstalledComponentMapper._guard((c) => c.hash(this));
+    return ComponentStateMapper._guard((c) => c.hash(this));
   }
 }
 
-extension InstalledComponentValueCopy<$R, $Out extends InstalledComponent>
-    on ObjectCopyWith<$R, InstalledComponent, $Out> {
-  InstalledComponentCopyWith<$R, InstalledComponent, $Out>
-      get $asInstalledComponent =>
-          $base.as((v, t, t2) => _InstalledComponentCopyWithImpl(v, t, t2));
+extension ComponentStateValueCopy<$R, $Out extends ComponentState>
+    on ObjectCopyWith<$R, ComponentState, $Out> {
+  ComponentStateCopyWith<$R, ComponentState, $Out> get $asComponentState =>
+      $base.as((v, t, t2) => _ComponentStateCopyWithImpl(v, t, t2));
 }
 
-typedef InstalledComponentCopyWithBound = InstalledComponent;
+typedef ComponentStateCopyWithBound = ComponentState;
 
-abstract class InstalledComponentCopyWith<$R, $In extends InstalledComponent,
-    $Out extends InstalledComponent> implements ClassCopyWith<$R, $In, $Out> {
+abstract class ComponentStateCopyWith<$R, $In extends ComponentState,
+    $Out extends ComponentState> implements ClassCopyWith<$R, $In, $Out> {
   ComponentCopyWith<$R, Component, Component> get component;
   $R call(
       {String? id,
@@ -682,19 +678,19 @@ abstract class InstalledComponentCopyWith<$R, $In extends InstalledComponent,
       Location? loc,
       int? currentDurability,
       bool? isExpended});
-  InstalledComponentCopyWith<$R2, $In, $Out2>
-      $chain<$R2, $Out2 extends InstalledComponent>(
-          Then<InstalledComponent, $Out2> t, Then<$Out2, $R2> t2);
+  ComponentStateCopyWith<$R2, $In, $Out2>
+      $chain<$R2, $Out2 extends ComponentState>(
+          Then<ComponentState, $Out2> t, Then<$Out2, $R2> t2);
 }
 
-class _InstalledComponentCopyWithImpl<$R, $Out extends InstalledComponent>
-    extends ClassCopyWithBase<$R, InstalledComponent, $Out>
-    implements InstalledComponentCopyWith<$R, InstalledComponent, $Out> {
-  _InstalledComponentCopyWithImpl(super.value, super.then, super.then2);
+class _ComponentStateCopyWithImpl<$R, $Out extends ComponentState>
+    extends ClassCopyWithBase<$R, ComponentState, $Out>
+    implements ComponentStateCopyWith<$R, ComponentState, $Out> {
+  _ComponentStateCopyWithImpl(super.value, super.then, super.then2);
 
   @override
-  late final ClassMapperBase<InstalledComponent> $mapper =
-      InstalledComponentMapper.ensureInitialized();
+  late final ClassMapperBase<ComponentState> $mapper =
+      ComponentStateMapper.ensureInitialized();
   @override
   ComponentCopyWith<$R, Component, Component> get component =>
       $value.component.copyWith.$chain($identity, (v) => call(component: v));
@@ -713,7 +709,7 @@ class _InstalledComponentCopyWithImpl<$R, $Out extends InstalledComponent>
         if (isExpended != null) #isExpended: isExpended
       }));
   @override
-  InstalledComponent $make(CopyWithData data) => InstalledComponent(
+  ComponentState $make(CopyWithData data) => ComponentState(
       id: data.get(#id, or: $value.id),
       component: data.get(#component, or: $value.component),
       loc: data.get(#loc, or: $value.loc),
@@ -722,21 +718,21 @@ class _InstalledComponentCopyWithImpl<$R, $Out extends InstalledComponent>
       isExpended: data.get(#isExpended, or: $value.isExpended));
 
   @override
-  InstalledComponentCopyWith<$R2, InstalledComponent, $Out2>
-      $chain<$R2, $Out2 extends InstalledComponent>(
-              Then<InstalledComponent, $Out2> t, Then<$Out2, $R2> t2) =>
-          _InstalledComponentCopyWithImpl($value, t, t2);
+  ComponentStateCopyWith<$R2, ComponentState, $Out2>
+      $chain<$R2, $Out2 extends ComponentState>(
+              Then<ComponentState, $Out2> t, Then<$Out2, $R2> t2) =>
+          _ComponentStateCopyWithImpl($value, t, t2);
 }
 
-class InstalledComponentWithControlMapper
-    extends SubClassMapperBase<InstalledComponentWithControl> {
-  InstalledComponentWithControlMapper._();
-  static InstalledComponentWithControlMapper? _instance;
-  static InstalledComponentWithControlMapper ensureInitialized() {
+class ComponentStateWithControlMapper
+    extends SubClassMapperBase<ComponentStateWithControl> {
+  ComponentStateWithControlMapper._();
+  static ComponentStateWithControlMapper? _instance;
+  static ComponentStateWithControlMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals
-          .use(_instance = InstalledComponentWithControlMapper._());
-      InstalledComponentMapper.ensureInitialized().addSubMapper(_instance!);
+          .use(_instance = ComponentStateWithControlMapper._());
+      ComponentStateMapper.ensureInitialized().addSubMapper(_instance!);
       ComponentMapper.ensureInitialized();
       LocationMapper.ensureInitialized();
     }
@@ -749,29 +745,28 @@ class InstalledComponentWithControlMapper
   }
 
   @override
-  final String id = 'InstalledComponentWithControl';
+  final String id = 'ComponentStateWithControl';
 
-  static String _$id(InstalledComponentWithControl v) => v.id;
-  static Component _$component(InstalledComponentWithControl v) => v.component;
-  static Location _$loc(InstalledComponentWithControl v) => v.loc;
-  static int? _$currentDurability(InstalledComponentWithControl v) =>
+  static String _$id(ComponentStateWithControl v) => v.id;
+  static Component _$component(ComponentStateWithControl v) => v.component;
+  static Location _$loc(ComponentStateWithControl v) => v.loc;
+  static int? _$currentDurability(ComponentStateWithControl v) =>
       v.currentDurability;
-  static bool _$isExpended(InstalledComponentWithControl v) => v.isExpended;
-  static int _$control(InstalledComponentWithControl v) => v.control;
+  static bool _$isExpended(ComponentStateWithControl v) => v.isExpended;
+  static int _$control(ComponentStateWithControl v) => v.control;
 
   @override
-  final Map<Symbol, Field<InstalledComponentWithControl, dynamic>> fields =
-      const {
-    #id: Field<InstalledComponentWithControl, String>('id', _$id),
-    #component: Field<InstalledComponentWithControl, Component>(
-        'component', _$component),
-    #loc: Field<InstalledComponentWithControl, Location>('loc', _$loc),
-    #currentDurability: Field<InstalledComponentWithControl, int?>(
+  final Map<Symbol, Field<ComponentStateWithControl, dynamic>> fields = const {
+    #id: Field<ComponentStateWithControl, String>('id', _$id),
+    #component:
+        Field<ComponentStateWithControl, Component>('component', _$component),
+    #loc: Field<ComponentStateWithControl, Location>('loc', _$loc),
+    #currentDurability: Field<ComponentStateWithControl, int?>(
         'currentDurability', _$currentDurability),
-    #isExpended: Field<InstalledComponentWithControl, bool>(
+    #isExpended: Field<ComponentStateWithControl, bool>(
         'isExpended', _$isExpended,
         opt: true, def: false),
-    #control: Field<InstalledComponentWithControl, int>('control', _$control,
+    #control: Field<ComponentStateWithControl, int>('control', _$control,
         opt: true, def: 0),
   };
 
@@ -781,10 +776,10 @@ class InstalledComponentWithControlMapper
   final dynamic discriminatorValue = 'instCompWithCtrl';
   @override
   late final ClassMapperBase superMapper =
-      InstalledComponentMapper.ensureInitialized();
+      ComponentStateMapper.ensureInitialized();
 
-  static InstalledComponentWithControl _instantiate(DecodingData data) {
-    return InstalledComponentWithControl(
+  static ComponentStateWithControl _instantiate(DecodingData data) {
+    return ComponentStateWithControl(
         id: data.get(#id),
         component: data.get(#component),
         loc: data.get(#loc),
@@ -796,64 +791,61 @@ class InstalledComponentWithControlMapper
   @override
   final Function instantiate = _instantiate;
 
-  static InstalledComponentWithControl fromMap(Map<String, dynamic> map) {
-    return _guard((c) => c.fromMap<InstalledComponentWithControl>(map));
+  static ComponentStateWithControl fromMap(Map<String, dynamic> map) {
+    return _guard((c) => c.fromMap<ComponentStateWithControl>(map));
   }
 
-  static InstalledComponentWithControl fromJson(String json) {
-    return _guard((c) => c.fromJson<InstalledComponentWithControl>(json));
+  static ComponentStateWithControl fromJson(String json) {
+    return _guard((c) => c.fromJson<ComponentStateWithControl>(json));
   }
 }
 
-mixin InstalledComponentWithControlMappable {
+mixin ComponentStateWithControlMappable {
   String toJson() {
-    return InstalledComponentWithControlMapper._guard(
-        (c) => c.toJson(this as InstalledComponentWithControl));
+    return ComponentStateWithControlMapper._guard(
+        (c) => c.toJson(this as ComponentStateWithControl));
   }
 
   Map<String, dynamic> toMap() {
-    return InstalledComponentWithControlMapper._guard(
-        (c) => c.toMap(this as InstalledComponentWithControl));
+    return ComponentStateWithControlMapper._guard(
+        (c) => c.toMap(this as ComponentStateWithControl));
   }
 
-  InstalledComponentWithControlCopyWith<InstalledComponentWithControl,
-          InstalledComponentWithControl, InstalledComponentWithControl>
-      get copyWith => _InstalledComponentWithControlCopyWithImpl(
-          this as InstalledComponentWithControl, $identity, $identity);
+  ComponentStateWithControlCopyWith<ComponentStateWithControl,
+          ComponentStateWithControl, ComponentStateWithControl>
+      get copyWith => _ComponentStateWithControlCopyWithImpl(
+          this as ComponentStateWithControl, $identity, $identity);
   @override
   String toString() {
-    return InstalledComponentWithControlMapper._guard((c) => c.asString(this));
+    return ComponentStateWithControlMapper._guard((c) => c.asString(this));
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (runtimeType == other.runtimeType &&
-            InstalledComponentWithControlMapper._guard(
+            ComponentStateWithControlMapper._guard(
                 (c) => c.isEqual(this, other)));
   }
 
   @override
   int get hashCode {
-    return InstalledComponentWithControlMapper._guard((c) => c.hash(this));
+    return ComponentStateWithControlMapper._guard((c) => c.hash(this));
   }
 }
 
-extension InstalledComponentWithControlValueCopy<$R,
-        $Out extends InstalledComponent>
-    on ObjectCopyWith<$R, InstalledComponentWithControl, $Out> {
-  InstalledComponentWithControlCopyWith<$R, InstalledComponentWithControl, $Out>
-      get $asInstalledComponentWithControl => $base.as(
-          (v, t, t2) => _InstalledComponentWithControlCopyWithImpl(v, t, t2));
+extension ComponentStateWithControlValueCopy<$R, $Out extends ComponentState>
+    on ObjectCopyWith<$R, ComponentStateWithControl, $Out> {
+  ComponentStateWithControlCopyWith<$R, ComponentStateWithControl, $Out>
+      get $asComponentStateWithControl => $base
+          .as((v, t, t2) => _ComponentStateWithControlCopyWithImpl(v, t, t2));
 }
 
-typedef InstalledComponentWithControlCopyWithBound = InstalledComponent;
+typedef ComponentStateWithControlCopyWithBound = ComponentState;
 
-abstract class InstalledComponentWithControlCopyWith<
-        $R,
-        $In extends InstalledComponentWithControl,
-        $Out extends InstalledComponent>
-    implements InstalledComponentCopyWith<$R, $In, $Out> {
+abstract class ComponentStateWithControlCopyWith<$R,
+        $In extends ComponentStateWithControl, $Out extends ComponentState>
+    implements ComponentStateCopyWith<$R, $In, $Out> {
   @override
   ComponentCopyWith<$R, Component, Component> get component;
   @override
@@ -864,23 +856,20 @@ abstract class InstalledComponentWithControlCopyWith<
       int? currentDurability,
       bool? isExpended,
       int? control});
-  InstalledComponentWithControlCopyWith<$R2, $In, $Out2>
-      $chain<$R2, $Out2 extends InstalledComponent>(
-          Then<InstalledComponentWithControl, $Out2> t, Then<$Out2, $R2> t2);
+  ComponentStateWithControlCopyWith<$R2, $In, $Out2>
+      $chain<$R2, $Out2 extends ComponentState>(
+          Then<ComponentStateWithControl, $Out2> t, Then<$Out2, $R2> t2);
 }
 
-class _InstalledComponentWithControlCopyWithImpl<$R,
-        $Out extends InstalledComponent>
-    extends ClassCopyWithBase<$R, InstalledComponentWithControl, $Out>
+class _ComponentStateWithControlCopyWithImpl<$R, $Out extends ComponentState>
+    extends ClassCopyWithBase<$R, ComponentStateWithControl, $Out>
     implements
-        InstalledComponentWithControlCopyWith<$R, InstalledComponentWithControl,
-            $Out> {
-  _InstalledComponentWithControlCopyWithImpl(
-      super.value, super.then, super.then2);
+        ComponentStateWithControlCopyWith<$R, ComponentStateWithControl, $Out> {
+  _ComponentStateWithControlCopyWithImpl(super.value, super.then, super.then2);
 
   @override
-  late final ClassMapperBase<InstalledComponentWithControl> $mapper =
-      InstalledComponentWithControlMapper.ensureInitialized();
+  late final ClassMapperBase<ComponentStateWithControl> $mapper =
+      ComponentStateWithControlMapper.ensureInitialized();
   @override
   ComponentCopyWith<$R, Component, Component> get component =>
       $value.component.copyWith.$chain($identity, (v) => call(component: v));
@@ -901,8 +890,8 @@ class _InstalledComponentWithControlCopyWithImpl<$R,
         if (control != null) #control: control
       }));
   @override
-  InstalledComponentWithControl $make(CopyWithData data) =>
-      InstalledComponentWithControl(
+  ComponentStateWithControl $make(CopyWithData data) =>
+      ComponentStateWithControl(
           id: data.get(#id, or: $value.id),
           component: data.get(#component, or: $value.component),
           loc: data.get(#loc, or: $value.loc),
@@ -912,8 +901,8 @@ class _InstalledComponentWithControlCopyWithImpl<$R,
           control: data.get(#control, or: $value.control));
 
   @override
-  InstalledComponentWithControlCopyWith<$R2, InstalledComponentWithControl,
-      $Out2> $chain<$R2, $Out2 extends InstalledComponent>(
-          Then<InstalledComponentWithControl, $Out2> t, Then<$Out2, $R2> t2) =>
-      _InstalledComponentWithControlCopyWithImpl($value, t, t2);
+  ComponentStateWithControlCopyWith<$R2, ComponentStateWithControl, $Out2>
+      $chain<$R2, $Out2 extends ComponentState>(
+              Then<ComponentStateWithControl, $Out2> t, Then<$Out2, $R2> t2) =>
+          _ComponentStateWithControlCopyWithImpl($value, t, t2);
 }

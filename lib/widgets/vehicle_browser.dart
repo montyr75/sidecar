@@ -105,8 +105,8 @@ class ComponentPanelList extends StatefulWidget {
 }
 
 class _ComponentPanelListState extends State<ComponentPanelList> {
-  List<ExpandableItem<InstalledComponent>> _crewList = const [];
-  List<ExpandableItem<InstalledComponent>> _componentList = const [];
+  List<ExpandableItem<ComponentState>> _crewList = const [];
+  List<ExpandableItem<ComponentState>> _componentList = const [];
 
   @override
   void initState() {
@@ -141,9 +141,9 @@ class _ComponentPanelListState extends State<ComponentPanelList> {
     );
   }
 
-  List<ExpandableItem<InstalledComponent>> _generateComponentItems(List<InstalledComponent> value) {
-    return value.map<ExpandableItem<InstalledComponent>>((component) {
-      return ExpandableItem<InstalledComponent>(
+  List<ExpandableItem<ComponentState>> _generateComponentItems(List<ComponentState> value) {
+    return value.map<ExpandableItem<ComponentState>>((component) {
+      return ExpandableItem<ComponentState>(
         headerBuilder: (context, isExpanded) => Padding(
           padding: const EdgeInsets.only(top: sm),
           child: ComponentHeader(

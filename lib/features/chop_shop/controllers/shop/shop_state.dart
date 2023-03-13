@@ -18,7 +18,7 @@ class ShopState {
 
   final Chassis chassis;
   final int division;
-  final List<InstalledComponent> components;
+  final List<ComponentState> components;
 
   final List<Restriction> restrictions;
   final List<Attribute> attributes;
@@ -36,7 +36,7 @@ class ShopState {
   });
 
   factory ShopState.fromVehicle(Vehicle vehicle) {
-    final List<InstalledComponent> comps = [];
+    final List<ComponentState> comps = [];
     for (final loc in Location.values) {
       final locComps = vehicle.locs[loc]?.map((key) => db.components[key]!) ?? const [];
       comps.addAll(createInstalledComponents(locComps, loc));
@@ -49,7 +49,7 @@ class ShopState {
       name: RequiredStringFormField.pure(vehicle.name),
       chassis: vehicle.chassis,
       division: vehicle.division,
-      components: List<InstalledComponent>.unmodifiable(comps),
+      components: List<ComponentState>.unmodifiable(comps),
       restrictions: comps.allRestrictions,
       attributes: comps.allAttributes,
     );
@@ -62,7 +62,7 @@ class ShopState {
     RequiredStringFormField? name,
     Chassis? chassis,
     int? division,
-    List<InstalledComponent>? components,
+    List<ComponentState>? components,
     List<Restriction>? restrictions,
     List<Attribute>? attributes,
   }) {
@@ -98,7 +98,7 @@ class ShopState {
 
   int componentTypeCount(ComponentType type) => components.where((value) => value.type == type).length;
 
-  bool hasMatchingComponentByLoc(Location loc, InstalledComponent component) => components.any((value) =>
+  bool hasMatchingComponentByLoc(Location loc, ComponentState component) => components.any((value) =>
       value.name == component.name &&
       value.loc == loc &&
       value.type == component.type &&

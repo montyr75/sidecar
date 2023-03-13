@@ -13,12 +13,12 @@ class SavedBuilds with SavedBuildsMappable {
 
   const SavedBuilds([this.vehicles = const []]);
 
-  factory SavedBuilds.fromDbFormat(Map<String, dynamic> data) {
+  factory SavedBuilds.fromDb(Map<String, dynamic> data) {
     data['vehicles'] = (data['vehicles'] as List).map((value) => jsonDecode(value)).toList();
     return SavedBuilds.fromMap(data);
   }
 
-  Map<String, dynamic> toDbFormat() {
+  Map<String, dynamic> toDb() {
     final map = toMap();
     map['vehicles'] = (map['vehicles'] as List).map((value) => jsonEncode(value)).toList();
     return map;

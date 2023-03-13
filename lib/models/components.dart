@@ -113,14 +113,14 @@ class Weapon extends Component with WeaponMappable {
 
 /// Currently active component... Allows for health tracking, etc.
 @MappableClass(discriminatorKey: 'classType')
-class InstalledComponent with InstalledComponentMappable implements Comparable {
+class ComponentState with ComponentStateMappable implements Comparable {
   final String id;
   final Component component;
   final Location loc;
   final int? currentDurability;
   final bool isExpended;
 
-  InstalledComponent({
+  ComponentState({
     required this.id,
     required this.component,
     required this.loc,
@@ -177,16 +177,16 @@ class InstalledComponent with InstalledComponentMappable implements Comparable {
     return loc.toArcString();
   }
 
-  static const fromMap = InstalledComponentMapper.fromMap;
-  static const fromJson = InstalledComponentMapper.fromJson;
+  static const fromMap = ComponentStateMapper.fromMap;
+  static const fromJson = ComponentStateMapper.fromJson;
 }
 
 /// Currently active component... Allows for health tracking, control tracking (for accessories like Autopilot), etc..
 @MappableClass(discriminatorValue: 'instCompWithCtrl')
-class InstalledComponentWithControl extends InstalledComponent with InstalledComponentWithControlMappable {
+class ComponentStateWithControl extends ComponentState with ComponentStateWithControlMappable {
   final int control;
 
-  InstalledComponentWithControl({
+  ComponentStateWithControl({
     required super.id,
     required super.component,
     required super.loc,
@@ -195,6 +195,6 @@ class InstalledComponentWithControl extends InstalledComponent with InstalledCom
     this.control = 0,
   });
 
-  static const fromMap = InstalledComponentWithControlMapper.fromMap;
-  static const fromJson = InstalledComponentWithControlMapper.fromJson;
+  static const fromMap = ComponentStateWithControlMapper.fromMap;
+  static const fromJson = ComponentStateWithControlMapper.fromJson;
 }

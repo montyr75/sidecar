@@ -17,9 +17,8 @@ const defaultTires = 10;
 @MappableClass()
 class VehicleState with VehicleStateMappable {
   final String id;
-  final String uid;
   final Vehicle vehicle;
-  final List<InstalledComponent> components;
+  final List<ComponentState> components;
   final Map<Location, LocationState> locs;
   final List<Attribute> attributes;
   final int speed;
@@ -32,7 +31,6 @@ class VehicleState with VehicleStateMappable {
 
   const VehicleState({
     required this.id,
-    required this.uid,
     required this.vehicle,
     required this.components,
     required this.locs,
@@ -46,7 +44,7 @@ class VehicleState with VehicleStateMappable {
   });
 
   factory VehicleState.fromVehicle(String uid, Vehicle vehicle) {
-    final List<InstalledComponent> comps = [];
+    final List<ComponentState> comps = [];
     for (final loc in Location.values) {
       final locComps = vehicle.locs[loc]?.map((key) => db.components[key]!) ?? const [];
       comps.addAll(createInstalledComponents(locComps, loc));
@@ -77,9 +75,8 @@ class VehicleState with VehicleStateMappable {
 
     return VehicleState(
       id: uuid.v4(),
-      uid: uid,
       vehicle: vehicle,
-      components: List<InstalledComponent>.unmodifiable(comps),
+      components: List<ComponentState>.unmodifiable(comps),
       locs: Map<Location, LocationState>.unmodifiable({
         for (final loc in Location.carLocs)
           loc: LocationState.fromCar(
@@ -213,18 +210,18 @@ class VehicleState with VehicleStateMappable {
 
   Map<Location, LocationState> cloneLocs() => Map<Location, LocationState>.from(locs);
 
-  InstalledComponent? get driver => components.driver;
-  InstalledComponent? get gunner => components.gunner;
+  ComponentState? get driver => components.driver;
+  ComponentState? get gunner => components.gunner;
 
-  List<InstalledComponent> get crew => components.crew;
-  List<InstalledComponent> get allCrewComponents => components.allCrewComponents;
-  List<InstalledComponent> get allCarComponents => components.allCarComponents;
-  List<InstalledComponent> get sidearms => components.sidearms;
-  List<InstalledComponent> get gear => components.gear;
-  List<InstalledComponent> get weapons => components.weapons;
-  List<InstalledComponent> get accessories => components.accessories;
-  List<InstalledComponent> get upgrades => components.upgrades;
-  List<InstalledComponent> get structure => components.structure;
+  List<ComponentState> get crew => components.crew;
+  List<ComponentState> get allCrewComponents => components.allCrewComponents;
+  List<ComponentState> get allCarComponents => components.allCarComponents;
+  List<ComponentState> get sidearms => components.sidearms;
+  List<ComponentState> get gear => components.gear;
+  List<ComponentState> get weapons => components.weapons;
+  List<ComponentState> get accessories => components.accessories;
+  List<ComponentState> get upgrades => components.upgrades;
+  List<ComponentState> get structure => components.structure;
 
   bool get hasGear => gear.isNotEmpty;
   bool get hasWeapons => weapons.isNotEmpty;
@@ -234,7 +231,7 @@ class VehicleState with VehicleStateMappable {
 
   bool hasAttribute(Attribute value) => attributes.hasAttribute(value);
 
-  InstalledComponent? findComponentById(String id) => components.firstWhereOrNull((value) => value.id == id);
+  ComponentState? findComponentById(String id) => components.firstWhereOrNull((value) => value.id == id);
 
   String get name => vehicle.chassis.toString();
 
@@ -350,17 +347,17 @@ class ArmorState with ArmorStateMappable {
   static const fromJson = ArmorStateMapper.fromJson;
 }
 
-Iterable<InstalledComponent> createInstalledComponents(Iterable<Component> comps, Location loc) {
+Iterable<ComponentState> createInstalledComponents(Iterable<Component> comps, Location loc) {
   return comps.map((value) {
     if (value.hasAttribute(Attribute.canStoreControl)) {
-      return InstalledComponentWithControl(
+      return ComponentStateWithControl(
         id: uuid.v4(),
         loc: loc,
         component: value,
         currentDurability: value.durability,
       );
     } else {
-      return InstalledComponent(
+      return ComponentState(
         id: uuid.v4(),
         loc: loc,
         component: value,
@@ -370,57 +367,57 @@ Iterable<InstalledComponent> createInstalledComponents(Iterable<Component> comps
   });
 }
 
-extension ListInstCompX on List<InstalledComponent> {
-  InstalledComponent? get driver => firstWhereOrNull((value) => value.subtype == ComponentSubtype.driver);
-  InstalledComponent? get gunner => firstWhereOrNull((value) => value.subtype == ComponentSubtype.gunner);
+extension ListInstCompX on List<ComponentState> {
+  ComponentState? get driver => firstWhereOrNull((value) => value.subtype == ComponentSubtype.driver);
+  ComponentState? get gunner => firstWhereOrNull((value) => value.subtype == ComponentSubtype.gunner);
   bool get hasDriver => driver != null;
   bool get hasGunner => gunner != null;
 
-  List<InstalledComponent> get crew =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.type == ComponentType.crew));
+  List<ComponentState> get crew =>
+      List<ComponentState>.unmodifiable(where((value) => value.type == ComponentType.crew));
 
-  List<InstalledComponent> get allCrewComponents => List<InstalledComponent>.unmodifiable([
+  List<ComponentState> get allCrewComponents => List<ComponentState>.unmodifiable([
     if (hasDriver) driver,
     if (hasGunner) gunner,
     ...(sidearms.toList()..sort()),
     ...(gear.toList()..sort()),
   ]);
 
-  List<InstalledComponent> get allCarComponents =>
-      List<InstalledComponent>.unmodifiable(where((value) => !value.type.isCrewType));
+  List<ComponentState> get allCarComponents =>
+      List<ComponentState>.unmodifiable(where((value) => !value.type.isCrewType));
 
-  List<InstalledComponent> get sidearms =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.type == ComponentType.sidearm));
+  List<ComponentState> get sidearms =>
+      List<ComponentState>.unmodifiable(where((value) => value.type == ComponentType.sidearm));
 
-  List<InstalledComponent> get gear =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.type == ComponentType.gear));
+  List<ComponentState> get gear =>
+      List<ComponentState>.unmodifiable(where((value) => value.type == ComponentType.gear));
 
-  List<InstalledComponent> get weapons =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.type == ComponentType.weapon));
+  List<ComponentState> get weapons =>
+      List<ComponentState>.unmodifiable(where((value) => value.type == ComponentType.weapon));
 
-  List<InstalledComponent> get accessories =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.type == ComponentType.accessory));
+  List<ComponentState> get accessories =>
+      List<ComponentState>.unmodifiable(where((value) => value.type == ComponentType.accessory));
 
-  List<InstalledComponent> get upgrades =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.type == ComponentType.upgrade));
+  List<ComponentState> get upgrades =>
+      List<ComponentState>.unmodifiable(where((value) => value.type == ComponentType.upgrade));
 
-  List<InstalledComponent> get structure =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.type == ComponentType.structure));
+  List<ComponentState> get structure =>
+      List<ComponentState>.unmodifiable(where((value) => value.type == ComponentType.structure));
 
-  List<InstalledComponent> getCompsByLoc(Location loc) =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.loc == loc).toList()..sort());
+  List<ComponentState> getCompsByLoc(Location loc) =>
+      List<ComponentState>.unmodifiable(where((value) => value.loc == loc).toList()..sort());
 
-  List<InstalledComponent> getCompsByLocAndType(Location loc, ComponentType type) =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.loc == loc && value.type == type));
+  List<ComponentState> getCompsByLocAndType(Location loc, ComponentType type) =>
+      List<ComponentState>.unmodifiable(where((value) => value.loc == loc && value.type == type));
 
-  List<InstalledComponent> getCarCompsByLoc(Location loc) => List<InstalledComponent>.unmodifiable([
+  List<ComponentState> getCarCompsByLoc(Location loc) => List<ComponentState>.unmodifiable([
     ...(getCompsByLocAndType(loc, ComponentType.weapon).toList()..sort()),
     ...(getCompsByLocAndType(loc, ComponentType.accessory).toList()..sort()),
     ...(getCompsByLocAndType(loc, ComponentType.structure).toList()..sort()),
   ]);
 
-  List<InstalledComponent> getCompsByAttr(Attribute attr) =>
-      List<InstalledComponent>.unmodifiable(where((value) => value.attributes.contains(attr)));
+  List<ComponentState> getCompsByAttr(Attribute attr) =>
+      List<ComponentState>.unmodifiable(where((value) => value.attributes.contains(attr)));
 
   List<Attribute> get allAttributes {
     final List<Attribute> list = [];

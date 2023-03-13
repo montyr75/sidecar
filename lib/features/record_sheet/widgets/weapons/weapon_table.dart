@@ -17,7 +17,7 @@ class WeaponTable extends ConsumerWidget {
 
   final bool showType;
 
-  List<InstalledComponent> get weapons => type != ComponentType.sidearm ? state.weapons : state.sidearms;
+  List<ComponentState> get weapons => type != ComponentType.sidearm ? state.weapons : state.sidearms;
 
   const WeaponTable({Key? key, required this.state, this.type = ComponentType.weapon})
       : showType = type != ComponentType.sidearm,
@@ -59,7 +59,7 @@ class WeaponTable extends ConsumerWidget {
   TableRow _buildRow({
     required BuildContext context,
     required WidgetRef ref,
-    required InstalledComponent component,
+    required ComponentState component,
   }) {
     return TableRow(children: [
       buildNameCell(context: context, ref: ref, component: component),

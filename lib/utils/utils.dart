@@ -109,7 +109,7 @@ Color foregroundColorForBackground(Color bgColor, {Color light = Colors.white, C
   return bgColor.computeLuminance() > 0.5 ? dark : light;
 }
 
-extension InstalledComponentX on InstalledComponent {
+extension InstalledComponentX on ComponentState {
   Color get nameColor {
     if (isDestroyed) {
       return destroyedColor;

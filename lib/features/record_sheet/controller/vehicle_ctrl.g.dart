@@ -6,7 +6,7 @@ part of 'vehicle_ctrl.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$vehicleCtrlHash() => r'f4f2cc8f258dc8d4c1e3a8fc7e86532ba34fbe9e';
+String _$vehicleCtrlHash() => r'494f6db64d87904df7600e99fb1f8c63ba1b813d';
 
 /// Copied from Dart SDK
 class _SystemHash {

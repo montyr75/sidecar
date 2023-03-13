@@ -13,7 +13,7 @@ import 'mod_display.dart';
 import 'token_pile.dart';
 
 class ComponentDialog extends ConsumerWidget {
-  final InstalledComponent component;
+  final ComponentState component;
 
   const ComponentDialog({
     Key? key,
@@ -45,7 +45,7 @@ class ComponentDialog extends ConsumerWidget {
         TokenPile(
           width: 100,
           minHeight: 50,
-          value: (instComp as InstalledComponentWithControl).control,
+          value: (instComp as ComponentStateWithControl).control,
           max: 1,
           tokenBuilder: (_) => const ControlToken(),
           emptyBuilder: (_) => const Text(

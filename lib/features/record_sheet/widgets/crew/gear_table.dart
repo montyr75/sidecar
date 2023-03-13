@@ -5,7 +5,7 @@ import '../../../../models/components.dart';
 import '../../utils/component_table_utils.dart';
 
 class GearTable extends ConsumerWidget {
-  final List<InstalledComponent> gear;
+  final List<ComponentState> gear;
 
   const GearTable({Key? key, required this.gear}) : super(key: key);
 
@@ -33,7 +33,7 @@ class GearTable extends ConsumerWidget {
   TableRow _buildRow({
     required BuildContext context,
     required WidgetRef ref,
-    required InstalledComponent component,
+    required ComponentState component,
   }) {
     return TableRow(children: [
       buildNameCell(context: context, ref: ref, component: component),

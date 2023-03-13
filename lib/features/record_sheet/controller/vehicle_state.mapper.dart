@@ -12,7 +12,7 @@ class VehicleStateMapper extends ClassMapperBase<VehicleState> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = VehicleStateMapper._());
       VehicleMapper.ensureInitialized();
-      InstalledComponentMapper.ensureInitialized();
+      ComponentStateMapper.ensureInitialized();
       LocationMapper.ensureInitialized();
       LocationStateMapper.ensureInitialized();
       AttributeMapper.ensureInitialized();
@@ -29,9 +29,8 @@ class VehicleStateMapper extends ClassMapperBase<VehicleState> {
   final String id = 'VehicleState';
 
   static String _$id(VehicleState v) => v.id;
-  static String _$uid(VehicleState v) => v.uid;
   static Vehicle _$vehicle(VehicleState v) => v.vehicle;
-  static List<InstalledComponent> _$components(VehicleState v) => v.components;
+  static List<ComponentState> _$components(VehicleState v) => v.components;
   static Map<Location, LocationState> _$locs(VehicleState v) => v.locs;
   static List<Attribute> _$attributes(VehicleState v) => v.attributes;
   static int _$speed(VehicleState v) => v.speed;
@@ -44,10 +43,9 @@ class VehicleStateMapper extends ClassMapperBase<VehicleState> {
   @override
   final Map<Symbol, Field<VehicleState, dynamic>> fields = const {
     #id: Field<VehicleState, String>('id', _$id),
-    #uid: Field<VehicleState, String>('uid', _$uid),
     #vehicle: Field<VehicleState, Vehicle>('vehicle', _$vehicle),
-    #components: Field<VehicleState, List<InstalledComponent>>(
-        'components', _$components),
+    #components:
+        Field<VehicleState, List<ComponentState>>('components', _$components),
     #locs: Field<VehicleState, Map<Location, LocationState>>('locs', _$locs),
     #attributes:
         Field<VehicleState, List<Attribute>>('attributes', _$attributes),
@@ -65,7 +63,6 @@ class VehicleStateMapper extends ClassMapperBase<VehicleState> {
   static VehicleState _instantiate(DecodingData data) {
     return VehicleState(
         id: data.get(#id),
-        uid: data.get(#uid),
         vehicle: data.get(#vehicle),
         components: data.get(#components),
         locs: data.get(#locs),
@@ -130,20 +127,17 @@ typedef VehicleStateCopyWithBound = VehicleState;
 abstract class VehicleStateCopyWith<$R, $In extends VehicleState,
     $Out extends VehicleState> implements ClassCopyWith<$R, $In, $Out> {
   VehicleCopyWith<$R, Vehicle, Vehicle> get vehicle;
-  ListCopyWith<
-      $R,
-      InstalledComponent,
-      InstalledComponentCopyWith<$R, InstalledComponent,
-          InstalledComponent>> get components;
+  ListCopyWith<$R, ComponentState,
+          ComponentStateCopyWith<$R, ComponentState, ComponentState>>
+      get components;
   MapCopyWith<$R, Location, LocationState,
       LocationStateCopyWith<$R, LocationState, LocationState>> get locs;
   ListCopyWith<$R, Attribute, ObjectCopyWith<$R, Attribute, Attribute>>
       get attributes;
   $R call(
       {String? id,
-      String? uid,
       Vehicle? vehicle,
-      List<InstalledComponent>? components,
+      List<ComponentState>? components,
       Map<Location, LocationState>? locs,
       List<Attribute>? attributes,
       int? speed,
@@ -168,14 +162,12 @@ class _VehicleStateCopyWithImpl<$R, $Out extends VehicleState>
   VehicleCopyWith<$R, Vehicle, Vehicle> get vehicle =>
       $value.vehicle.copyWith.$chain($identity, (v) => call(vehicle: v));
   @override
-  ListCopyWith<
-      $R,
-      InstalledComponent,
-      InstalledComponentCopyWith<$R, InstalledComponent,
-          InstalledComponent>> get components => ListCopyWith(
-      $value.components,
-      (v, t) => v.copyWith.$chain<$R, InstalledComponent>($identity, t),
-      (v) => call(components: v));
+  ListCopyWith<$R, ComponentState,
+          ComponentStateCopyWith<$R, ComponentState, ComponentState>>
+      get components => ListCopyWith(
+          $value.components,
+          (v, t) => v.copyWith.$chain<$R, ComponentState>($identity, t),
+          (v) => call(components: v));
   @override
   MapCopyWith<$R, Location, LocationState,
           LocationStateCopyWith<$R, LocationState, LocationState>>
@@ -192,9 +184,8 @@ class _VehicleStateCopyWithImpl<$R, $Out extends VehicleState>
   @override
   $R call(
           {String? id,
-          String? uid,
           Vehicle? vehicle,
-          List<InstalledComponent>? components,
+          List<ComponentState>? components,
           Map<Location, LocationState>? locs,
           List<Attribute>? attributes,
           int? speed,
@@ -205,7 +196,6 @@ class _VehicleStateCopyWithImpl<$R, $Out extends VehicleState>
           Object? saveName = $none}) =>
       $apply(FieldCopyWithData({
         if (id != null) #id: id,
-        if (uid != null) #uid: uid,
         if (vehicle != null) #vehicle: vehicle,
         if (components != null) #components: components,
         if (locs != null) #locs: locs,
@@ -220,7 +210,6 @@ class _VehicleStateCopyWithImpl<$R, $Out extends VehicleState>
   @override
   VehicleState $make(CopyWithData data) => VehicleState(
       id: data.get(#id, or: $value.id),
-      uid: data.get(#uid, or: $value.uid),
       vehicle: data.get(#vehicle, or: $value.vehicle),
       components: data.get(#components, or: $value.components),
       locs: data.get(#locs, or: $value.locs),

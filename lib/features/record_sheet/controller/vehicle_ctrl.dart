@@ -69,8 +69,8 @@ class VehicleCtrl extends _$VehicleCtrl {
     state = state.copyWith(locs: locs);
   }
 
-  void updateComponentDurability(InstalledComponent component, int value) {
-    final comps = List<InstalledComponent>.unmodifiable(
+  void updateComponentDurability(ComponentState component, int value) {
+    final comps = List<ComponentState>.unmodifiable(
       state.components.toList()
         ..replaceWith(
           component,
@@ -83,15 +83,15 @@ class VehicleCtrl extends _$VehicleCtrl {
       attributes: comps.allAttributes,
     );
   }
-  void incrementComponentDurability(InstalledComponent component) {
+  void incrementComponentDurability(ComponentState component) {
     updateComponentDurability(component, component.currentDurability! + 1);
   }
-  void decrementComponentDurability(InstalledComponent component) {
+  void decrementComponentDurability(ComponentState component) {
     updateComponentDurability(component, component.currentDurability! - 1);
   }
 
-  void updateComponentControl(InstalledComponentWithControl component, int value) {
-    final comps = List<InstalledComponent>.unmodifiable(
+  void updateComponentControl(ComponentStateWithControl component, int value) {
+    final comps = List<ComponentState>.unmodifiable(
       state.components.toList()
         ..replaceWith(
           component,
@@ -101,15 +101,15 @@ class VehicleCtrl extends _$VehicleCtrl {
 
     state = state.copyWith(components: comps);
   }
-  void incrementComponentControl(InstalledComponentWithControl component) {
+  void incrementComponentControl(ComponentStateWithControl component) {
     updateComponentControl(component, component.control + 1);
   }
-  void decrementComponentControl(InstalledComponentWithControl component) {
+  void decrementComponentControl(ComponentStateWithControl component) {
     updateComponentControl(component, component.control - 1);
   }
 
-  void markComponentExpended(InstalledComponent component, bool value) {
-    final comps = List<InstalledComponent>.unmodifiable(
+  void markComponentExpended(ComponentState component, bool value) {
+    final comps = List<ComponentState>.unmodifiable(
       state.components.toList()
         ..replaceWith(
           component,

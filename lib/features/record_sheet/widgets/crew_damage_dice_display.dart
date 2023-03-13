@@ -6,8 +6,8 @@ import '../../../utils/screen_utils.dart';
 import '../../../widgets/component_display.dart';
 
 class CrewDamageDiceDisplay extends StatelessWidget {
-  final InstalledComponent driver;
-  final InstalledComponent gunner;
+  final ComponentState driver;
+  final ComponentState gunner;
   final CrewDamageDice data;
 
   const CrewDamageDiceDisplay({
