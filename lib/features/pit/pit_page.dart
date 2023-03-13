@@ -47,9 +47,11 @@ class PitPage extends ConsumerWidget {
                                 title: Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      value.name,
-                                      style: const TextStyle(fontSize: 18, fontFamily: 'Audiowide'),
+                                    Flexible(
+                                      child: Text(
+                                        value.name,
+                                        style: const TextStyle(fontSize: 18, fontFamily: 'Audiowide'),
+                                      ),
                                     ),
                                     Text(
                                       DateFormat.yMd().add_jm().format(DateTime.fromMillisecondsSinceEpoch(value.timestamp)),
