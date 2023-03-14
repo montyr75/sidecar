@@ -6,7 +6,7 @@ part of 'pit_ctrl.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$pitCtrlHash() => r'ff7240b38dc006998926e4929c65d00dc5e151f3';
+String _$pitCtrlHash() => r'd850a7c66567bde2db38ab48c5c4cafacbe02274';
 
 /// See also [PitCtrl].
 @ProviderFor(PitCtrl)

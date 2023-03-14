@@ -15,9 +15,7 @@ void main() {
     DeviceOrientation.portraitDown,
   ]);
 
-  runApp(const ProviderScope(
-    child: App(),
-  ));
+  runApp(const ProviderScope(child: App()));
 }
 
 class App extends ConsumerWidget {
